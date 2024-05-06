@@ -2,15 +2,16 @@ import React from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity, Dimensions } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { COLORS } from "../constants/colors";
+import Register from './Register';
 
 const { width, height } = Dimensions.get("window");
 
 const Welcome = () => {
     const navigation = useNavigation();
 
-    const handleSignIn = () => {
-        // Navigate to SignUp screen
-        navigation.navigate("SignUp");
+    const handleRegister = () => {
+        // Navigate to Register screen
+        navigation.navigate("Register");
     };
 
     const handleLogin = () => {
@@ -21,17 +22,16 @@ const Welcome = () => {
     return (
         <View style={styles.container}>
             <Image source={require("../assets/logo.png")} style={styles.logo} />
-            <Text style={styles.welcomeText}> Meow Mood the diary</Text>   
+            <Text style={styles.welcomeText}> Meow Mood diary</Text>   
             <View style={styles.buttonContainer}>
                 <TouchableOpacity style={styles.button} onPress={handleLogin}>
                     <Text style={styles.buttonText}>Login</Text>
                 </TouchableOpacity>
                 <View style={styles.buttonSpacer} />
-                <TouchableOpacity style={styles.button} onPress={handleSignIn}>
-                    <Text style={styles.buttonText}>Sign Up</Text>
+                <TouchableOpacity style={styles.button} onPress={handleRegister}>
+                    <Text style={styles.buttonText}>Register</Text>
                 </TouchableOpacity>
-                
-                
+
             </View>
         </View>
     );
@@ -69,10 +69,10 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         paddingHorizontal: 20,
         borderRadius: 5,
-        width: "40%", // Adjust button width as needed
+        width: "40%", 
     },
     buttonSpacer: {
-        width: "10%", // Adjust spacing between buttons as needed
+        width: "10%", 
     },
     buttonText: {
         fontSize: 16,
