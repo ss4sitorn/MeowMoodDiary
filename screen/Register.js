@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 20,
     paddingTop: 20, 
-    backgroundColor: COLORS.brown,
+    backgroundColor: COLORS.cream,
   },
   headingContainer: {
     marginBottom: 20,

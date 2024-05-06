@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         paddingHorizontal: 20,
-        backgroundColor: COLORS.brown,
+        backgroundColor: COLORS.cream,
     },
     logo: {
         width: width * 0.8,
