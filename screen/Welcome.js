@@ -21,14 +21,17 @@ const Welcome = () => {
     return (
         <View style={styles.container}>
             <Image source={require("../assets/logo.png")} style={styles.logo} />
-            <Text style={styles.welcomeText}>Welcome to React Native Web</Text>   
+            <Text style={styles.welcomeText}> Meow Mood the diary</Text>   
             <View style={styles.buttonContainer}>
-                <TouchableOpacity style={[styles.button, styles.leftButton]} onPress={handleSignIn}>
-                    <Text style={styles.buttonText}>Sign Up</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={[styles.button, styles.rightButton]} onPress={handleLogin}>
+                <TouchableOpacity style={styles.button} onPress={handleLogin}>
                     <Text style={styles.buttonText}>Login</Text>
                 </TouchableOpacity>
+                <View style={styles.buttonSpacer} />
+                <TouchableOpacity style={styles.button} onPress={handleSignIn}>
+                    <Text style={styles.buttonText}>Sign Up</Text>
+                </TouchableOpacity>
+                
+                
             </View>
         </View>
     );
@@ -40,6 +43,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         paddingHorizontal: 20,
+        backgroundColor: COLORS.brown,
     },
     logo: {
         width: width * 0.8,
@@ -50,34 +54,33 @@ const styles = StyleSheet.create({
     welcomeText: {
         fontSize: 24,
         fontWeight: "bold",
-        color: COLORS.brown, // Using color from constants
+        color: COLORS.darkgreen,
         textAlign: "center",
         marginBottom: 20,
     },
     buttonContainer: {
         flexDirection: "row",
-        justifyContent: "space-between",
+        alignItems: "center",
+        justifyContent: "center",
         width: "100%",
     },
     button: {
-        backgroundColor: COLORS.lightgreen, // Using color from constants
+        backgroundColor: COLORS.lightgreen,
         paddingVertical: 10,
         paddingHorizontal: 20,
         borderRadius: 5,
-        width: "45%", // Adjust button width as needed
+        width: "40%", // Adjust button width as needed
     },
-    leftButton: {
-        marginRight: "auto",
-    },
-    rightButton: {
-        marginLeft: "auto",
+    buttonSpacer: {
+        width: "10%", // Adjust spacing between buttons as needed
     },
     buttonText: {
         fontSize: 16,
         fontWeight: "bold",
-        color: COLORS.white, // Using color from constants
+        color: COLORS.white,
         textAlign: "center",
     },
 });
 
 export default Welcome;
+
