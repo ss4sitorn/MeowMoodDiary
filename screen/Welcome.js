@@ -1,29 +1,35 @@
 import React from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity, Dimensions } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { COLORS } from "../constants/colors";
 
 const { width, height } = Dimensions.get("window");
 
 const Welcome = () => {
+    const navigation = useNavigation();
+
     const handleSignIn = () => {
-        // Handle sign-in logic
-        console.log("Sign in button pressed");
+        // Navigate to SignUp screen
+        navigation.navigate("SignUp");
     };
 
     const handleLogin = () => {
-        // Handle login logic
-        console.log("Login button pressed");
+        // Navigate to Login screen
+        navigation.navigate("Login");
     };
 
     return (
         <View style={styles.container}>
             <Image source={require("../assets/logo.png")} style={styles.logo} />
             <Text style={styles.welcomeText}>Welcome to React Native Web</Text>   
-            <TouchableOpacity style={styles.button} onPress={handleSignIn}>
-                <Text style={styles.buttonText}>Sign In</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={handleLogin}>
-                <Text style={styles.buttonText}>Login</Text>
-            </TouchableOpacity>
+            <View style={styles.buttonContainer}>
+                <TouchableOpacity style={[styles.button, styles.leftButton]} onPress={handleSignIn}>
+                    <Text style={styles.buttonText}>Sign Up</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={[styles.button, styles.rightButton]} onPress={handleLogin}>
+                    <Text style={styles.buttonText}>Login</Text>
+                </TouchableOpacity>
+            </View>
         </View>
     );
 };
@@ -36,29 +42,41 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
     },
     logo: {
-        width: width * 0.8, // Adjust width as needed
-        height: height * 0.3, // Adjust height as needed
-        resizeMode: "contain", // Ensure image fits within the specified dimensions
+        width: width * 0.8,
+        height: height * 0.3,
+        resizeMode: "contain",
         marginBottom: 20,
     },
     welcomeText: {
         fontSize: 24,
         fontWeight: "bold",
-        color: "red",
+        color: COLORS.brown, // Using color from constants
         textAlign: "center",
         marginBottom: 20,
     },
+    buttonContainer: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        width: "100%",
+    },
     button: {
-        backgroundColor: "blue",
+        backgroundColor: COLORS.lightgreen, // Using color from constants
         paddingVertical: 10,
         paddingHorizontal: 20,
         borderRadius: 5,
-        marginBottom: 10,
+        width: "45%", // Adjust button width as needed
+    },
+    leftButton: {
+        marginRight: "auto",
+    },
+    rightButton: {
+        marginLeft: "auto",
     },
     buttonText: {
         fontSize: 16,
         fontWeight: "bold",
-        color: "white",
+        color: COLORS.white, // Using color from constants
+        textAlign: "center",
     },
 });
 
