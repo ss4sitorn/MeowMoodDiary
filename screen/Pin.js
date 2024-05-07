@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { Text, TouchableOpacity, TextInput, View, StyleSheet } from 'react-native'; 
 import { COLORS } from "../constants/colors";
 
-const Login = ({ navigation }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+const Pin = ({ navigation }) => {
+  const [pin, setPin] = useState('');
   const [error, setError] = useState('');
 
-  const handleLogin = async () => {
+  const handleSubmit = async () => {
     try {
-      // Perform login logic here
+      // Perform registration form submission logic here
+      navigation.navigate('Login'); // Navigate to the login screen after registration
     } catch (e) {
       setError(e.message);
     }
@@ -18,30 +18,23 @@ const Login = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.headingContainer}>
-        <Text style={styles.headingText}>Welcome Back!</Text>
-        <Text style={styles.subheadingText}> Happy to see you again </Text>
+        <Text style={styles.headingText}>PIN</Text>
+        <Text style={styles.subheadingText}> </Text>
       </View>
       {error ? <Text>{error}</Text> : null}
       <View style={styles.inputContainer}>
-        <Text style={styles.label}>Email</Text>
+        <Text style={styles.label}> Your favorite 4 digits </Text>
         <TextInput
           style={styles.input}
-          value={email}
-          onChangeText={text => setEmail(text)}
-        />
-      </View>
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>Password</Text>
-        <TextInput
-          style={styles.input}
-          secureTextEntry
-          value={password}
-          onChangeText={text => setPassword(text)}
+          value={pin}
+          onChangeText={text => setPin(text)}
+          keyboardType="numeric"
+          maxLength={4}
         />
       </View>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={handleLogin}>
-          <Text style={styles.buttonText}>Sign In</Text>
+        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+          <Text style={styles.buttonText}> Submit</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -99,8 +92,4 @@ const styles = StyleSheet.create({
   },
 });
 
-Login.navigationOptions = {
-  title: 'Login'
-};
-
-export default Login;
+export default Pin;

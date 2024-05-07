@@ -17,6 +17,9 @@ const Register = ({ navigation }) => {
 
     try {
       // Perform registration logic here
+
+      // Navigate to the PIN creation screen after successful registration
+      navigation.navigate('Pin');
     } catch (e) {
       setError(e.message);
     }
@@ -96,12 +99,9 @@ const styles = StyleSheet.create({
   label: {
     marginBottom: 10,
     fontSize: 16,
-    // fontWeight: 'bold',
     color: COLORS.darkgreen,
   },
   input: {
-    // borderWidth: 1,
-    // borderColor: 'gray',
     borderRadius: 15,
     padding: 5,
     width: '100%',
@@ -125,9 +125,5 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
-
-Register.navigationOptions = {
-  title: 'Register'
-};
 
 export default Register;
