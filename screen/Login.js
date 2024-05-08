@@ -1,7 +1,12 @@
-import React, { useState } from 'react';
-import { Text, TouchableOpacity, TextInput, View, StyleSheet } from 'react-native'; 
+import React, { useState} from 'react';
+import { Text, TouchableOpacity, TextInput, View, StyleSheet, Alert } from 'react-native';
 import { COLORS } from "../constants/colors";
 import styles from "../src/styles/styles";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import firebaseApp from "../src/firebase/config";
+import showAlert from "../util/alert-custom";
+
+const auth = getAuth(firebaseApp);
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -11,8 +16,19 @@ const Login = ({ navigation }) => {
   const handleLogin = async () => {
     try {
       // Perform login logic here
+        // To sign in an existing user
+        signInWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                // The user is signed in
+                const user = userCredential.user;
+                console.log('User signed in: ', user);
+                showAlert('Login success', 'Nice to see you again!');
+            })
+            .catch((error) => {
+                showAlert('Login failed', 'username or password is incorrect');
+            });
     } catch (e) {
-      setError(e.message);5
+      setError(e.message);
     }
   };
 
