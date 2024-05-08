@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Image, TouchableOpacity, Dimensions } from "rea
 import { useNavigation } from "@react-navigation/native";
 import { COLORS } from "../constants/colors";
 import Register from './Register';
+// import styles from "../src/styles/styles";
 
 const { width, height } = Dimensions.get("window");
 
