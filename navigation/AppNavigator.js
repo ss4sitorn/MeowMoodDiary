@@ -6,6 +6,7 @@ import Welcome from "../screen/Welcome";
 import Register from '../screen/Register';
 import Login from '../screen/Login';
 import Pin from '../screen/Pin';
+import Home from '../screen/Home';
 
 
 const Stack = createNativeStackNavigator();
@@ -17,6 +18,7 @@ const AppNavigator = () => {
                 <Stack.Screen name="Register" component={ Register } />
                 <Stack.Screen name="Pin" component={ Pin } />
                 <Stack.Screen name="Login" component={ Login } />
+                <Stack.Screen name="Home" component={ Home } options={{ headerShown: false }}/>
             </Stack.Navigator>
         </NavigationContainer>
     );
