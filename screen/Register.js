@@ -91,6 +91,7 @@ const Register = ({ navigation }) => {
           value={password}
           onChangeText={text => setPassword(text)}
         />
+        <Text style={{ color: 'rgba(128, 128, 128, 0.5)' }}> ** Password must be at least 6 characters long</Text>
       </View>
       <View style={styles.inputContainer}>
         <Text style={styles.label}>Confirm Password</Text>
