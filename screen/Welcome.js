@@ -41,9 +41,7 @@ const Welcome = () => {
                     <Text style={styles.buttonText}>Register</Text>
                 </TouchableOpacity>
             </View>
-            
-                
-            
+
         </View>
     );
 };

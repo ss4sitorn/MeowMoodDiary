@@ -17,10 +17,24 @@ const Register = ({ navigation }) => {
 
 
   const handleRegister = async () => {
+    // Check if all fields are filled
+    if (!username || !email || !password || !confirmPassword) {
+      setError('All fields are required');
+      return;
+    }
+  
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setError('Invalid email format');
+      return;
+    }
+  
     if (password !== confirmPassword) {
       setError('Passwords do not match');
       return;
     }
+  
 
     try {
       // Perform registration logic here
@@ -52,7 +66,7 @@ const Register = ({ navigation }) => {
         <Text style={styles.headingText}>Hello!</Text>
         <Text style={styles.subheadingText}>May I get to know you?</Text>
       </View>
-      {error ? <Text>{error}</Text> : null}
+      <Text style={styles.errorText}>{error}</Text>
       <View style={styles.inputContainer}>
         <Text style={styles.label}>Username</Text>
         <TextInput
@@ -95,56 +109,5 @@ const Register = ({ navigation }) => {
     </View>
   );
 };
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     paddingHorizontal: 20,
-//     paddingTop: 20, 
-//     backgroundColor: COLORS.cream,
-//   },
-//   headingContainer: {
-//     marginBottom: 20,
-//   },
-//   headingText: {
-//     fontSize: 24,
-//     fontWeight: 'bold',
-//   },
-//   subheadingText: {
-//     fontSize: 16,
-//   },
-//   inputContainer: {
-//     marginBottom: 20,
-//     width: '100%',
-//   },
-//   label: {
-//     marginBottom: 10,
-//     fontSize: 16,
-//     color: COLORS.darkgreen,
-//   },
-//   input: {
-//     borderRadius: 15,
-//     padding: 5,
-//     width: '100%',
-//     backgroundColor: COLORS.white,
-//   },
-//   buttonContainer: {
-//     width: '100%',
-//     alignItems: 'flex-end',
-//   },
-//   button: {
-//     backgroundColor: COLORS.lightgreen,
-//     paddingVertical: 10,
-//     paddingHorizontal: 20,
-//     borderRadius: 5,
-//     width: '40%',
-//   },
-//   buttonText: {
-//     fontSize: 16,
-//     fontWeight: 'bold',
-//     color: COLORS.white,
-//     textAlign: 'center',
-//   },
-// });
 
 export default Register;

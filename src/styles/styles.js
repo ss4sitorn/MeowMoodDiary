@@ -50,6 +50,16 @@ const styles = StyleSheet.create({
     color: COLORS.white,
     textAlign: 'center',
   },
+    errorText: {
+      color: 'red',
+      marginBottom: 10,
+      fontSize: 16,
+    },
+    forgotPasswordText: {
+      color: 'COLORS.darkgreen',
+      marginTop: 15,
+      textAlign: 'center',
+    },
 });
 
 export default styles;

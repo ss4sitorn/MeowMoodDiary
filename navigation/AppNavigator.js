@@ -9,7 +9,7 @@ import Pin from '../screen/Pin';
 import Home from '../screen/Home';
 import MoodCheck from '../screen/MoodCheck';
 import ReasonTracker from '../screen/ReasonTracker';
-
+import ForgotPassword from '../screen/ForgotPassword';
 
 const Stack = createNativeStackNavigator();
 const AppNavigator = () => {
@@ -23,6 +23,7 @@ const AppNavigator = () => {
                 <Stack.Screen name="Home" component={ Home } options={{ headerShown: false }}/>
                 <Stack.Screen name="MoodTracker" component={ MoodCheck }   />
                 <Stack.Screen name="What is the reason ?" component={ ReasonTracker } />
+                <Stack.Screen name="ForgotPassword" component= { ForgotPassword } />
             </Stack.Navigator>
         </NavigationContainer>
     );
