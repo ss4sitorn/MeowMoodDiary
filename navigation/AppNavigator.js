@@ -13,7 +13,7 @@ const AppNavigator = () => {
     return (
         <NavigationContainer>
             <Stack.Navigator>
-                <Stack.Screen name="Welcome" component={ Welcome } />
+                <Stack.Screen name="Welcome" component={ Welcome } options={{headerShown:false}} />
                 <Stack.Screen name="Register" component={ Register } />
                 <Stack.Screen name="Pin" component={ Pin } />
                 <Stack.Screen name="Login" component={ Login } />

@@ -12,7 +12,7 @@ const Login = ({ navigation }) => {
     try {
       // Perform login logic here
     } catch (e) {
-      setError(e.message);
+      setError(e.message);5
     }
   };
 
@@ -100,8 +100,8 @@ const Login = ({ navigation }) => {
 //   },
 // });
 
-Login.navigationOptions = {
-  title: 'Login'
-};
+// Login.navigationOptions = {
+//   title: 'Login'
+// };
 
 export default Login;
