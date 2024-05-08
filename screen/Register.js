@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
-import { Text, TouchableOpacity, TextInput, View, StyleSheet } from 'react-native'; 
+import { Text, TouchableOpacity, TextInput, View, StyleSheet } from 'react-native';
 import { COLORS } from "../constants/colors";
 import styles from "../src/styles/styles";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import firebaseApp from "../src/firebase/config";
+import showAlert from "../util/alert-custom";
+
+const auth = getAuth(firebaseApp);
 
 const Register = ({ navigation }) => {
   const [username, setUsername] = useState('');
@@ -9,6 +14,7 @@ const Register = ({ navigation }) => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
+
 
   const handleRegister = async () => {
     if (password !== confirmPassword) {
@@ -18,9 +24,23 @@ const Register = ({ navigation }) => {
 
     try {
       // Perform registration logic here
-
+        // To create a new user
+        createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                // The user has been registered
+                const user = userCredential.user;
+                console.log('User registered: ', user);
+                showAlert('Register success', user.email);
+                navigation.navigate('Pin' , {
+                    uid: user.uid,
+                    email: email,username: username
+                });
+            })
+            .catch((error) => {
+                showAlert('Register failed', error.toString());
+            });
       // Navigate to the PIN creation screen after successful registration
-      navigation.navigate('Pin');
+
     } catch (e) {
       setError(e.message);
     }
