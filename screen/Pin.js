@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Text, TouchableOpacity, TextInput, View, StyleSheet } from 'react-native'; 
 import { COLORS } from "../constants/colors";
-import styles from '../src/styles/styles';
+import styles from "../src/styles/styles";
 
 const Pin = ({ navigation }) => {
   const [pin, setPin] = useState('');
@@ -10,7 +10,7 @@ const Pin = ({ navigation }) => {
   const handleSubmit = async () => {
     try {
       // Perform registration form submission logic here
-      navigation.navigate('Login'); // Navigate to the login screen after registration
+      navigation.navigate('Login')
     } catch (e) {
       setError(e.message);
     }
@@ -24,14 +24,8 @@ const Pin = ({ navigation }) => {
       </View>
       {error ? <Text>{error}</Text> : null}
       <View style={styles.inputContainer}>
-        <Text style={styles.label}> Your favorite 4 digits </Text>
-        <TextInput
-          style={styles.input}
-          value={pin}
-          onChangeText={text => setPin(text)}
-          keyboardType="numeric"
-          maxLength={4}
-        />
+        <Text style={[styles.label, {align: "center"}]}> Your favorite 4 digits </Text>
+        <PinInput />
       </View>
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button} onPress={handleSubmit}>
@@ -42,55 +36,49 @@ const Pin = ({ navigation }) => {
   );
 };
 
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     paddingHorizontal: 20,
-//     paddingTop: 20, 
-//     backgroundColor: COLORS.cream,
-//   },
-//   headingContainer: {
-//     marginBottom: 20,
-//   },
-//   headingText: {
-//     fontSize: 24,
-//     fontWeight: 'bold',
-//   },
-//   subheadingText: {
-//     fontSize: 16,
-//   },
-//   inputContainer: {
-//     marginBottom: 20,
-//     width: '100%',
-//   },
-//   label: {
-//     marginBottom: 10,
-//     fontSize: 16,
-//     color: COLORS.darkgreen,
-//   },
-//   input: {
-//     borderRadius: 15,
-//     padding: 5,
-//     width: '100%',
-//     backgroundColor: COLORS.white,
-//   },
-//   buttonContainer: {
-//     width: '100%',
-//     alignItems: 'flex-end',
-//   },
-//   button: {
-//     backgroundColor: COLORS.lightgreen,
-//     paddingVertical: 10,
-//     paddingHorizontal: 20,
-//     borderRadius: 5,
-//     width: '40%',
-//   },
-//   buttonText: {
-//     fontSize: 16,
-//     fontWeight: 'bold',
-//     color: COLORS.white,
-//     textAlign: 'center',
-//   },
-// });
+const PinInput = () => {
+  const [pin, setPin] = useState(['', '', '', '']);
+  const inputRefs = useRef([]);
+
+  const handleTextChange = (text, index) => {
+    const newPin = [...pin];
+    newPin[index] = text;
+    setPin(newPin);
+
+    if (text && index < 3) {
+      inputRefs.current[index + 1].focus();
+    }
+  };
+
+  return (
+    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+      {pin.map((value, index) => (
+        <TextInput
+          key={index}
+          ref={ref => inputRefs.current[index] = ref}
+          style={pinStyles.input}
+          value={value}
+          onChangeText={text => handleTextChange(text, index)}
+          keyboardType="numeric"
+          maxLength={1}
+        />
+      ))}
+    </View>
+  );
+}
+
+const pinStyles = StyleSheet.create({
+  input: {
+    borderRadius: 15,
+    padding: 5,
+    width: '15%',
+    backgroundColor: COLORS.white,
+    borderColor: COLORS.darkgreen,
+    borderWidth: 1,
+    margin: 5,
+    textAlign: 'center',
+  },
+});
+
 
 export default Pin;
