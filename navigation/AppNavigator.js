@@ -7,6 +7,8 @@ import Register from '../screen/Register';
 import Login from '../screen/Login';
 import Pin from '../screen/Pin';
 import Home from '../screen/Home';
+import MoodCheck from '../screen/MoodCheck';
+import ReasonTracker from '../screen/ReasonTracker';
 
 
 const Stack = createNativeStackNavigator();
@@ -19,6 +21,8 @@ const AppNavigator = () => {
                 <Stack.Screen name="Pin" component={ Pin } />
                 <Stack.Screen name="Login" component={ Login } />
                 <Stack.Screen name="Home" component={ Home } options={{ headerShown: false }}/>
+                <Stack.Screen name="MoodTracker" component={ MoodCheck }   />
+                <Stack.Screen name="What is the reason ?" component={ ReasonTracker } />
             </Stack.Navigator>
         </NavigationContainer>
     );
