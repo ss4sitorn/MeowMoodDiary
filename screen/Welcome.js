@@ -11,11 +11,6 @@ const { width, height } = Dimensions.get("window");
 const Welcome = () => {
     const navigation = useNavigation();
 
-    const handleGoHome = () => {
-        // Navigate to Home screen
-        navigation.navigate("Home");
-    };
-
     const handleRegister = () => {
         // Navigate to Register screen
         navigation.navigate("Register");
@@ -28,9 +23,7 @@ const Welcome = () => {
 
     return (
         <View style={styles.container}>
-            <Pressable onPress={handleGoHome}> 
             <Image source={require("../assets/logo.png")} style={styles.logo} />
-            </Pressable>
             <Text style={styles.welcomeText}> Meow Mood diary</Text>   
             <View style={styles.buttonContainer}>
                 <TouchableOpacity style={styles.button} onPress={handleLogin}>
