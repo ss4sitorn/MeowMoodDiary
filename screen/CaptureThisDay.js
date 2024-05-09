@@ -18,7 +18,13 @@ const CaptureThisDay = () => {
   });
 
   const selectMood = () => {
-    alert("Select mood");
+    //alert("Select mood");
+    navigation.navigate("MoodTracker");
+  };
+
+  const selectReason = () => {
+    //alert("Select Reason");
+    navigation.navigate("Reason");
   };
 
   const handleSubmit = () => {
@@ -56,7 +62,7 @@ const CaptureThisDay = () => {
         <Text style={styles.reasonText}>Reason</Text>
       </View>
       <View style={styles.imageContainer}>
-        <TouchableOpacity onPress={selectMood}>
+        <TouchableOpacity onPress={selectReason}>
           <Image
             source={require("../assets/Stress reason icon/r01.png")}
             style={styles.image}
