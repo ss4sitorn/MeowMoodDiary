@@ -11,6 +11,7 @@ import MoodCheck from '../screen/MoodCheck';
 import ReasonTracker from '../screen/ReasonTracker';
 import ForgotPassword from '../screen/ForgotPassword';
 import Assessment from "../screen/Assessment";
+import CaptureThisDay from "../screen/CaptureThisDay";
 
 const Stack = createNativeStackNavigator();
 const AppNavigator = () => {
@@ -26,6 +27,7 @@ const AppNavigator = () => {
                 <Stack.Screen name="What is the reason ?" component={ ReasonTracker } />
                 <Stack.Screen name="ForgotPassword" component= { ForgotPassword } />
                 <Stack.Screen name="Assessment" component={ Assessment } options={{headerShown:false}} />
+                <Stack.Screen name="CaptureThisDay" component={ CaptureThisDay } options={{headerShown:false}} />
             </Stack.Navigator>
         </NavigationContainer>
     );
