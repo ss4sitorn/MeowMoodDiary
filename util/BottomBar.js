@@ -7,7 +7,7 @@ import { COLORS } from '../constants/colors';
 const BottomNavBar = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => navigation.navigate('')}>
+      <TouchableOpacity onPress={() => navigation.navigate('Home')}>
         <Icon name="calendar" size={35} color={COLORS.darkgreen} />
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate('CardOTD')}>

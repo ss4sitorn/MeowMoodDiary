@@ -42,8 +42,10 @@ const Home = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "flex-start",
+    alignItems: "center",
+    paddingTop: "10%",
+    backgroundColor: "cream",
   },
   contentContainer: {
     flex: 1, // Take remaining space
@@ -55,7 +57,11 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 30,
-    color: COLORS.lightgreen,
+    fontWeight: "bold",
+    color: COLORS.darkgreen,
+    marginBottom: 20,
+    marginLeft: 5,
+
   },
   buttonContainer: {
     flexDirection: "row",
