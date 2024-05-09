@@ -2,20 +2,29 @@ import React from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity, Dimensions  } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import { COLORS } from "../constants/colors";
-
+import Icon from "react-native-vector-icons/Ionicons";
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
  
 const ReasonTracker = () => {
     const navigation = useNavigation();
 
+    const handleBackPress = () => {
+        navigation.navigate("MoodTracker");
+    };
+
     const reasonrecord = () => {
         // const mood = somethingIclicked;
-        // navigation.navigate("Reason");
+        navigation.navigate("CaptureThisDay");
     };
 
     return (
-        <View >
+    <View>
+      <View style={styles.backButtonContainer}>
+        <TouchableOpacity onPress={handleBackPress}>
+          <Icon name="arrow-back" size={30} color="#000" />
+        </TouchableOpacity>
+      </View>
         <Text style={styles.header} >What is the reason ?</Text>
         <View style={styles.tableContainer}>
             <View style={styles.row}>
@@ -95,7 +104,13 @@ const ReasonTracker = () => {
 
 };
 const styles = StyleSheet.create({
-   
+    container: {
+        flex: 1,
+        justifyContent: "flex-start",
+        alignItems: "center",
+        paddingTop: "20%",
+        backgroundColor: "cream",
+      },
     header: {
         fontSize: windowWidth * 0.07, // 10% of screen width
         fontWeight: "bold",
@@ -103,13 +118,6 @@ const styles = StyleSheet.create({
         textAlign: "center",
         // marginBottom: windowHeight * 0.02, // 2% of screen height
         marginTop: windowHeight * 0.01, // 2% of screen height
-    },
-
-
-    container: {
-        flex: 1,
-        padding : 20,
-        backgroundColor: COLORS.white,
     },
     row: {
         flexDirection: "row",

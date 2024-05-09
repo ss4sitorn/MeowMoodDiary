@@ -2,12 +2,17 @@ import React from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import { COLORS } from "../constants/colors";
+import Icon from "react-native-vector-icons/Ionicons";
 
 // import styles from "../src/styles/styles";
 
 
 const MoodCheck = () => {
     const navigation = useNavigation();
+
+    const handleBackPress = () => {
+        navigation.navigate("Home");
+      };
 
     const Moodtracking = () => {
         // const mood = somethingIclicked;
@@ -19,7 +24,11 @@ const MoodCheck = () => {
     return (
         // JSX code
         <View >
-
+            <View style={styles.backButtonContainer}>
+            <TouchableOpacity onPress={handleBackPress}>
+                <Icon name="arrow-back" size={30} color="#000" />
+            </TouchableOpacity>
+            </View>
             <Text style={styles.header} >How do you feel today ?</Text>
             <View style={styles.tableContainer}>
                 <View style={styles.row}>

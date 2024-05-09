@@ -2,11 +2,13 @@ import { View, Text, TouchableOpacity, StyleSheet, Image, TextInput } from "reac
 import React, { useState } from "react";
 import Icon from "react-native-vector-icons/Ionicons";
 import { COLORS } from "../constants/colors";
+import { useNavigation } from '@react-navigation/native';
 
 const CaptureThisDay = () => {
-  
+  const navigation = useNavigation();
+
   const handleBackPress = () => {
-    navigation.goBack(); // navigate back to the previous screen
+    navigation.navigate("Reason");
   };
 
   const currentDate = new Date().toLocaleDateString("en-GB", {
