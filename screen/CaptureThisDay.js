@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import Icon from "react-native-vector-icons/Ionicons";
 import { COLORS } from "../constants/colors";
 import { useNavigation } from '@react-navigation/native';
-import BottomBar from "../util/BottomBar";
 
 const CaptureThisDay = () => {
   const navigation = useNavigation();
@@ -76,8 +75,7 @@ const CaptureThisDay = () => {
       <TouchableOpacity style={styles.submit} onPress={handleSubmit}>
         <Text style={styles.submitText}>Submit</Text>
       </TouchableOpacity>
-      
-      <BottomBar navigation={navigation} />
+
     </View>
   );
 };
