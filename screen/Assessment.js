@@ -27,7 +27,7 @@ const Assessment = () => {
     if (currentQuestionIndex < questions.length - 1) {
       handleNextQuestion();
     } else {
-      navigation.navigate("AnotherScreen");
+      navigation.navigate("Reason");
     }
   };
 
