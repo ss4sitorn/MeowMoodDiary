@@ -48,6 +48,9 @@ const styles = StyleSheet.create({
         shadowOpacity: 1,
         shadowRadius: 10,
         elevation: 10,
+        width: '100%',
+        position: 'absolute', 
+        bottom: 0, 
     },
     middleIconContainer: {
       position: 'center',

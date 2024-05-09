@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Icon from "react-native-vector-icons/Ionicons";
 import { COLORS } from "../constants/colors";
 import { useNavigation } from '@react-navigation/native';
+import BottomBar from "../util/BottomBar";
 
 const CaptureThisDay = () => {
   const navigation = useNavigation();
@@ -33,6 +34,7 @@ const CaptureThisDay = () => {
           <Icon name="arrow-back" size={30} color="#000" />
         </TouchableOpacity>
       </View>
+      
       <View style={styles.title}>
         <Text style={styles.titleText}>Capture This Day</Text>
       </View>
@@ -74,6 +76,8 @@ const CaptureThisDay = () => {
       <TouchableOpacity style={styles.submit} onPress={handleSubmit}>
         <Text style={styles.submitText}>Submit</Text>
       </TouchableOpacity>
+      
+      <BottomBar navigation={navigation} />
     </View>
   );
 };
