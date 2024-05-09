@@ -24,8 +24,8 @@ const AppNavigator = () => {
                 <Stack.Screen name="Pin" component={ Pin } />
                 <Stack.Screen name="Login" component={ Login } />
                 <Stack.Screen name="Home" component={ Home } options={{ headerShown: false }}/>
-                <Stack.Screen name="MoodTracker" component={ MoodCheck }   />
-                <Stack.Screen name="Reason" component={ ReasonTracker } />
+                <Stack.Screen name="MoodTracker" component={ MoodCheck } options={{headerShown:false}}   />
+                <Stack.Screen name="Reason" component={ ReasonTracker } options={{headerShown:false}} />
                 <Stack.Screen name="ForgotPassword" component= { ForgotPassword } />
                 <Stack.Screen name="Assessment" component={ Assessment } options={{headerShown:false}} />
                 <Stack.Screen name="CaptureThisDay" component={ CaptureThisDay } options={{headerShown:false}} />
