@@ -1,55 +1,59 @@
 import React from 'react';
-import { View, TouchableOpacity, StyleSheet } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { View, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
+import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { COLORS } from '../constants/colors';
 
-const BottomBar = ({ navigation }) => {
-    return (
-        <View style={styles.container}>
-            <TouchableOpacity
-                style={[styles.tab, { width: 50, height: 50, borderRadius: 25 }]}
-                onPress={() => navigation.navigate('Home')}>
-                <MaterialCommunityIcons name="home" size={30} color="#63BFB2" />
-            </TouchableOpacity>
-            <TouchableOpacity
-                style={[styles.tab, { width: 50, height: 50, borderRadius: 25 }]}
-                onPress={() => navigation.navigate('Analytics')}>
-                <MaterialCommunityIcons name="chart-bar" size={30} color="#63BFB2" />
-            </TouchableOpacity>
-            <TouchableOpacity
-                style={[styles.tab, { width: 50, height: 50, borderRadius: 25}]}
-                onPress={() => navigation.navigate('Notes')}>
-                <MaterialCommunityIcons name="note-text" size={30} color="#63BFB2" />
-            </TouchableOpacity>
-            <TouchableOpacity
-                style={[styles.tab, { width: 50, height: 50, borderRadius: 25 }]}
-                onPress={() => navigation.navigate('Settings')}>
-                <MaterialCommunityIcons name="cog" size={30} color="#63BFB2" />
-            </TouchableOpacity>
-        </View>
-    );
+const BottomNavBar = ({ navigation }) => {
+  return (
+    <View style={styles.container}>
+      <TouchableOpacity onPress={() => navigation.navigate('')}>
+        <Icon name="calendar" size={30} color={COLORS.darkgreen} />
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('')}>
+        <Icons name="cards-playing" size={30} color={COLORS.darkgreen} />
+      </TouchableOpacity>
+      <View style={styles.middleIconContainer}>
+        <TouchableOpacity onPress={() => navigation.navigate('MoodTracker')}>
+        <Image source={require("../assets/Emotion/e12.png")} style={{width: 80, height: 140}} />
+        </TouchableOpacity>
+      </View>
+      <TouchableOpacity onPress={() => navigation.navigate('')}>
+        <Icon name="pie-chart-sharp" size={30} color={COLORS.darkgreen} />
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('')}>
+        <Icon name="settings" size={30} color={COLORS.darkgreen} />
+      </TouchableOpacity>
+    </View>
+  );
 };
-
 
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'center',
-        backgroundColor: '#FFF',
-        borderTopWidth: 1,
-        borderTopColor: '#ccc',
-        paddingTop: 10,
-        borderRadius : 10,
+        backgroundColor: COLORS.white,
+        height: 60,
+        width: '100%',
+        paddingHorizontal: 20,
+        borderTopWidth: 0.5,
+        borderTopRadius: 30,
+        borderTopColor: COLORS.darkgreen,
         shadowColor: "#000",
         shadowOffset: {
-          width: 0,
-          height: 2,
+          width: 1,
+          height: 4,
         },
+        shadowOpacity: 1,
+        shadowRadius: 10,
+        elevation: 10,
     },
-    tab: {
-        flex: 1,
-        alignItems: 'center',
+    middleIconContainer: {
+      position: 'center',
+      top: -25, // Adjust as needed to position the icon outside the container
+      alignItems: 'center',
     },
 });
 
-export default BottomBar;
+export default BottomNavBar;
