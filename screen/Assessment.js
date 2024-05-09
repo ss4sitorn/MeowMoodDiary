@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Button } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { useNavigation } from '@react-navigation/native';
+import { COLORS } from "../constants/colors";
 
 const questions = [
   "1. Do you have sleep problems, such as insomnia or hypersomnia?",
@@ -90,7 +91,7 @@ const Assessment = () => {
               currentQuestionIndex < questions.length - 1 ? "Next" : "Finish"
             }
             onPress={handleButtonPress}
-            color="#D8BFD8"
+            color={COLORS.pink}
           />
         </View>
       </View>
@@ -104,13 +105,13 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
     paddingTop: "20%",
-    backgroundColor: "#FFF8F8",
+    backgroundColor: COLORS.cream,
   },
   title: {
     fontSize: 20,
     fontWeight: "bold",
     paddingBottom: "10%",
-    color: "#80B7A2",
+    color: COLORS.darkgreen,
   },
   question: {
     fontSize: 16,
@@ -127,7 +128,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderWidth: 1,
-    borderColor: "#D8BFD8",
+    borderColor: COLORS.purple,
   },
   buttonText: {
     fontSize: 20,
@@ -135,7 +136,7 @@ const styles = StyleSheet.create({
   },
   message: {
     fontSize: 15,
-    color: "#D8BFD8",
+    color: COLORS.purple,
     fontWeight: "bold",
     paddingTop: "5%",
   },

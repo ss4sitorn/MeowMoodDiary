@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
       fontSize: 16,
     },
     forgotPasswordText: {
-      color: 'COLORS.darkgreen',
+      color: COLORS.darkgreen,
       marginTop: 15,
       textAlign: 'center',
     },

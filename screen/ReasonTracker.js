@@ -1,14 +1,17 @@
 import React from "react";
-import { StyleSheet, Text, View, Image, TouchableOpacity, Dimensions } from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity, Dimensions  } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import { COLORS } from "../constants/colors";
 
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+ 
 const ReasonTracker = () => {
     const navigation = useNavigation();
 
     const reasonrecord = () => {
         // const mood = somethingIclicked;
-        // navigation.navigate('ReasonTracker');
+        // navigation.navigate("Reason");
     };
 
     return (
@@ -92,33 +95,33 @@ const ReasonTracker = () => {
 
 };
 const styles = StyleSheet.create({
+   
+    header: {
+        fontSize: windowWidth * 0.07, // 10% of screen width
+        fontWeight: "bold",
+        color: COLORS.darkgreen,
+        textAlign: "center",
+        // marginBottom: windowHeight * 0.02, // 2% of screen height
+        marginTop: windowHeight * 0.01, // 2% of screen height
+    },
+
+
+    container: {
+        flex: 1,
+        padding : 20,
+        backgroundColor: COLORS.white,
+    },
     row: {
         flexDirection: "row",
         justifyContent: "center",
     },
-    cell: {
-        marginTop : 17,
-        marginLeft: 9,
-        marginRight: 9,
-    
+    cellButton : {
+        alignItems: "center",
+        width: 135,
+        height: 135,
+        flexDirection: "column",
     },
-    header: {
-        fontSize: 36,
-        fontWeight: "bold",
-        color: COLORS.darkgreen,
-        textAlign: "center",
-        marginBottom: 20,
-        marginTop: 15,
-    },
-
-    Mood: {
-        fontSize: 18,
-        color: COLORS.black,
-        textAlign: "center",
-        fontStyle: "italic",
-    
-    },
-
+  
  });
 
 export default ReasonTracker;
