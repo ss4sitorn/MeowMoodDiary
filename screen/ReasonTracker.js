@@ -8,7 +8,7 @@ const ReasonTracker = () => {
 
     const reasonrecord = () => {
         // const mood = somethingIclicked;
-        // navigation.navigate('ReasonTracker');
+        // navigation.navigate("Reason");
     };
 
     return (

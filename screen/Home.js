@@ -3,6 +3,7 @@ import { Calendar } from "react-native-calendars";
 import React from "react";
 import BottomBar from "../util/BottomBar";
 
+import { COLORS } from "../constants/colors";
 
 const Home = ({ navigation }) => {
   const emotionPath = "../assets/Emotion/e01.png";
@@ -47,32 +48,29 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     flex: 1, // Take remaining space
+    backgroundColor: COLORS.cream,
+    padding: 20,
   },
   titleContainer: {
     alignSelf: "flex-start",
   },
   title: {
     fontSize: 30,
-    color: "#80B7A2",
+    color: COLORS.lightgreen,
   },
   buttonContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
     width: "100%",
     marginTop: 20,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
   },
   button: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: COLORS.white,
     padding: 10,
     borderRadius: 5,
     borderWidth: 1,
-    borderColor: "#800080",
-    width: "45%",
+    borderColor: COLORS.purple,
+    width: "45%", // เปลี่ยนเป็น 45%
     alignItems: "center",
     justifyContent: "center",
     margin: 10,
@@ -83,17 +81,17 @@ const styles = StyleSheet.create({
     },
   },
   buttonText: {
-    color: "#800080",
+    color: COLORS.purple,
     fontSize: 16,
   },
   messageBox: {
-    backgroundColor: "#FFF",
-    borderRadius: 10,
+    backgroundColor: COLORS.white,
+    borderRadius: 10, // Rounded corners
     padding: 20,
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 20,
-    borderBlockColor: "#800080",
+    alignItems: "center", // Center everything
+    justifyContent: "center", // Center everything
+    marginTop: 20, // Add some margin at the top
+    borderBlockColor: COLORS.purple,
     borderWidth: 1,
     shadowColor: "#000",
     shadowOffset: {
@@ -107,11 +105,11 @@ const styles = StyleSheet.create({
   },
   date: {
     fontSize: 20,
-    color: "#000",
+    color: "COLORS.black",
   },
   message: {
     fontSize: 16,
-    color: "#000",
+    color: "COLORS.black",
   },
 });
 
