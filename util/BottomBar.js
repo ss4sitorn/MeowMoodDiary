@@ -8,10 +8,10 @@ const BottomNavBar = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={() => navigation.navigate('')}>
-        <Icon name="calendar" size={30} color={COLORS.darkgreen} />
+        <Icon name="calendar" size={35} color={COLORS.darkgreen} />
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate('')}>
-        <Icons name="cards-playing" size={30} color={COLORS.darkgreen} />
+        <Icons name="cards-playing" size={35} color={COLORS.darkgreen} />
       </TouchableOpacity>
       <View style={styles.middleIconContainer}>
         <TouchableOpacity onPress={() => navigation.navigate('MoodTracker')}>
@@ -19,10 +19,10 @@ const BottomNavBar = ({ navigation }) => {
         </TouchableOpacity>
       </View>
       <TouchableOpacity onPress={() => navigation.navigate('')}>
-        <Icon name="pie-chart-sharp" size={30} color={COLORS.darkgreen} />
+        <Icon name="pie-chart-sharp" size={35} color={COLORS.darkgreen} />
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate('')}>
-        <Icon name="settings" size={30} color={COLORS.darkgreen} />
+        <Icon name="settings" size={35} color={COLORS.darkgreen} />
       </TouchableOpacity>
     </View>
   );
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     },
     middleIconContainer: {
       position: 'center',
-      top: -25, // Adjust as needed to position the icon outside the container
+      top: -10, // Adjust as needed to position the icon outside the container
       alignItems: 'center',
     },
 });

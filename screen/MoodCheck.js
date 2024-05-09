@@ -11,7 +11,7 @@ const MoodCheck = () => {
 
     const Moodtracking = () => {
         // const mood = somethingIclicked;
-        navigation.navigate('What is the reason ?');
+        navigation.navigate('Reason');
     };
 
     // rest of the code
