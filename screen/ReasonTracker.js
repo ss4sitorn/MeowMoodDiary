@@ -19,7 +19,7 @@ const ReasonTracker = () => {
     };
 
     return (
-    <View>
+    <View style={styles.container}>
       <View style={styles.backButtonContainer}>
         <TouchableOpacity onPress={handleBackPress}>
           <Icon name="arrow-back" size={30} color="#000" />
@@ -112,12 +112,12 @@ const styles = StyleSheet.create({
         backgroundColor: "cream",
       },
     header: {
-        fontSize: windowWidth * 0.07, // 10% of screen width
+        fontSize:   30, // 10% of screen width
         fontWeight: "bold",
         color: COLORS.darkgreen,
         textAlign: "center",
         // marginBottom: windowHeight * 0.02, // 2% of screen height
-        marginTop: windowHeight * 0.01, // 2% of screen height
+        // marginTop: windowHeight * 0.01, // 2% of screen height
     },
     row: {
         flexDirection: "row",
@@ -129,6 +129,12 @@ const styles = StyleSheet.create({
         height: 135,
         flexDirection: "column",
     },
+    backButtonContainer : {
+        position: "absolute",
+        top: 50,
+        left: 20,
+        zIndex: 1,
+      },
   
  });
 

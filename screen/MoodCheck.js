@@ -23,7 +23,7 @@ const MoodCheck = () => {
 
     return (
         // JSX code
-        <View >
+        <View style={styles.container} >
             <View style={styles.backButtonContainer}>
             <TouchableOpacity onPress={handleBackPress}>
                 <Icon name="arrow-back" size={30} color="#000" />
@@ -125,33 +125,38 @@ const MoodCheck = () => {
 
 
  const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: "flex-start",
+        alignItems: "center",
+        paddingTop: "20%",
+        backgroundColor: "cream",
+      },
+    header: {
+        fontSize:   30, // 10% of screen width
+        fontWeight: "bold",
+        color: COLORS.darkgreen,
+        textAlign: "center",
+        // marginBottom: windowHeight * 0.02, // 2% of screen height
+        // marginTop: windowHeight * 0.01, // 2% of screen height
+    },
     row: {
         flexDirection: "row",
         justifyContent: "center",
     },
-    cell: {
-        marginTop : 17,
-        marginLeft: 9,
-        marginRight: 9,
-    
+    cellButton : {
+        alignItems: "center",
+        width: 135,
+        height: 135,
+        flexDirection: "column",
     },
-    header: {
-        fontSize: 36,
-        fontWeight: "bold",
-        color: COLORS.darkgreen,
-        textAlign: "center",
-        marginBottom: 20,
-        marginTop: 15,
-    },
-
-    Mood: {
-        fontSize: 18,
-        color: COLORS.black,
-        textAlign: "center",
-        fontStyle: "italic",
-    
-    },
-
+    backButtonContainer : {
+        position: "absolute",
+        top: 50,
+        left: 20,
+        zIndex: 1,
+      },
+  
  });
 
 
