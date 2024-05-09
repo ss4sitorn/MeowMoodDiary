@@ -2,7 +2,6 @@ import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 import { Calendar } from "react-native-calendars";
 import React from "react";
 import BottomBar from "../util/BottomBar";
-
 import { COLORS } from "../constants/colors";
 
 const Home = ({ navigation }) => {

@@ -33,7 +33,7 @@ const CaptureThisDay = () => {
           <Icon name="arrow-back" size={30} color="#000" />
         </TouchableOpacity>
       </View>
-      
+
       <View style={styles.title}>
         <Text style={styles.titleText}>Capture This Day</Text>
       </View>
