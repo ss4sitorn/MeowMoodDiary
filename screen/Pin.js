@@ -10,7 +10,7 @@ const Pin = ({ navigation }) => {
   const handleSubmit = async () => {
     try {
       // Perform registration form submission logic here
-      navigation.navigate('Login')
+      navigation.navigate("Home")
     } catch (e) {
       setError(e.message);
     }
