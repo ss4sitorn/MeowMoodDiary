@@ -4,6 +4,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { COLORS } from "../constants/colors";
 
 const CaptureThisDay = () => {
+  
   const handleBackPress = () => {
     navigation.goBack(); // navigate back to the previous screen
   };
