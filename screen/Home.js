@@ -2,10 +2,14 @@ import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 import { Calendar } from "react-native-calendars";
 import React from "react";
 
-const Home = () => {
+const Home = ({ navigation }) => {
   const emotionPath = "../assets/Emotion/e01.png";
   const date = "2022-01-01";
   const message = "This is a message from Firebase";
+
+  const handleStressAssessment = () => {
+    navigation.navigate("Assessment");
+  };
 
   return (
     <View style={styles.container}>
@@ -22,7 +26,7 @@ const Home = () => {
         <TouchableOpacity style={styles.button} onPress={() => {}}>
           <Text style={styles.buttonText}>Weekly Homework</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={() => {}}>
+        <TouchableOpacity style={styles.button} onPress={handleStressAssessment}>
           <Text style={styles.buttonText}>Stress Assessment</Text>
         </TouchableOpacity>
       </View>

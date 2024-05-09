@@ -22,10 +22,11 @@ const Login = ({ navigation }) => {
                 // The user is signed in
                 const user = userCredential.user;
                 console.log('User signed in: ', user);
-                showAlert('Login success', 'Nice to see you again!');
+                // showAlert('Login success', 'Nice to see you again!');
+                navigation.navigate('Home');
             })
             .catch((error) => {
-                showAlert('Login failed', 'username or password is incorrect');
+                showAlert('Login failed', 'email or password is incorrect');
             });
     } catch (e) {
       setError(e.message);

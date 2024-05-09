@@ -1,18 +1,19 @@
-import { View, Text, TouchableOpacity, StyleSheet, Button } from "react-native";
 import React, { useState } from "react";
+import { View, Text, TouchableOpacity, StyleSheet, Button } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
+import { useNavigation } from '@react-navigation/native';
 
 const questions = [
-  "1.Do you have sleep problems, such as insomnia or hypersomnia?",
-  "2.Do you have trouble concentrating or focusing?",
-  "3.Do you feel irritable, agitated, or restless?",
-  "4.Do you feel bored or apathetic?",
-  "5.Do you avoid social interaction or withdraw from social activities?",
+  "1. Do you have sleep problems, such as insomnia or hypersomnia?",
+  "2. Do you have trouble concentrating or focusing?",
+  "3. Do you feel irritable, agitated, or restless?",
+  "4. Do you feel bored or apathetic?",
+  "5. Do you avoid social interaction or withdraw from social activities?",
 ];
 
 const Assessment = () => {
+  const navigation = useNavigation();
   const [message, setMessage] = useState("");
-
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 
   const handleNextQuestion = () => {
@@ -26,8 +27,7 @@ const Assessment = () => {
     if (currentQuestionIndex < questions.length - 1) {
       handleNextQuestion();
     } else {
-      // navigate to another screen
-      navigation.navigate("AnotherScreen"); // replace 'AnotherScreen' with the name of the screen you want to navigate to
+      navigation.navigate("AnotherScreen");
     }
   };
 
@@ -53,7 +53,7 @@ const Assessment = () => {
   };
 
   const handleBackPress = () => {
-    navigation.goBack(); // navigate back to the previous screen
+    navigation.navigate("Home");
   };
 
   return (
