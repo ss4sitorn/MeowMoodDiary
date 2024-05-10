@@ -85,6 +85,10 @@ const CardCreate = () => {
     navigation.navigate("Home");
   };
 
+  const handleCardMood = () => {
+    navigation.navigate("CardMood");
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
@@ -155,7 +159,7 @@ const CardCreate = () => {
       </View>
 
       {/* Mood button */}
-      <TouchableOpacity style={styles.button} onPress={handleMood}>
+      <TouchableOpacity style={styles.button} onPress={handleCardMood}>
         <Text style={styles.buttonText}>Mood Tag</Text>
       </TouchableOpacity>
     </SafeAreaView>
@@ -232,7 +236,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   selectionTitle: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "bold",
     marginRight: 5,
     color: COLORS.darkgreen,
