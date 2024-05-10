@@ -1,22 +1,18 @@
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  Image,
-  TextInput,
-} from "react-native";
+import { View,Text,TouchableOpacity,StyleSheet,Image,TextInput,} from "react-native";
 import React, { Profiler, useState } from "react";
 import Icon from "react-native-vector-icons/Ionicons";
 import Icons from "react-native-vector-icons/MaterialIcons";
 import { COLORS } from "../constants/colors";
 import { useNavigation } from "@react-navigation/native";
 import BottomBar from "../util/BottomBar";
-import { ref } from "firebase/database";
+
 
 const Setting = () => {
   const navigation = useNavigation();
 
+  const handleResetPassword = () => {
+    navigation.navigate("ResetPassword");
+  };
   return (
     <View style={styles.container}>
       <View style={styles.headerzone}>
@@ -40,12 +36,12 @@ const Setting = () => {
 
       <View style={styles.settingContainer}>
         <TouchableOpacity style={styles.settingButton}>
-          <Icon name="keypad-outline" size={40}  style={styles.settingicon} />   
+          <Icon name="keypad-outline" size={40}  style={styles.settingicon} />  
           <Text style={styles.settingText}>    Pin</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.settingButton}>
+        <TouchableOpacity style={styles.settingButton}onPress={handleResetPassword} >
         <Icons name="password" size={40}  style={styles.settingicon} />
-          <Text style={styles.settingText}>    Change Password</Text>
+          <Text style={styles.settingText}>    Change Password </Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.settingButton}>
         <Icon name="log-out-outline" size={40}  style={styles.settingicon} />

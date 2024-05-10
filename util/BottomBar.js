@@ -22,7 +22,7 @@ const BottomNavBar = ({ navigation }) => {
         <Icon name="pie-chart-sharp" size={35} color={COLORS.darkgreen} />
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => navigation.navigate('')}> 
+      <TouchableOpacity onPress={() => navigation.navigate('Setting')}> 
 
         <Icon name="settings" size={35} color={COLORS.darkgreen} />
       </TouchableOpacity>
