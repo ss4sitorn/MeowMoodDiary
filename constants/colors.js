@@ -6,7 +6,7 @@ const COLORS = {
     lightgreen: '#ADD495',
     darkgreen: '#80B7A2',
     purple: '#A19DCA',
-    black: '#000000',
+    black: '#181818',
 };
 
 export { COLORS };
