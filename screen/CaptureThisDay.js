@@ -69,7 +69,7 @@ const CaptureThisDay = () => {
           />
           <Text style={styles.imageText}>social</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.editIconContainer} onPress={selectMood}>
+        <TouchableOpacity style={styles.editIconContainer} onPress={selectReason}>
           <Icon name="pencil" size={25} color="white" />
         </TouchableOpacity>
       </View>

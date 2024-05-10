@@ -21,7 +21,7 @@ const BottomNavBar = ({ navigation }) => {
       <TouchableOpacity onPress={() => navigation.navigate('WeekReport')}>
         <Icon name="pie-chart-sharp" size={35} color={COLORS.darkgreen} />
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('CardCreate')}> 
+      <TouchableOpacity onPress={() => navigation.navigate('Setting')}> 
         <Icon name="settings" size={35} color={COLORS.darkgreen} />
       </TouchableOpacity>
     </View>

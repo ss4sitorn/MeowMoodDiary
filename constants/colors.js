@@ -7,6 +7,7 @@ const COLORS = {
     darkgreen: '#80B7A2',
     purple: '#A19DCA',
     black: '#181818',
+    lightpurple: "rgba(155, 71, 255, 0.05)", // use with 5% opacity
 };
 
 export { COLORS };
