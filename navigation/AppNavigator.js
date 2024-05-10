@@ -14,6 +14,9 @@ import Assessment from "../screen/Assessment";
 import CaptureThisDay from "../screen/CaptureThisDay";
 import WeekReport from "../screen/WeekReport";
 import CardOTD from '../screen/CardOTD';
+import CardCreate from '../screen/CardCreate';
+import CardToday from "../screen/CardToday";
+
 
 const Stack = createNativeStackNavigator();
 const AppNavigator = () => {
@@ -32,7 +35,9 @@ const AppNavigator = () => {
                 <Stack.Screen name="CaptureThisDay" component={ CaptureThisDay } options={{headerShown:false}} />
                 <Stack.Screen name="WeekReport" component={ WeekReport } options={{headerShown:false}} />
                 <Stack.Screen name="CardOTD" component={ CardOTD } options={{headerShown:false}} />
-                {/* <Stack.Screen name="CardCreate" component={ CardCreate } options={{headerShown:false}} /> */}
+                <Stack.Screen name="CardCreate" component={ CardCreate } options={{headerShown:false}} />
+                <Stack.Screen name="CardToday" component={ CardToday } options={{headerShown:false}} />
+
             </Stack.Navigator>
         </NavigationContainer>
     );
