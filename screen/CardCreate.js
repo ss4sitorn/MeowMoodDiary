@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Image, TextInput, SafeAreaView } from "react-native";
 import { COLORS } from "../constants/colors";
 import { useNavigation } from '@react-navigation/native';
@@ -38,13 +38,21 @@ const CardCreate = () => {
     ];
 
     // Function to handle form submission and update the card
-    const handleSubmit = () => {
+    const handleMood = () => {
         // Update default card information based on user input
         setDefaultIcon(icon);
         setDefaultQuote(quote);
         setDefaultSignature(signature);
         setDefaultBgColor(bgColor);
     };
+
+    useEffect(() => {
+        // Update default card information based on user input
+        setDefaultIcon(icon);
+        setDefaultQuote(quote);
+        setDefaultSignature(signature);
+        setDefaultBgColor(bgColor);
+    }, [icon, quote, signature, bgColor]);
 
     // Function to handle color selection
     const handleColorSelection = (selectedColor) => {
@@ -78,61 +86,67 @@ const CardCreate = () => {
 
             {/* Icon selection */}
             <View style={styles.selectionContainer}>
-                <View style={styles.selectionTitleContainer}>
+                <View style={styles.titleInputContainer}>
                     <Text style={styles.selectionTitle}>Select Icon:</Text>
-                </View>
-                <View style={styles.selection}>
-                    {iconList.map((icon, index) => (
-                        <TouchableOpacity
-                            key={index}
-                            style={styles.option}
-                            onPress={() => handleIconSelection(icon)}
-                        >
-                            <Image source={icon} style={styles.thumbnail} />
-                        </TouchableOpacity>
-                    ))}
+                    <View style={styles.selection}>
+                        {iconList.map((icon, index) => (
+                            <TouchableOpacity
+                                key={index}
+                                style={styles.option}
+                                onPress={() => handleIconSelection(icon)}
+                            >
+                                <Image source={icon} style={styles.thumbnail} />
+                            </TouchableOpacity>
+                        ))}
+                    </View>
                 </View>
             </View>
 
             {/* Color selection */}
             <View style={styles.selectionContainer}>
-                <Text style={styles.selectionTitle}>Select Color:</Text>
-                <View style={styles.colorSelection}>
-                    {colorList.map((color, index) => (
-                        <TouchableOpacity
-                            key={index}
-                            style={[styles.colorOption, { backgroundColor: color }]}
-                            onPress={() => handleColorSelection(color)}
-                        />
-                    ))}
+                <View style={styles.titleInputContainer}>
+                    <Text style={styles.selectionTitle}>Select Color:</Text>
+                    <View style={styles.colorSelection}>
+                        {colorList.map((color, index) => (
+                            <TouchableOpacity
+                                key={index}
+                                style={[styles.colorOption, { backgroundColor: color }]}
+                                onPress={() => handleColorSelection(color)}
+                            />
+                        ))}
+                    </View>
                 </View>
             </View>
 
             {/* Quote input */}
             <View style={styles.inputContainer}>
-                <Text style={styles.inputTitle}>Quote:</Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Enter Quote"
-                    onChangeText={(text) => setQuote(text)}
-                    value={quote}
-                />
+                <View style={styles.titleInputContainer}>
+                    <Text style={styles.inputTitle}>Quote:</Text>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Enter Quote"
+                        onChangeText={(text) => setQuote(text)}
+                        value={quote}
+                    />
+                </View>
             </View>
 
             {/* Signature input */}
             <View style={styles.inputContainer}>
-                <Text style={styles.inputTitle}>Signature:</Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Enter Signature"
-                    onChangeText={(text) => setSignature(text)}
-                    value={signature}
-                />
+                <View style={styles.titleInputContainer}>
+                    <Text style={styles.inputTitle}>Signature:</Text>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Enter Signature"
+                        onChangeText={(text) => setSignature(text)}
+                        value={signature}
+                    />
+                </View>
             </View>
 
-            {/* Submit button */}
-            <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-                <Text style={styles.buttonText}>Submit</Text>
+            {/* Mood button */}
+            <TouchableOpacity style={styles.button} onPress={handleMood}>
+                <Text style={styles.buttonText}>Mood Tag</Text>
             </TouchableOpacity>
         </SafeAreaView>
     );
@@ -185,9 +199,10 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         width: "90%",
     },
-    selectionTitleContainer: {
+    titleInputContainer: {
         flexDirection: "row",
         alignItems: "center",
+        marginBottom: 10,
     },
     selectionTitle: {
         fontSize: 18,
@@ -213,13 +228,13 @@ const styles = StyleSheet.create({
     },
     colorSelection: {
         flexDirection: "row",
-        marginBottom: 10,
-        width: "100%",
-        maxHeight: 40,
+        flexWrap: "wrap",
+        justifyContent: "flex-start",
     },
     colorOption: {
         marginRight: 10,
-        width: 20,
+        marginBottom: 10,
+        width: 40,
         height: 20,
         borderRadius: 5,
         borderColor: COLORS.black,
@@ -240,10 +255,12 @@ const styles = StyleSheet.create({
     },
     input: {
         height: 30,
+        width: "70%",
         borderWidth: 1,
         borderColor: COLORS.darkgreen,
         borderRadius: 5,
         paddingHorizontal: 10,
+        color: COLORS.white,
     },
     button: {
         backgroundColor: COLORS.purple,
@@ -252,7 +269,7 @@ const styles = StyleSheet.create({
         width: "40%",
         alignItems: "center",
         alignSelf: "flex-end",
-        marginTop: 10,
+        marginTop: 5,
     },
     buttonText: {
         color: COLORS.white,
