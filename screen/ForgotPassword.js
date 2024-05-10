@@ -18,7 +18,7 @@ const ForgotPassword = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {flex: 1}]}>
       <Text style={styles.label}>Email</Text>
       <TextInput
         style={styles.input}
@@ -26,12 +26,13 @@ const ForgotPassword = () => {
         onChangeText={text => setEmail(text)}
       />
       {error ? <Text style={styles.errorText}>{error}</Text> : null}
-      <TouchableOpacity style={styles.button} onPress={handleResetPassword}>
+      <TouchableOpacity style={[styles.button, { marginTop: 10, alignSelf: 'flex-end' }]} onPress={handleResetPassword}>
         <Text style={styles.buttonText}>Reset Password</Text>
       </TouchableOpacity>
     </View>
   );
 };
+
 
 
 export default ForgotPassword;

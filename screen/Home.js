@@ -44,7 +44,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "flex-start",
     alignItems: "center",
-    paddingTop: "10%",
     backgroundColor: "cream",
   },
   contentContainer: {
@@ -54,6 +53,7 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     alignSelf: "flex-start",
+    padding: 10,
   },
   title: {
     fontSize: 30,

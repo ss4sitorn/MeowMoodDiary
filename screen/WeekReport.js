@@ -1,16 +1,11 @@
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  Image,
-  TextInput,
-} from "react-native";
+import { View,Text,TouchableOpacity,StyleSheet,Image,TextInput,} from "react-native";
 import React, { useState } from "react";
 import Icon from "react-native-vector-icons/Ionicons";
 import { COLORS } from "../constants/colors";
+import { useNavigation } from "@react-navigation/native";
 
 const WeekReport = () => {
+  const navigation = useNavigation();
   const handleBackPress = () => {
     navigation.goBack(); // navigate back to the previous screen
   };

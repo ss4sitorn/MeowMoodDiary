@@ -18,10 +18,10 @@ const BottomNavBar = ({ navigation }) => {
         <Image source={require("../assets/Emotion/e12.png")} style={{width: 80, height: 140}} />
         </TouchableOpacity>
       </View>
-      <TouchableOpacity onPress={() => navigation.navigate('')}>
+      <TouchableOpacity onPress={() => navigation.navigate('WeekReport')}>
         <Icon name="pie-chart-sharp" size={35} color={COLORS.darkgreen} />
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('')}>
+      <TouchableOpacity onPress={() => navigation.navigate('CardCreate')}> 
         <Icon name="settings" size={35} color={COLORS.darkgreen} />
       </TouchableOpacity>
     </View>
