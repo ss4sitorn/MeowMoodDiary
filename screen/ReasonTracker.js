@@ -3,8 +3,8 @@ import { StyleSheet, Text, View, Image, TouchableOpacity, Dimensions  } from "re
 import { useNavigation } from '@react-navigation/native';
 import { COLORS } from "../constants/colors";
 import Icon from "react-native-vector-icons/Ionicons";
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
+import Reason from "../util/Reason";
+import BackButton from "../util/BackButton";
  
 const ReasonTracker = () => {
     const navigation = useNavigation();
@@ -21,81 +21,28 @@ const ReasonTracker = () => {
     return (
     <View style={styles.container}>
       <View style={styles.backButtonContainer}>
-        <TouchableOpacity onPress={handleBackPress}>
-          <Icon name="arrow-back" size={30} color="#000" />
-        </TouchableOpacity>
+        <BackButton onPress={handleBackPress} />
       </View>
         <Text style={styles.header} >What is the reason ?</Text>
         <View style={styles.tableContainer}>
             <View style={styles.row}>
-                <View style={styles.cell}>
-                    <TouchableOpacity style={styles.cellButton} onPress={ reasonrecord }>
-                       <Image source={require("../assets/Stress reason icon/r01.png")} style={{width: 135, height: 135}} />
-                       <Text style={styles.Mood}>social</Text>
-                    </TouchableOpacity>
-                  
-                </View>
-                
-                <View style={styles.cell}>
-                    <TouchableOpacity style={styles.cellButton} onPress={ reasonrecord } >
-                    <Image source={require("../assets/Stress reason icon/r02.png")} style={{width: 135, height: 135}} />
-                    <Text style={styles.Mood}>food</Text>
-                    </TouchableOpacity>
-                </View>
-                <View style={styles.cell}>
-                    <TouchableOpacity style={styles.cellButton} onPress={ reasonrecord } >
-                    <Image source={require("../assets/Stress reason icon/r03.png")} style={{width: 135, height: 135}} />
-                    <Text style={styles.Mood}>baby</Text>
-                    </TouchableOpacity>
-                </View>
+                <Reason imageSource={require("../assets/Stress reason icon/r01.png")} reasonText="social" onPress={reasonrecord} />          
+                <Reason imageSource={require("../assets/Stress reason icon/r02.png")} reasonText="food" onPress={reasonrecord} />
+                <Reason imageSource={require("../assets/Stress reason icon/r03.png")} reasonText="baby" onPress={reasonrecord} />
             </View>
             <View style={styles.row}>
-                <View style={styles.cell}>
-                    <TouchableOpacity style={styles.cellButton}onPress={ reasonrecord } >
-                    <Image source={require("../assets/Stress reason icon/r04.png")} style={{width: 135, height: 135}} />
-                    <Text style={styles.Mood}>excercies</Text>
-                    </TouchableOpacity>
-                </View>
-                <View style={styles.cell}>
-                    <TouchableOpacity style={styles.cellButton} onPress={ reasonrecord } >
-                    <Image source={require("../assets/Stress reason icon/r05.png")} style={{width: 135, height: 135}} />   
-                    <Text style={styles.Mood}>family</Text>
-                    </TouchableOpacity>
-                </View>
-                <View style={styles.cell}>
-                    <TouchableOpacity style={styles.cellButton}onPress={ reasonrecord } >
-                    <Image source={require("../assets/Stress reason icon/r06.png")} style={{width: 135, height: 135}} />    
-                    <Text style={styles.Mood}>work</Text>
-                    </TouchableOpacity>
-                </View>
+                <Reason imageSource={require("../assets/Stress reason icon/r04.png")} reasonText="work" onPress={reasonrecord} />
+                <Reason imageSource={require("../assets/Stress reason icon/r05.png")} reasonText="health" onPress={reasonrecord} />
+                <Reason imageSource={require("../assets/Stress reason icon/r06.png")} reasonText="school" onPress={reasonrecord} />
             </View>
             <View style={styles.row}>
-                <View style={styles.cell}>
-                    <TouchableOpacity style={styles.cellButton} onPress={ reasonrecord }>
-                    <Image source={require("../assets/Stress reason icon/r07.png")} style={{width: 135, height: 135}} />  
-                    <Text style={styles.Mood}>money</Text>
-                    </TouchableOpacity>
-                </View>
-                <View style={styles.cell}>
-                    <TouchableOpacity style={styles.cellButton} onPress={ reasonrecord } >
-                    <Image source={require("../assets/Stress reason icon/r08.png")} style={{width: 135, height: 135}} /> 
-                    <Text style={styles.Mood}>love</Text>
-                    </TouchableOpacity>
-                </View>
-                <View style={styles.cell}>
-                    <TouchableOpacity style={styles.cellButton}onPress={ reasonrecord } >
-                    <Image source={require("../assets/Stress reason icon/r09.png")} style={{width: 135, height: 135}} />
-                    <Text style={styles.Mood}>home</Text>
-                    </TouchableOpacity>
-                </View>
+                <Reason imageSource={require("../assets/Stress reason icon/r07.png")} reasonText="money" onPress={reasonrecord} />
+                <Reason imageSource={require("../assets/Stress reason icon/r08.png")} reasonText="love" onPress={reasonrecord} />
+                <Reason imageSource={require("../assets/Stress reason icon/r09.png")} reasonText="home" onPress={reasonrecord} />
+         
             </View>
             <View style={styles.row}>
-                <View style={styles.cell}>
-                    <TouchableOpacity style={styles.cellButton}onPress={ reasonrecord } >
-                    <Image source={require("../assets/Stress reason icon/r10.png")} style={{width: 135, height: 135}} />
-                    <Text style={styles.Mood}>Friend</Text>
-                    </TouchableOpacity>
-                </View>
+                <Reason imageSource={require("../assets/Stress reason icon/r10.png")} reasonText="friend" onPress={reasonrecord} />
             </View>
         </View> 
         
@@ -116,19 +63,13 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         color: COLORS.darkgreen,
         textAlign: "center",
-        // marginBottom: windowHeight * 0.02, // 2% of screen height
-        // marginTop: windowHeight * 0.01, // 2% of screen height
+
     },
     row: {
         flexDirection: "row",
         justifyContent: "center",
     },
-    cellButton : {
-        alignItems: "center",
-        width: 135,
-        height: 135,
-        flexDirection: "column",
-    },
+
     backButtonContainer : {
         position: "absolute",
         top: 50,
