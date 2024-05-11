@@ -1,64 +1,37 @@
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  Image,
-  TextInput,
-} from "react-native";
-import React, { Profiler, useState } from "react";
-import Icon from "react-native-vector-icons/Ionicons";
-import Icons from "react-native-vector-icons/MaterialIcons";
-import { COLORS } from "../constants/colors";
+import React, { useState } from "react";
+import { View, Text, TouchableOpacity, Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import BottomBar from "../util/BottomBar";
+import PinInput from "../util/PinTemp";
+import styles from "../src/styles/styles";
 
-
-const ResetPin = () => {
+const ResetPin = ({ setResetPin }) => {
   const navigation = useNavigation();
+  const [pin, setPin] = useState('');
 
-  const handleBackPress = () => {
-    navigation.navigate("Setting");
+  const handleSubmit = () => {
+    if (pin.length !== 4) {
+      Alert.alert('Error', 'Please enter a 4-digit PIN');
+      return;
+    }
+
+    try {
+      navigation.navigate("ConfirmPin", { pin });
+    } catch (e) {
+      console.error(e);
+    }
   };
-
-
-  
   
   return (
     <View style={styles.container}>
-      <View style={styles.backButtonContainer}>
-        <TouchableOpacity onPress={handleBackPress}>
-          <Icon name="arrow-back" size={30} color="#000" />
-        </TouchableOpacity>
+      <View style={styles.inputContainer}>
+        <Text style={[styles.label, {align: "center"}]}> Your favorite 4 digits </Text>
+        <PinInput onPinChange={setPin} />
       </View>
-      <Text style={styles.header}>PIN</Text>
-
- 
-
+      <TouchableOpacity style={styles.button} onPress={() => handleSubmit()}>
+        <Text style={styles.buttonText}> Submit </Text>
+      </TouchableOpacity>
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: "flex-start",
-    backgroundColor: COLORS.white,
-    
-},
-  backButtonContainer: {
-    position: "absolute",
-    top: 50,
-    left: 20,
-    zIndex: 1,
-  },
-  header: {
-    fontSize:   30, 
-    fontWeight: "bold",
-    color: COLORS.darkgreen,
-    marginTop: 45,
-    paddingLeft: 80,
-
-},
-});
 export default ResetPin;

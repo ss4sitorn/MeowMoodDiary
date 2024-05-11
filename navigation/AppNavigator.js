@@ -20,6 +20,7 @@ import Setting from "../screen/Setting";
 import ResetPassword from "../screen/ResetPassword";
 import CardMood from "../screen/CardMood";
 import ResetPin from "../screen/ResetPin";
+import ConfirmPin from "../screen/ConfirmPin";
 
 const Stack = createNativeStackNavigator();
 const AppNavigator = () => {
@@ -44,6 +45,7 @@ const AppNavigator = () => {
                 <Stack.Screen name="ResetPassword" component={ ResetPassword } options={{headerShown:false}} />
                 <Stack.Screen name="CardMood" component={ CardMood } options={{headerShown:false}} /> 
                 <Stack.Screen name="ResetPin" component={ ResetPin } options={{headerShown:false}} />
+                <Stack.Screen name="ConfirmPin" component={ ConfirmPin } options={{headerShown:false}} />
             </Stack.Navigator>
         </NavigationContainer>
     );
