@@ -4,6 +4,9 @@ import React from "react";
 import BottomBar from "../util/BottomBar";
 import { COLORS } from "../constants/colors";
 
+import calendarImage1 from "../assets/Emotion/e01.png";
+import calendarImage2 from "../assets/Emotion/e02.png";
+
 const Home = ({ navigation }) => {
   const emotionPath = "../assets/Emotion/e01.png";
   const date = "2022-01-01";
@@ -13,13 +16,30 @@ const Home = ({ navigation }) => {
     navigation.navigate("Assessment");
   };
 
+  const images = {
+    "2024-05-11": calendarImage1,
+    "2024-05-15": calendarImage2,
+  };
+
+  //ฟังค์สำหรับแปะภาพลงในวันที่
+  const renderDay = ({ date, state }) => {
+    const image = images[date.dateString];
+  
+    return (
+      <View>
+        <Text>{date.day}</Text>
+        {image && <Image source={image} style={styles.calendarImage} />}
+      </View>
+    );
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>Calendar</Text>
         </View>
-        <Calendar />
+        <Calendar dayComponent={renderDay} />
         <View style={styles.messageBox}>
           <Image source={require(emotionPath)} style={styles.emoji} />
           <Text style={styles.date}>{date}</Text>
@@ -116,6 +136,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "COLORS.black",
   },
+  calendarImage: {
+    width: 40,
+    height: 40,
+  },
 });
 
 export default Home;
+
+
