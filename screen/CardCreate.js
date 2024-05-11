@@ -159,7 +159,7 @@ const CardCreate = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
     backgroundColor: COLORS.cream,
     flex: 1,
     justifyContent: "flex-start",

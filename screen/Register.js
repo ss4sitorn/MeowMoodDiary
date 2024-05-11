@@ -5,6 +5,7 @@ import styles from "../src/styles/styles";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import firebaseApp from "../src/firebase/config";
 import showAlert from "../util/alert-custom";
+import { getFirestore, doc, setDoc } from "firebase/firestore";
 
 const auth = getAuth(firebaseApp);
 
@@ -14,7 +15,7 @@ const Register = ({ navigation }) => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
-
+  const db = getFirestore(firebaseApp);
 
   const handleRegister = async () => {
     // Check if all fields are filled
@@ -40,15 +41,21 @@ const Register = ({ navigation }) => {
       // Perform registration logic here
         // To create a new user
         createUserWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
+            .then(async (userCredential) => {
                 // The user has been registered
                 const user = userCredential.user;
                 console.log('User registered: ', user);
                 showAlert('Register success', user.email);
-                navigation.navigate('Pin' , {
-                    uid: user.uid,
-                    email: email,username: username
-                });
+                try {
+                  await setDoc(doc(db, "users", user.uid), {
+                    username: username,
+                    email: email
+                  });
+                    showAlert('Success', 'Account created successfully');
+                  navigation.navigate('Login')
+                } catch (e) {
+                  showAlert('Error', e.message)
+                }
             })
             .catch((error) => {
                 showAlert('Register failed', error.toString());

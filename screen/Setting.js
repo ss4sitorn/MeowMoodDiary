@@ -5,9 +5,13 @@ import Icons from "react-native-vector-icons/MaterialIcons";
 import { COLORS } from "../constants/colors";
 import { useNavigation } from "@react-navigation/native";
 import BottomBar from "../util/BottomBar";
+import showConfirmationDialog from "../util/alert-confirm-custom";
+import firebaseApp from "../src/firebase/config";
+import 'firebase/auth';
+import { getAuth } from "firebase/auth";
 
 
-const Setting = () => {
+const Setting = () => {const auth = getAuth(firebaseApp);
   const navigation = useNavigation();
 
   const handleResetPassword = () => {
@@ -16,6 +20,16 @@ const Setting = () => {
   const handleResetPin = () => {
     navigation.navigate("ResetPin");
   };
+  const user = auth.currentUser;
+  //delete user from firebase auth and database
+  const handleDeleteAccount = () => {
+    user.delete().then(() => {
+      console.log("User deleted");
+    }).catch((error) => {
+      console.log(error);
+    });
+  };
+  
   return (
     <View style={styles.container}>
       <View style={styles.headerzone}>
@@ -46,11 +60,13 @@ const Setting = () => {
         <Icons name="password" size={40}  style={styles.settingicon} />
           <Text style={styles.settingText}>    Change Password </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.settingButton}>
-        <Icon name="log-out-outline" size={40}  style={styles.settingicon} />
+        <TouchableOpacity style={styles.settingButton} onPress={() => showConfirmationDialog('Warning', 'Are you sure to log out?',()=>{
+            navigation.popToTop("Login"),()=>{console.log('cancle logout')}}) }>
+          <Icon name="log-out-outline" size={40}  style={styles.settingicon} />
           <Text style={styles.settingText}>    Log Out</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.settingButton}>
+        <TouchableOpacity style={styles.settingButton} onPress={() => showConfirmationDialog('Warning', 'Do you want to delete your account?',()=>{{handleDeleteAccount()}
+            navigation.popToTop("Login"),()=>{console.log('cancle logout')}}) }>
         <Icons name="delete" size={40}  style={styles.settingicon} />
           <Text style={styles.settingText}>    Delete Account</Text>
         </TouchableOpacity>
