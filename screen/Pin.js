@@ -75,7 +75,7 @@ const pinStyles = StyleSheet.create({
     borderRadius: 15,
     padding: 5,
     width: '15%',
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.cream,
     borderColor: COLORS.darkgreen,
     borderWidth: 1,
     margin: 5,

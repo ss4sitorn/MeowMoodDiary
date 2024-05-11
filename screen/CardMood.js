@@ -4,8 +4,9 @@ import { useNavigation } from '@react-navigation/native';
 import { COLORS } from "../constants/colors";
 import Icon from "react-native-vector-icons/Ionicons";
 import CardCreate from "./CardCreate";
+import BackButton from "../util/BackButton";
+import Mood from "../util/Mood";
 
-// import styles from "../src/styles/styles";
 
 
 const CardMood = () => {
@@ -24,94 +25,33 @@ const CardMood = () => {
     return (
         // JSX code
         <View style={styles.container} >
-            <View style={styles.backButtonContainer}>
-            <TouchableOpacity onPress={handleBackPress}>
-                <Icon name="arrow-back" size={30} color="#000" />
-            </TouchableOpacity>
+            <View style={styles.back}>
+                <BackButton onPress={handleBackPress} />
             </View>
+           
             <Text style={styles.header} >Add Mood to Your Card</Text>
             <View style={styles.tableContainer}>
                 <View style={styles.row}>
-                    <View style={styles.cell}>
-                        <TouchableOpacity style={styles.cellButton} onPress={ handleMoodTag }>
-                           <Image source={require("../assets/Emotion/e01.png")} style={{width: 135, height: 135}} />
-                           <Text style={styles.Mood}>Disappointed</Text>
-                        </TouchableOpacity>
-                      
-                    </View>
-                    
-                    <View style={styles.cell}>
-                        <TouchableOpacity style={styles.cellButton} onPress={ handleMoodTag }>
-                        <Image source={require("../assets/Emotion/e02.png")} style={{width: 135, height: 135}} />
-                        <Text style={styles.Mood}>Shy</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={styles.cell}>
-                        <TouchableOpacity style={styles.cellButton} onPress={ handleMoodTag }>
-                        <Image source={require("../assets/Emotion/e03.png")} style={{width: 135, height: 135}} />
-                        <Text style={styles.Mood}>Confused</Text>
-                        </TouchableOpacity>
-                    </View>
+                    <Mood imageSource={require("../assets/Emotion/e01.png")} moodText="Disappointed" onPress={handleMoodTag} />
+                    <Mood imageSource={require("../assets/Emotion/e02.png")} moodText="Shy" onPress={handleMoodTag} />
+                    <Mood imageSource={require("../assets/Emotion/e03.png")} moodText="Confused" onPress={handleMoodTag} />
                 </View>
                 <View style={styles.row}>
-                    <View style={styles.cell}>
-                        <TouchableOpacity style={styles.cellButton} onPress={ handleMoodTag }>
-                        <Image source={require("../assets/Emotion/e12.png")} style={{width: 135, height: 135}} />
-                        <Text style={styles.Mood}>Happy</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={styles.cell}>
-                        <TouchableOpacity style={styles.cellButton} onPress={ handleMoodTag }>
-                        <Image source={require("../assets/Emotion/e04.png")} style={{width: 135, height: 135}} />   
-                        <Text style={styles.Mood}>Sad</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={styles.cell}>
-                        <TouchableOpacity style={styles.cellButton} onPress={ handleMoodTag }>
-                        <Image source={require("../assets/Emotion/e06.png")} style={{width: 135, height: 135}} />    
-                        <Text style={styles.Mood}>Silly</Text>
-                        </TouchableOpacity>
-                    </View>
+                    <Mood imageSource={require("../assets/Emotion/e12.png")} moodText="Happy" onPress={handleMoodTag} />
+                    <Mood imageSource={require("../assets/Emotion/e04.png")} moodText="Sad" onPress={handleMoodTag} />
+                    <Mood imageSource={require("../assets/Emotion/e06.png")} moodText="Silly" onPress={handleMoodTag} />
+
                 </View>
                 <View style={styles.row}>
-                    <View style={styles.cell}>
-                        <TouchableOpacity style={styles.cellButton} onPress={ handleMoodTag }>
-                        <Image source={require("../assets/Emotion/e07.png")} style={{width: 135, height: 135}} />  
-                        <Text style={styles.Mood}>Angry</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={styles.cell}>
-                        <TouchableOpacity style={styles.cellButton} onPress={ handleMoodTag }>
-                        <Image source={require("../assets/Emotion/e13.png")} style={{width: 135, height: 135}} /> 
-                        <Text style={styles.Mood}>Sleepy</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={styles.cell}>
-                        <TouchableOpacity style={styles.cellButton} onPress={ handleMoodTag }>
-                        <Image source={require("../assets/Emotion/e08.png")} style={{width: 135, height: 135}} />
-                        <Text style={styles.Mood}>Jealous</Text>
-                        </TouchableOpacity>
-                    </View>
+                    <Mood imageSource={require("../assets/Emotion/e07.png")} moodText="Angry" onPress={handleMoodTag} />
+                    <Mood imageSource={require("../assets/Emotion/e13.png")} moodText="Sleepy" onPress={handleMoodTag} />
+                    <Mood imageSource={require("../assets/Emotion/e08.png")} moodText="Jealous" onPress={handleMoodTag} />
+     
                 </View>
                 <View style={styles.row}>
-                    <View style={styles.cell}>
-                        <TouchableOpacity style={styles.cellButton} onPress={ handleMoodTag }>
-                        <Image source={require("../assets/Emotion/e09.png")} style={{width: 135, height: 135}} />
-                        <Text style={styles.Mood}>Love</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={styles.cell}>
-                        <TouchableOpacity style={styles.cellButton} onPress={ handleMoodTag }>
-                        <Image source={require("../assets/Emotion/e10.png")} style={{width: 135, height: 135}} />
-                        <Text style={styles.Mood}>Proud</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={styles.cell}>
-                        <TouchableOpacity style={styles.cellButton} onPress={ handleMoodTag }>
-                        <Image source={require("../assets/Emotion/e14.png")} style={{width: 135, height: 135}} />
-                        <Text style={styles.Mood}>Bored</Text>
-                        </TouchableOpacity>
-                    </View>
+                    <Mood imageSource={require("../assets/Emotion/e09.png")} moodText="Love" onPress={handleMoodTag} />
+                    <Mood imageSource={require("../assets/Emotion/e10.png")} moodText="Proud" onPress={handleMoodTag} />
+                    <Mood imageSource={require("../assets/Emotion/e14.png")} moodText="Bored" onPress={handleMoodTag} />
                 </View>
             </View> 
             <TouchableOpacity style={styles.button} onPress={handleCardCreate}>
@@ -128,28 +68,30 @@ const CardMood = () => {
 
  const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        justifyContent: "flex-start",
-        alignItems: "center",
-        paddingTop: "20%",
-        backgroundColor: "cream",
+         flex: 1,
+         justifyContent: "flex-start",
+        alighItems: "center",        
+         paddingTop: "20%",
+         backgroundColor: COLORS.cream,
       },
     header: {
-        fontSize:   30, // 10% of screen width
+        fontSize:   30, 
         fontWeight: "bold",
         color: COLORS.darkgreen,
         textAlign: "center",
+
     },
     row: {
         flexDirection: "row",
         justifyContent: "center",
     },
-    cellButton : {
-        alignItems: "center",
-        width: 135,
-        height: 135,
-        flexDirection: "column",
-    },
+
+    back : {
+        position: "absolute",
+        top: 50,
+        left: 20,
+        zIndex: 1,
+      },
     button: {
         backgroundColor: COLORS.pink,
         padding: 10,
@@ -158,6 +100,7 @@ const CardMood = () => {
         width: "30%", // Adjusted width
         height: 45,
         alignItems: "center",
+        alignSelf: "center",
         justifyContent: "center",
         marginHorizontal: "2%", // Adjusted margin
         shadowColor: "#000",
@@ -174,6 +117,7 @@ const CardMood = () => {
     tableContainer: {
         marginTop: 20, 
     },
+
  });
 
 export default CardMood;

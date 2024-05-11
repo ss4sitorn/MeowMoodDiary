@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Text, TouchableOpacity, TextInput, View, StyleSheet } from 'react-native'; 
-import styles from "../src/styles/styles";
+import { COLORS } from '../constants/colors';
 import Icon from "react-native-vector-icons/Ionicons";
-
+import BackButton from "../util/BackButton";
 const ForgotPassword = ({ navigation }) => {
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -23,12 +23,9 @@ const ForgotPassword = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.headingContainer}>
+        <BackButton style={styles.back} onPress={() => handleBackPress()} />
         <Text style={styles.headingText}>Reset Password</Text>
-        <View style={styles.backButtonContainer}>
-            <TouchableOpacity onPress={handleBackPress}>
-                <Icon name="arrow-back" size={30} color="#000" />
-            </TouchableOpacity>
-            </View>
+     
       </View>
       {error ? <Text>{error}</Text> : null}
       <View style={styles.inputContainer}>
@@ -70,5 +67,55 @@ const ForgotPassword = ({ navigation }) => {
 ForgotPassword.navigationOptions = {
   title: 'Forgot Password'
 };
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingHorizontal: 20,
+    paddingTop: 40,
+    backgroundColor: COLORS.cream,
+  },
+  headingContainer: {
+    marginBottom: 20,
+  },
+  headingText: {
+    marginTop: 20,
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: COLORS.darkgreen,
+  },
+
+  inputContainer: {
+    marginBottom: 20,
+    width: '100%',
+  },
+  label: {
+    marginBottom: 10,
+    fontSize: 16,
+    color: COLORS.darkgreen,
+  },
+  input: {
+    borderRadius: 15,
+    padding: 5,
+    width: '100%',
+    backgroundColor: COLORS.white,
+  },
+  buttonContainer: {
+    width: '100%',
+    alignItems: 'flex-end',
+  },
+  button: {
+    backgroundColor: COLORS.lightgreen,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+    width: '40%',
+  },
+  buttonText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: COLORS.white,
+    textAlign: 'center',
+  },
+});
 
 export default ForgotPassword;

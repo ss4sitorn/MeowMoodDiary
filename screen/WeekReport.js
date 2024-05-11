@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Icon from "react-native-vector-icons/Ionicons";
 import { COLORS } from "../constants/colors";
 import { useNavigation } from "@react-navigation/native";
+import BackButton from "../util/BackButton";
 
 const WeekReport = () => {
   const navigation = useNavigation();
@@ -19,9 +20,8 @@ const WeekReport = () => {
   return (
     <View style={styles.container}>
       <View style={styles.backButtonContainer}>
-        <TouchableOpacity onPress={handleBackPress}>
-          <Icon name="arrow-back" size={30} color="#000" />
-        </TouchableOpacity>
+        
+        <BackButton onPress={handleBackPress} />
       </View>
       <View style={styles.title}>
         <Text style={styles.titleText}>Week Report</Text>
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
     paddingTop: "20%",
-    backgroundColor: "cream",
+    backgroundColor: COLORS.cream,
   },
   backButtonContainer: {
     position: "absolute",

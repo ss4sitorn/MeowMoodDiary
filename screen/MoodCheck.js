@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { COLORS } from "../constants/colors";
 import Icon from "react-native-vector-icons/Ionicons";
 import Mood from "../util/Mood";
+import BackButton from "../util/BackButton";
 // import styles from "../src/styles/styles";
 
 
@@ -25,9 +26,7 @@ const MoodCheck = () => {
         // JSX code
         <View style={styles.container} >
             <View style={styles.backButtonContainer}>
-            <TouchableOpacity onPress={handleBackPress}>
-                <Icon name="arrow-back" size={30} color="#000" />
-            </TouchableOpacity>
+                <BackButton onPress={handleBackPress} />
             </View>
             <Text style={styles.header} >How do you feel today ?</Text>
             <View style={styles.tableContainer}>
@@ -68,7 +67,7 @@ const MoodCheck = () => {
         justifyContent: "flex-start",
         alignItems: "center",
         paddingTop: "20%",
-        backgroundColor: "cream",
+        backgroundColor: COLORS.cream,
       },
     header: {
         fontSize:   30, // 10% of screen width

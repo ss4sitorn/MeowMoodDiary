@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { TextInput, View, StyleSheet, Text } from 'react-native';
 import { COLORS } from "../constants/colors";
-import styles from "../src/styles/styles";
+
 
 const PinTemp = ({ heading, label, onPinChange }) => {
   const [pin, setPin] = useState(['', '', '', '']);
@@ -33,7 +33,7 @@ const PinTemp = ({ heading, label, onPinChange }) => {
             <TextInput
               key={index}
               ref={ref => inputRefs.current[index] = ref}
-              style={pinStyles.input}
+              style={styles.inputs}
               value={value}
               onChangeText={text => handleTextChange(text, index)}
               keyboardType="numeric"
@@ -47,8 +47,8 @@ const PinTemp = ({ heading, label, onPinChange }) => {
   );
 };
 
-const pinStyles = StyleSheet.create({
-  input: {
+const styles = StyleSheet.create({
+  inputs: {
     borderRadius: 15,
     padding: 5,
     width: '15%',
@@ -58,5 +58,29 @@ const pinStyles = StyleSheet.create({
     margin: 5,
     textAlign: 'center',
   },
+  container: {
+    flex: 1,
+    paddingHorizontal: 20,
+    paddingTop: 20,
+    backgroundColor: COLORS.cream,
+  },
+  headingContainer: {
+    marginBottom: 20,
+  },
+  headingText: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: COLORS.darkgreen,
+  },
+  inputContainer: {
+    marginBottom: 20,
+    width: '100%',
+  },
+  label: {
+    marginBottom: 10,
+    fontSize: 16,
+    color: COLORS.darkgreen,
+  },
+
 });
 export default PinTemp;

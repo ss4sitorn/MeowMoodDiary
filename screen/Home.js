@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "flex-start",
     alignItems: "center",
-    backgroundColor: "cream",
+    backgroundColor: COLORS.cream,
   },
   contentContainer: {
     flex: 1, // Take remaining space

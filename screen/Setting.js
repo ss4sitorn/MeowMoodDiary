@@ -30,7 +30,7 @@ const Setting = () => {
             />
           </TouchableOpacity>
         </View>
-        <Text style={styles.name}>Rithnapa Prasertsee</Text>
+        <Text style={styles.name}> Don't forget to listen Girl Never Dies    </Text>
         <Text style={styles.email}> B6500000@g.sut.ac.th</Text>
       </View>
       <View style={styles.Title}>
@@ -63,7 +63,7 @@ const Setting = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.white,
+    backgroundColor: COLORS.cream,
 
     justifyContent: "flex-start",
     paddingTop: "20%",

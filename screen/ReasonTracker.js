@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
         justifyContent: "flex-start",
         alignItems: "center",
         paddingTop: "20%",
-        backgroundColor: "cream",
+        backgroundColor: COLORS.cream,
       },
     header: {
         fontSize:   30, // 10% of screen width

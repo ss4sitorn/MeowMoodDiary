@@ -3,6 +3,7 @@ import { View,Text,TouchableOpacity,StyleSheet,Image,TextInput,SafeAreaView, Scr
 import { COLORS } from "../constants/colors";
 import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
+import BackButton from "../util/BackButton";
 
 const CardCreate = () => {
   const navigation = useNavigation();
@@ -84,9 +85,7 @@ const CardCreate = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={handleBackPress}>
-          <Icon name="arrow-back" size={30} color={COLORS.black} />
-        </TouchableOpacity>
+        <BackButton onPress={handleBackPress} />
         <Text style={styles.headerText}>Design Your Card</Text>
       </View>
 
@@ -161,7 +160,7 @@ const CardCreate = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.lightpurple,
+    backgroundColor: COLORS.cream,
     flex: 1,
     justifyContent: "flex-start",
     alignItems: "center",
