@@ -19,7 +19,7 @@ import CardToday from "../screen/CardToday";
 import Setting from "../screen/Setting";
 import ResetPassword from "../screen/ResetPassword";
 import CardMood from "../screen/CardMood";
-
+import ResetPin from "../screen/ResetPin";
 
 const Stack = createNativeStackNavigator();
 const AppNavigator = () => {
@@ -43,7 +43,7 @@ const AppNavigator = () => {
                 <Stack.Screen name="Setting" component={ Setting } options={{headerShown:false}} />
                 <Stack.Screen name="ResetPassword" component={ ResetPassword } options={{headerShown:false}} />
                 <Stack.Screen name="CardMood" component={ CardMood } options={{headerShown:false}} /> 
-
+                <Stack.Screen name="ResetPin" component={ ResetPin } options={{headerShown:false}} />
             </Stack.Navigator>
         </NavigationContainer>
     );

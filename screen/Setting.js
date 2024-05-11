@@ -13,6 +13,9 @@ const Setting = () => {
   const handleResetPassword = () => {
     navigation.navigate("ResetPassword");
   };
+  const handleResetPin = () => {
+    navigation.navigate("ResetPin");
+  };
   return (
     <View style={styles.container}>
       <View style={styles.headerzone}>
@@ -35,7 +38,7 @@ const Setting = () => {
       </View>
 
       <View style={styles.settingContainer}>
-        <TouchableOpacity style={styles.settingButton}>
+        <TouchableOpacity style={styles.settingButton} onPress={handleResetPin}>
           <Icon name="keypad-outline" size={40}  style={styles.settingicon} />  
           <Text style={styles.settingText}>    Pin</Text>
         </TouchableOpacity>

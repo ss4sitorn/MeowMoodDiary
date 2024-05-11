@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Text, TouchableOpacity, TextInput, View, StyleSheet } from 'react-native'; 
 import styles from "../src/styles/styles";
-
+import Icon from "react-native-vector-icons/Ionicons";
 const ForgotPassword = ({ navigation }) => {
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -14,12 +14,20 @@ const ForgotPassword = ({ navigation }) => {
     } catch (e) {
       setError(e.message);
     }
-  };
 
+  };
+  const handleBackPress = () => {
+    navigation.navigate("Setting");
+  };
   return (
     <View style={styles.container}>
       <View style={styles.headingContainer}>
         <Text style={styles.headingText}>Reset Password</Text>
+        <View style={styles.backButtonContainer}>
+            <TouchableOpacity onPress={handleBackPress}>
+                <Icon name="arrow-back" size={30} color="#000" />
+            </TouchableOpacity>
+            </View>
       </View>
       {error ? <Text>{error}</Text> : null}
       <View style={styles.inputContainer}>

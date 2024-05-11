@@ -11,9 +11,9 @@ import CardCreate from "./CardCreate";
 const CardMood = () => {
     const navigation = useNavigation();
 
-    // const handleBackPress = () => {
-    //     navigation.navigate("CardCreate");
-    //   };
+    const handleBackPress = () => {
+        navigation.navigate("CardCreate");
+      };
 
         const handleMoodTag = () => {
       };
@@ -24,11 +24,11 @@ const CardMood = () => {
     return (
         // JSX code
         <View style={styles.container} >
-            {/* <View style={styles.backButtonContainer}>
+            <View style={styles.backButtonContainer}>
             <TouchableOpacity onPress={handleBackPress}>
                 <Icon name="arrow-back" size={30} color="#000" />
             </TouchableOpacity>
-            </View> */}
+            </View>
             <Text style={styles.header} >Add Mood to Your Card</Text>
             <View style={styles.tableContainer}>
                 <View style={styles.row}>
@@ -153,10 +153,10 @@ const CardMood = () => {
     button: {
         backgroundColor: COLORS.pink,
         padding: 10,
-        marginTop: 20, // Adjusted margin top
+        marginTop: 70, // Adjusted margin top
         borderRadius: 5,
         width: "30%", // Adjusted width
-        height: 40,
+        height: 45,
         alignItems: "center",
         justifyContent: "center",
         marginHorizontal: "2%", // Adjusted margin
