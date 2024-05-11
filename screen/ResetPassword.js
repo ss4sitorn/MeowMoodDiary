@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Text, TouchableOpacity, TextInput, View, StyleSheet } from 'react-native'; 
 import styles from "../src/styles/styles";
 import Icon from "react-native-vector-icons/Ionicons";
+
 const ForgotPassword = ({ navigation }) => {
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');

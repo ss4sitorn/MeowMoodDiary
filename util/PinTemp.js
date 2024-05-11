@@ -1,8 +1,9 @@
 import React, { useState, useRef } from 'react';
 import { TextInput, View, StyleSheet, Text } from 'react-native';
 import { COLORS } from "../constants/colors";
+import styles from "../src/styles/styles";
 
-const PinTemp = ({ onPinChange }) => {
+const PinTemp = ({ heading, label, onPinChange }) => {
   const [pin, setPin] = useState(['', '', '', '']);
   const inputRefs = useRef([]);
 
@@ -17,24 +18,31 @@ const PinTemp = ({ onPinChange }) => {
       inputRefs.current[index - 1].focus();
     }
 
-    // Notify parent component about PIN change
     onPinChange(newPin.join(''));
   };
 
   return (
-    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-      {pin.map((value, index) => (
-        <TextInput
-          key={index}
-          ref={ref => inputRefs.current[index] = ref}
-          style={pinStyles.input}
-          value={value}
-          onChangeText={text => handleTextChange(text, index)}
-          keyboardType="numeric"
-          maxLength={1}
-          secureTextEntry={true}
-        />
-      ))}
+    <View>
+      <View style={styles.headingContainer}>
+        <Text style={styles.headingText}>{heading}</Text>
+      </View>
+      <View style={styles.inputContainer}>
+        <Text style={[styles.label, {align: "center"}]}>{label}</Text>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+          {pin.map((value, index) => (
+            <TextInput
+              key={index}
+              ref={ref => inputRefs.current[index] = ref}
+              style={pinStyles.input}
+              value={value}
+              onChangeText={text => handleTextChange(text, index)}
+              keyboardType="numeric"
+              maxLength={1}
+              secureTextEntry={true}
+            />
+          ))}
+        </View>
+      </View>
     </View>
   );
 };
@@ -51,5 +59,4 @@ const pinStyles = StyleSheet.create({
     textAlign: 'center',
   },
 });
-
 export default PinTemp;

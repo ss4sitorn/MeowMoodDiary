@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, Alert } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import PinInput from "../util/PinTemp";
+import PinTemp from "../util/PinTemp";
 import styles from "../src/styles/styles";
 
 const ConfirmPin = () => {
@@ -30,13 +30,11 @@ const ConfirmPin = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.headingContainer}>
-        <Text style={styles.headingText}>Confirm PIN Reset</Text>
-      </View>
-      <View style={styles.inputContainer}>
-        <Text style={[styles.label, {align: "center"}]}> Please confirm the new PIN </Text>
-        <PinInput onPinChange={setPin} />
-      </View>
+      <PinTemp
+        heading="PIN"
+        label="Please confirm the new PIN"
+        onPinChange={setPin}
+      />
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button} onPress={handleSubmit}>
           <Text style={styles.buttonText}> Confirm Reset </Text>

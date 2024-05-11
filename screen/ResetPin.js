@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import PinInput from "../util/PinTemp";
+import PinTemp from "../util/PinTemp";
 import styles from "../src/styles/styles";
 
 const ResetPin = ({ setResetPin }) => {
@@ -24,8 +24,11 @@ const ResetPin = ({ setResetPin }) => {
   return (
     <View style={styles.container}>
       <View style={styles.inputContainer}>
-        <Text style={[styles.label, {align: "center"}]}> Your favorite 4 digits </Text>
-        <PinInput onPinChange={setPin} />
+        <PinTemp
+        heading="PIN"
+        label="Your Favorite 4 Digits Number"
+        onPinChange={setPin}
+      />
       </View>
       <TouchableOpacity style={styles.button} onPress={() => handleSubmit()}>
         <Text style={styles.buttonText}> Submit </Text>

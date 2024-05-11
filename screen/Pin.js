@@ -24,7 +24,7 @@ const Pin = ({ navigation }) => {
       </View>
       {error ? <Text>{error}</Text> : null}
       <View style={styles.inputContainer}>
-        <Text style={[styles.label, {align: "center"}]}> Your favorite 4 digits </Text>
+        <Text style={[styles.label, {align: "center"}]}> You favorite 4 digits number </Text>
         <PinInput />
       </View>
       <View style={styles.buttonContainer}>
