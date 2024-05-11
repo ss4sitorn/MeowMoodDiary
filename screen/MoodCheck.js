@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import { COLORS } from "../constants/colors";
 import Icon from "react-native-vector-icons/Ionicons";
-
+import Mood from "../util/Mood";
 // import styles from "../src/styles/styles";
 
 
@@ -32,86 +32,24 @@ const MoodCheck = () => {
             <Text style={styles.header} >How do you feel today ?</Text>
             <View style={styles.tableContainer}>
                 <View style={styles.row}>
-                    <View style={styles.cell}>
-                        <TouchableOpacity style={styles.cellButton} onPress={ Moodtracking }>
-                           <Image source={require("../assets/Emotion/e01.png")} style={{width: 135, height: 135}} />
-                           <Text style={styles.Mood}>Disappointed</Text>
-                        </TouchableOpacity>
-                      
-                    </View>
-                    
-                    <View style={styles.cell}>
-                        <TouchableOpacity style={styles.cellButton} onPress={ Moodtracking } >
-                        <Image source={require("../assets/Emotion/e02.png")} style={{width: 135, height: 135}} />
-                        <Text style={styles.Mood}>Shy</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={styles.cell}>
-                        <TouchableOpacity style={styles.cellButton} onPress={ Moodtracking }>
-                        <Image source={require("../assets/Emotion/e03.png")} style={{width: 135, height: 135}} />
-                        <Text style={styles.Mood}>Confused</Text>
-                        </TouchableOpacity>
-                    </View>
+                <Mood imageSource={require("../assets/Emotion/e01.png")} moodText="Disappointed" onPress={Moodtracking} />                    
+                <Mood imageSource={require("../assets/Emotion/e02.png")} moodText="Shy" onPress={Moodtracking} />
+                <Mood imageSource={require("../assets/Emotion/e03.png")} moodText="Confused" onPress={Moodtracking} />
                 </View>
                 <View style={styles.row}>
-                    <View style={styles.cell}>
-                        <TouchableOpacity style={styles.cellButton} onPress={ Moodtracking }>
-                        <Image source={require("../assets/Emotion/e12.png")} style={{width: 135, height: 135}} />
-                        <Text style={styles.Mood}>Happy</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={styles.cell}>
-                        <TouchableOpacity style={styles.cellButton} onPress={ Moodtracking }>
-                        <Image source={require("../assets/Emotion/e04.png")} style={{width: 135, height: 135}} />   
-                        <Text style={styles.Mood}>Sad</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={styles.cell}>
-                        <TouchableOpacity style={styles.cellButton} onPress={ Moodtracking }>
-                        <Image source={require("../assets/Emotion/e06.png")} style={{width: 135, height: 135}} />    
-                        <Text style={styles.Mood}>Silly</Text>
-                        </TouchableOpacity>
-                    </View>
+                <Mood imageSource={require("../assets/Emotion/e12.png")} moodText="Happy" onPress={Moodtracking} />
+                <Mood imageSource={require("../assets/Emotion/e04.png")} moodText="Sad" onPress={Moodtracking} />     
+                <Mood imageSource={require("../assets/Emotion/e06.png")} moodText="Silly" onPress={Moodtracking} />
                 </View>
                 <View style={styles.row}>
-                    <View style={styles.cell}>
-                        <TouchableOpacity style={styles.cellButton} onPress={ Moodtracking }>
-                        <Image source={require("../assets/Emotion/e07.png")} style={{width: 135, height: 135}} />  
-                        <Text style={styles.Mood}>Angry</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={styles.cell}>
-                        <TouchableOpacity style={styles.cellButton} onPress={ Moodtracking }>
-                        <Image source={require("../assets/Emotion/e13.png")} style={{width: 135, height: 135}} /> 
-                        <Text style={styles.Mood}>Sleepy</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={styles.cell}>
-                        <TouchableOpacity style={styles.cellButton} onPress={ Moodtracking }>
-                        <Image source={require("../assets/Emotion/e08.png")} style={{width: 135, height: 135}} />
-                        <Text style={styles.Mood}>Jealous</Text>
-                        </TouchableOpacity>
-                    </View>
+                <Mood imageSource={require("../assets/Emotion/e07.png")} moodText="Angry" onPress={Moodtracking} />
+                <Mood imageSource={require("../assets/Emotion/e13.png")} moodText="Sleepy" onPress={Moodtracking} />
+                <Mood imageSource={require("../assets/Emotion/e08.png")} moodText="Jealous" onPress={Moodtracking} />    
                 </View>
                 <View style={styles.row}>
-                    <View style={styles.cell}>
-                        <TouchableOpacity style={styles.cellButton} onPress={ Moodtracking }>
-                        <Image source={require("../assets/Emotion/e09.png")} style={{width: 135, height: 135}} />
-                        <Text style={styles.Mood}>Love</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={styles.cell}>
-                        <TouchableOpacity style={styles.cellButton} onPress={ Moodtracking }>
-                        <Image source={require("../assets/Emotion/e10.png")} style={{width: 135, height: 135}} />
-                        <Text style={styles.Mood}>Proud</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={styles.cell}>
-                        <TouchableOpacity style={styles.cellButton} onPress={ Moodtracking }>
-                        <Image source={require("../assets/Emotion/e14.png")} style={{width: 135, height: 135}} />
-                        <Text style={styles.Mood}>Bored</Text>
-                        </TouchableOpacity>
-                    </View>
+                <Mood imageSource={require("../assets/Emotion/e09.png")} moodText="Love" onPress={Moodtracking} />
+                <Mood imageSource={require("../assets/Emotion/e10.png")} moodText="Proud" onPress={Moodtracking} />
+                <Mood imageSource={require("../assets/Emotion/e14.png")} moodText="Bored" onPress={Moodtracking} />
                 </View>
             </View> 
             
@@ -144,12 +82,12 @@ const MoodCheck = () => {
         flexDirection: "row",
         justifyContent: "center",
     },
-    cellButton : {
-        alignItems: "center",
-        width: 135,
-        height: 135,
-        flexDirection: "column",
-    },
+    // Moodbutton : {
+    //     alignItems: "center",
+    //     width: 135,
+    //     height: 135,
+    //     flexDirection: "column",
+    // },
     backButtonContainer : {
         position: "absolute",
         top: 50,
