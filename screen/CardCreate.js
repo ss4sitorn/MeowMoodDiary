@@ -1,13 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  Image,
-  TextInput,
-  SafeAreaView,
-} from "react-native";
+import { View,Text,TouchableOpacity,StyleSheet,Image,TextInput,SafeAreaView, ScrollView } from "react-native";
 import { COLORS } from "../constants/colors";
 import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
