@@ -1,9 +1,12 @@
+import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 import { Calendar } from "react-native-calendars";
-import React from "react";
 import BottomBar from "../util/BottomBar";
 import { COLORS } from "../constants/colors";
-
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import firebaseApp from "../src/firebase/config";
+import showAlert from "../util/alert-custom";
+import { getFirestore, doc, getDoc } from "firebase/firestore";
 import calendarImage1 from "../assets/Emotion/e01.png";
 import calendarImage2 from "../assets/Emotion/e02.png";
 
@@ -11,7 +14,30 @@ const Home = ({ navigation }) => {
   const emotionPath = "../assets/Emotion/e01.png";
   const date = "2022-01-01";
   const message = "This is a message from Firebase";
+  const db = getFirestore(firebaseApp);
+  const [diaryData, setDiaryData] = useState(null);
+  const currentDate = new Date().toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+  async function getdiary() {
+    //get current user
+    const user = getAuth(firebaseApp).currentUser;
+    const docRef = doc(db, "diaries", user.uid+currentDate);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      console.log("Document data:", docSnap.data());
+      setDiaryData(docSnap.data());
+    } else {
+      // doc.data() will be undefined in this case
+      console.log("No such document!");
+    }
+  }
 
+  useEffect(() => {
+    getdiary();
+  }, []);
   const handleStressAssessment = () => {
     navigation.navigate("Assessment");
   };
@@ -41,9 +67,9 @@ const Home = ({ navigation }) => {
         </View>
         <Calendar dayComponent={renderDay} />
         <View style={styles.messageBox}>
-          <Image source={require(emotionPath)} style={styles.emoji} />
-          <Text style={styles.date}>{date}</Text>
-          <Text style={styles.message}>{message}</Text>
+          <Image source={diaryData?.moodImage} style={styles.emoji} />
+          <Text style={styles.date}>{diaryData?.date}</Text>
+          <Text style={styles.message}>{diaryData?.text}</Text>
         </View>
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.button} onPress={() => {}}>
@@ -143,5 +169,3 @@ const styles = StyleSheet.create({
 });
 
 export default Home;
-
-

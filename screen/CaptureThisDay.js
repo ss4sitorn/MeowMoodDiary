@@ -3,9 +3,15 @@ import React, { useState } from "react";
 import Icon from "react-native-vector-icons/Ionicons";
 import { COLORS } from "../constants/colors";
 import { useNavigation } from '@react-navigation/native';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import firebaseApp from "../src/firebase/config";
+import showAlert from "../util/alert-custom";
+import { getFirestore, doc, setDoc } from "firebase/firestore";
 
-const CaptureThisDay = () => {
+const CaptureThisDay = ({route}) => {
   const navigation = useNavigation();
+  const db = getFirestore(firebaseApp);
+  const [textDiary, setTextDiary] = useState('');
 
   const handleBackPress = () => {
     navigation.navigate("Reason");
@@ -29,8 +35,55 @@ const CaptureThisDay = () => {
 
   const handleSubmit = () => {
     // navigate to another screen
-    navigation.navigate("AnotherScreen"); // replace 'AnotherScreen' with the name of the screen you want to navigate to
+    navigation.navigate("Home"); // replace 'AnotherScreen' with the name of the screen you want to navigate to
   };
+
+  // const images = {
+  //   r01: require('../assets/Stress reason icon/r01.png'),
+  //   r02: require('../assets/Stress reason icon/r02.png'),
+  //   r03: require('../assets/Stress reason icon/r03.png'),
+  //   r04: require('../assets/Stress reason icon/r04.png'),
+  //   r05: require('../assets/Stress reason icon/r05.png'),
+  //   r06: require('../assets/Stress reason icon/r06.png'),
+  //   r07: require('../assets/Stress reason icon/r07.png'),
+  //   r08: require('../assets/Stress reason icon/r08.png'),
+  //   r09: require('../assets/Stress reason icon/r09.png'),
+  //   r10: require('../assets/Stress reason icon/r10.png'),
+  // };
+
+  // get the mood and reason from the previous screen
+  // get the mood and reason from the previous screen
+const mood = route.params?.mood;
+const reason = route.params?.reason;
+console.log(mood);
+console.log(reason);
+
+function saveDiary() { 
+  // save the diary to the database
+  // get the current user
+  const user = getAuth(firebaseApp).currentUser;
+  // save the diary to the database
+  const diaryRef = doc(db, "diaries",user.uid + currentDate);
+  setDoc(diaryRef, {
+    mood: mood.moodText,
+    moodImage: mood.imageSource,
+    reason: reason.reasonText,
+    reasonImage: reason.imageSource,
+    text: textDiary,
+    uid: user.uid,
+    date: currentDate,
+  })
+    .then(() => {
+      showAlert("Success", "Diary saved successfully");
+      // navigate to the next screen
+      navigation.navigate("Home"); // replace 'AnotherScreen' with the name of the screen you want to navigate to
+    })
+    .catch((error) => {
+      showAlert("Error", error.message);
+    });
+}
+
+
 
   return (
     <View style={styles.container}>
@@ -49,10 +102,10 @@ const CaptureThisDay = () => {
       <View style={styles.imageContainer}>
         <TouchableOpacity onPress={selectMood}>
           <Image
-            source={require("../assets/Emotion/e01.png")}
+            source={mood.imageSource}
             style={styles.image}
           />
-          <Text style={styles.imageText}>sad</Text>
+          <Text style={styles.imageText}>{mood.moodText}</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.editIconContainer} onPress={selectMood}>
           <Icon name="pencil" size={25} color="white" />
@@ -64,21 +117,18 @@ const CaptureThisDay = () => {
       <View style={styles.imageContainer}>
         <TouchableOpacity onPress={selectReason}>
           <Image
-            source={require("../assets/Stress reason icon/r01.png")}
+            source={reason.imageSource}
             style={styles.image}
           />
-          <Text style={styles.imageText}>social</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.editIconContainer} onPress={selectReason}>
-          <Icon name="pencil" size={25} color="white" />
+          <Text style={styles.imageText}>{reason.reasonText}</Text>
         </TouchableOpacity>
       </View>
       <TextInput
         style={styles.input}
         placeholder="Write your Diary here..."
-        
+        onChangeText={text => setTextDiary(text)}
       />
-      <TouchableOpacity style={styles.submit} onPress={handleSubmit}>
+      <TouchableOpacity style={styles.submit} onPress={saveDiary}>
         <Text style={styles.submitText}>Submit</Text>
       </TouchableOpacity>
 

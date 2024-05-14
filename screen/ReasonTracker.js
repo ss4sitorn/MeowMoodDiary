@@ -15,11 +15,26 @@ const ReasonTracker = ({route}) => {
         navigation.navigate("MoodTracker");
     };
 
+    //map reason with reason img to object
+    const reasonData = [
+        { reasonText: "social", imageSource: require("../assets/Stress reason icon/r01.png") },
+        { reasonText: "food", imageSource: require("../assets/Stress reason icon/r02.png") },
+        { reasonText: "baby", imageSource: require("../assets/Stress reason icon/r03.png") },
+        { reasonText: "work", imageSource: require("../assets/Stress reason icon/r04.png") },
+        { reasonText: "health", imageSource: require("../assets/Stress reason icon/r05.png") },
+        { reasonText: "school", imageSource: require("../assets/Stress reason icon/r06.png") },
+        { reasonText: "money", imageSource: require("../assets/Stress reason icon/r07.png") },
+        { reasonText: "love", imageSource: require("../assets/Stress reason icon/r08.png") },
+        { reasonText: "home", imageSource: require("../assets/Stress reason icon/r09.png") },
+        { reasonText: "friend", imageSource: require("../assets/Stress reason icon/r10.png") },
+    ];
+
 
     const reasonrecord = (resson) => {
         // const mood = somethingIclicked;
-
-        navigation.navigate("CaptureThisDay", { reason: resson }, { mood: mood });
+        const reason = reasonData.find(reason => reason.reasonText === resson);
+        console.log(reason);
+        navigation.navigate("CaptureThisDay", { reason: reason , mood: mood });
     };
 
     return (

@@ -17,23 +17,23 @@ const MoodCheck = () => {
 
     //map mood and img mood to object
     const moodData = [
-        { moodText: "Disappointed", imageSource: "../assets/Emotion/e01.png" },
-        { moodText: "Shy", imageSource: "../assets/Emotion/e02.png" },
-        { moodText: "Confused", imageSource: "../assets/Emotion/e03.png" },
-        { moodText: "Happy", imageSource: "../assets/Emotion/e12.png" },
-        { moodText: "Sad", imageSource: "../assets/Emotion/e04.png" },
-        { moodText: "Silly", imageSource: "../assets/Emotion/e06.png" },
-        { moodText: "Angry", imageSource: "../assets/Emotion/e07.png" },
-        { moodText: "Sleepy", imageSource: "../assets/Emotion/e13.png" },
-        { moodText: "Jealous", imageSource: "../assets/Emotion/e08.png" },
-        { moodText: "Love", imageSource: "../assets/Emotion/e09.png" },
-        { moodText: "Proud", imageSource: "../assets/Emotion/e10.png" },
-        { moodText: "Bored", imageSource: "../assets/Emotion/e14.png" },
+        { moodText: "Disappointed", imageSource: require("../assets/Emotion/e01.png") },
+        { moodText: "Shy", imageSource: require("../assets/Emotion/e02.png") },
+        { moodText: "Confused", imageSource: require("../assets/Emotion/e03.png") },
+        { moodText: "Happy", imageSource: require("../assets/Emotion/e12.png") },
+        { moodText: "Sad", imageSource: require("../assets/Emotion/e04.png") },
+        { moodText: "Silly", imageSource: require("../assets/Emotion/e06.png") },
+        { moodText: "Angry", imageSource: require("../assets/Emotion/e07.png") },
+        { moodText: "Sleepy", imageSource: require("../assets/Emotion/e13.png") },
+        { moodText: "Jealous", imageSource: require("../assets/Emotion/e08.png") },
+        { moodText: "Love", imageSource: require("../assets/Emotion/e09.png") },
+        { moodText: "Proud", imageSource: require("../assets/Emotion/e10.png") },
+        { moodText: "Bored", imageSource: require("../assets/Emotion/e14.png") },
     ];
     const Moodtracking = (moodText) => {
         // const mood = somethingIclicked;
         const mood = moodData.find(mood => mood.moodText === moodText);
-        console.log(mood);
+        
         navigation.navigate('Reason', {mood: mood});
     };
 
