@@ -37,7 +37,11 @@ const Home = ({ navigation }) => {
 
   useEffect(() => {
     getdiary();
-  }, []);
+    const unsubscribe = navigation.addListener('focus', () => {
+      getdiary();
+    });
+    return unsubscribe;
+  }, [navigation]);
   const handleStressAssessment = () => {
     navigation.navigate("Assessment");
   };
