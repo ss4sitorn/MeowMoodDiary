@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Image, SafeAreaView } from "react-native";
-import BottomBar from "../util/BottomBar"; // Import your BottomBar component
+import BottomBar from "../util/BottomBar";
 import { useNavigation } from "@react-navigation/native";
 import { COLORS } from "../constants/colors";
 import Icon from 'react-native-vector-icons/AntDesign';

@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { View,Text,TouchableOpacity,StyleSheet,Image,TextInput,SafeAreaView, ScrollView } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Image, TextInput, SafeAreaView } from "react-native";
 import { COLORS } from "../constants/colors";
 import { useNavigation } from "@react-navigation/native";
-import Icon from "react-native-vector-icons/Ionicons";
 import BackButton from "../util/BackButton";
 
 const CardCreate = () => {
   const navigation = useNavigation();
 
   // State variables to hold default values for the card
-  const [defaultIcon, setDefaultIcon] = useState(
-    require("../assets/Flowers/f01.png")
-  );
+  const [defaultIcon, setDefaultIcon] = useState(require("../assets/Flowers/f01.png"));
   const [defaultQuote, setDefaultQuote] = useState("Default Quote");
   const [defaultSignature, setDefaultSignature] = useState("Default Signature");
   const [defaultBgColor, setDefaultBgColor] = useState(COLORS.lightgreen);
@@ -29,7 +26,6 @@ const CardCreate = () => {
     "#F898A4",
     "#ADD495",
     "#80B7A2",
-    // Add more colors as needed
   ];
 
   // List of available flower icons
@@ -38,10 +34,8 @@ const CardCreate = () => {
     require("../assets/Flowers/f02.png"),
     require("../assets/Flowers/f03.png"),
     require("../assets/Flowers/f04.png"),
-    // Add more icons as needed
   ];
 
-  // Function to handle form submission and update the card
   const handleMood = () => {
     // Update default card information based on user input
     setDefaultIcon(icon);
@@ -58,28 +52,31 @@ const CardCreate = () => {
     setDefaultBgColor(bgColor);
   }, [icon, quote, signature, bgColor]);
 
-  // Function to handle color selection
   const handleColorSelection = (selectedColor) => {
     setBgColor(selectedColor);
   };
 
-  // Function to handle icon selection
   const handleIconSelection = (selectedIcon) => {
     setIcon(selectedIcon);
   };
 
-  // Function to render the circular background for the icon
   const renderIconBackground = () => (
     <View style={styles.iconBackground}>
       <Image source={defaultIcon} style={styles.icon} />
     </View>
   );
+
   const handleBackPress = () => {
     navigation.navigate("Home");
   };
 
   const handleCardMood = () => {
-    navigation.navigate("CardMood");
+    navigation.navigate("CardMood", {
+      icon: icon,
+      quote: quote,
+      signature: signature,
+      bgColor: bgColor,
+    });
   };
 
   return (
@@ -100,11 +97,11 @@ const CardCreate = () => {
       <View style={styles.selectionContainer}>
         <View style={styles.titleInputContainer}>
           <Text style={styles.selectionTitle}>Select Icon :</Text>
-          <View style={styles.iconselection}>
+          <View style={styles.iconSelection}>
             {iconList.map((icon, index) => (
               <TouchableOpacity
                 key={index}
-                style={styles.Iconoption}
+                style={styles.iconOption}
                 onPress={() => handleIconSelection(icon)}
               >
                 <Image source={icon} style={styles.thumbnail} />
@@ -159,7 +156,6 @@ const CardCreate = () => {
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
     backgroundColor: COLORS.cream,
     flex: 1,
     justifyContent: "flex-start",
@@ -168,7 +164,6 @@ const styles = StyleSheet.create({
   },
   header: {
     flexDirection: "row",
-
     justifyContent: "flex-start",
     width: "100%",
     paddingTop: 20,
@@ -207,7 +202,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     top: 45,
   },
-
   quote: {
     top: 75,
     marginBottom: 5,
@@ -215,7 +209,6 @@ const styles = StyleSheet.create({
   signature: {
     top: 75,
     marginBottom: 5,
-    
   },
   selectionContainer: {
     width: "90%",
@@ -232,18 +225,18 @@ const styles = StyleSheet.create({
     marginRight: 5,
     color: COLORS.darkgreen,
   },
-  iconselection: {
+  iconSelection: {
     flexDirection: "row",
     flexWrap: "wrap",
-
   },
   colorSelection: {
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "flex-start",
   },
-  Iconoption: {
-    marginHorizontal: 5,
+  iconOption: {
+    marginHorizontal: 5
+    ,
     width: 50,
     height: 50,
     borderRadius: 5,
@@ -254,7 +247,6 @@ const styles = StyleSheet.create({
     height: "100%",
     borderRadius: 5,
   },
-  
   colorOption: {
     marginHorizontal: 5,
     width: 40,
@@ -267,7 +259,6 @@ const styles = StyleSheet.create({
     },
   },
   inputContainer: {
-    
     width: "90%",
   },
   inputTitle: {
@@ -293,7 +284,7 @@ const styles = StyleSheet.create({
     width: "35%",
     alignItems: "center",
     alignSelf: "flex-end",
-    marginRight:20,
+    marginRight: 20,
     marginTop: 5,
   },
   buttonText: {

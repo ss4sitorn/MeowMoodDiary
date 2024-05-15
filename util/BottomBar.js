@@ -10,7 +10,7 @@ const BottomNavBar = ({ navigation }) => {
       <TouchableOpacity onPress={() => navigation.navigate('Home')}>
         <Icon name="calendar" size={35} color={COLORS.darkgreen} />
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('CardCreate')}>
+      <TouchableOpacity onPress={() => navigation.navigate('CardToday')}>
         <Icons name="cards-playing" size={35} color={COLORS.darkgreen} />
       </TouchableOpacity>
       <View style={styles.middleIconContainer}>
