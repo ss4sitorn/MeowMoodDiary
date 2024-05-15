@@ -6,9 +6,10 @@ import { COLORS } from "../constants/colors";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import firebaseApp from "../src/firebase/config";
 import showAlert from "../util/alert-custom";
-import { getFirestore, doc, getDoc } from "firebase/firestore";
+import { getFirestore, doc, getDoc ,collection ,getDocs ,where ,query} from "firebase/firestore";
 import calendarImage1 from "../assets/Emotion/e01.png";
 import calendarImage2 from "../assets/Emotion/e02.png";
+import { set } from 'firebase/database';
 
 const Home = ({ navigation }) => {
   const emotionPath = "../assets/Emotion/e01.png";
@@ -34,11 +35,39 @@ const Home = ({ navigation }) => {
       console.log("No such document!");
     }
   }
+  const [diary, setDiary] = useState(null);
+  async function getAlldiary() {
+    //get all diary of current user uid = field uid in diary collection
+    const user = getAuth(firebaseApp).currentUser;
+    const diaryRef = collection(db, "diaries");
+    const q = query(diaryRef, where("uid", "==", user.uid));
+    const querySnapshot = await getDocs(q);
+    //map all diary to diaryData
+    let diaryData = [];
+    querySnapshot.forEach((doc) => {
+      diaryData.push(doc.data());
+    });
+    diaryData = diaryData.reduce((acc, diary) => {
+      acc[diary.date] = { moodImage: diary.moodImage, text: diary.text, date: diary.date };
+      return acc;
+    }, {});
+   
+    
+    console.log(diaryData);
+    setDiary(diaryData);
+    
 
+    
+
+  }
+
+  
   useEffect(() => {
     getdiary();
+    getAlldiary();
     const unsubscribe = navigation.addListener('focus', () => {
       getdiary();
+      getAlldiary();
     });
     return unsubscribe;
   }, [navigation]);
@@ -51,16 +80,32 @@ const Home = ({ navigation }) => {
     "2024-05-15": calendarImage2,
   };
 
-  //ฟังค์สำหรับแปะภาพลงในวันที่
+  const handleDatePress = (date) => {
+    // Logic to show diary for the selected date
+    console.log("Selected date:", date);
+    setDiaryData(diary[date]);
+    // You can navigate to a new screen or show a modal with the diary details
+  };
+
   const renderDay = ({ date, state }) => {
-    const image = images[date.dateString];
-  
+    //convert date form 2024-05-15 to 15 May 2024
+    const day = new Date(date.timestamp).toLocaleDateString("en-GB", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    });
+    // Get the image for the selected date
+    const image = diary[day]?.moodImage;
+    
+
     return (
-      <View>
-        <Text>{date.day}</Text>
-        {image && <Image source={image} style={styles.calendarImage} />}
-      </View>
-    );
+      <TouchableOpacity onPress={() => handleDatePress(day)}>
+        <View>
+          <Text>{date.day}</Text>
+          <Image source={image} style={styles.calendarImage} />
+        </View>
+      </TouchableOpacity>
+    ); 
   };
 
   return (
