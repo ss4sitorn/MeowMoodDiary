@@ -75,11 +75,6 @@ const Home = ({ navigation }) => {
     navigation.navigate("Assessment");
   };
 
-  const images = {
-    "2024-05-11": calendarImage1,
-    "2024-05-15": calendarImage2,
-  };
-
   const handleDatePress = (date) => {
     // Logic to show diary for the selected date
     console.log("Selected date:", date);
@@ -87,22 +82,21 @@ const Home = ({ navigation }) => {
     // You can navigate to a new screen or show a modal with the diary details
   };
 
-  const renderDay = ({ date, state }) => {
-    //convert date form 2024-05-15 to 15 May 2024
+  const renderDay = ({ date }) => {
+    // //convert date form 2024-05-15 to 15 May 2024
     const day = new Date(date.timestamp).toLocaleDateString("en-GB", {
       day: "numeric",
       month: "long",
       year: "numeric",
     });
     // Get the image for the selected date
-    const image = diary[day]?.moodImage;
-    
-
+    const image = diary && diary[day]?.moodImage;
+  
     return (
       <TouchableOpacity onPress={() => handleDatePress(day)}>
         <View>
           <Text>{date.day}</Text>
-          <Image source={image} style={styles.calendarImage} />
+          <Image source={image}  style={styles.calendarImage} />
         </View>
       </TouchableOpacity>
     ); 
