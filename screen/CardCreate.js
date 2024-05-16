@@ -1,14 +1,44 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Image, TextInput, SafeAreaView } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Image,
+  TextInput,
+  SafeAreaView,
+} from "react-native";
 import { COLORS } from "../constants/colors";
 import { useNavigation } from "@react-navigation/native";
 import BackButton from "../util/BackButton";
 
 const CardCreate = () => {
   const navigation = useNavigation();
+  // List of available colors
+  const colorList = ["#FFF8F8", "#ECDBC9", "#F898A4", "#ADD495", "#80B7A2"];
 
+  // List of available flower icons
+  const iconList = [
+    {
+      name: "f01",
+      image: require("../assets/Flowers/f01.png"),
+    },
+    {
+      name: "f02",
+      image: require("../assets/Flowers/f02.png"),
+    },
+    {
+      name: "f03",
+      image: require("../assets/Flowers/f03.png"),
+    },
+    {
+      name: "f04",
+      image: require("../assets/Flowers/f04.png"),
+    },
+  ];
   // State variables to hold default values for the card
-  const [defaultIcon, setDefaultIcon] = useState(require("../assets/Flowers/f01.png"));
+  const [defaultIcon, setDefaultIcon] = useState(iconList[0]);
+
   const [defaultQuote, setDefaultQuote] = useState("Default Quote");
   const [defaultSignature, setDefaultSignature] = useState("Default Signature");
   const [defaultBgColor, setDefaultBgColor] = useState(COLORS.lightgreen);
@@ -19,34 +49,18 @@ const CardCreate = () => {
   const [signature, setSignature] = useState(defaultSignature);
   const [bgColor, setBgColor] = useState(defaultBgColor);
 
-  // List of available colors
-  const colorList = [
-    "#FFF8F8",
-    "#ECDBC9",
-    "#F898A4",
-    "#ADD495",
-    "#80B7A2",
-  ];
+  // const handleMood = () => {
+  //   // Update default card information based on user input
+  //   setDefaultIcon(icon);
+  //   setDefaultQuote(quote);
+  //   setDefaultSignature(signature);
+  //   setDefaultBgColor(bgColor);
 
-  // List of available flower icons
-  const iconList = [
-    require("../assets/Flowers/f01.png"),
-    require("../assets/Flowers/f02.png"),
-    require("../assets/Flowers/f03.png"),
-    require("../assets/Flowers/f04.png"),
-  ];
-
-  const handleMood = () => {
-    // Update default card information based on user input
-    setDefaultIcon(icon);
-    setDefaultQuote(quote);
-    setDefaultSignature(signature);
-    setDefaultBgColor(bgColor);
-  };
+  // };
 
   useEffect(() => {
     // Update default card information based on user input
-    setDefaultIcon(icon);
+    setDefaultIcon(icon.image);
     setDefaultQuote(quote);
     setDefaultSignature(signature);
     setDefaultBgColor(bgColor);
@@ -54,17 +68,21 @@ const CardCreate = () => {
 
   const handleColorSelection = (selectedColor) => {
     setBgColor(selectedColor);
+    console.log(selectedColor);
   };
 
   const handleIconSelection = (selectedIcon) => {
     setIcon(selectedIcon);
+    console.log("this default icon ", defaultIcon);
+    console.log("this selectedicon path ", selectedIcon.image);
+    console.log("this selectedicon name ", selectedIcon.name);
   };
 
-  const renderIconBackground = () => (
-    <View style={styles.iconBackground}>
-      <Image source={defaultIcon} style={styles.icon} />
-    </View>
-  );
+  // const renderIconBackground = () => (
+  //   <View style={styles.iconBackground}>
+  //     <Image source={defaultIcon} style={styles.icon} />
+  //   </View>
+  // );
 
   const handleBackPress = () => {
     navigation.navigate("Home");
@@ -72,7 +90,7 @@ const CardCreate = () => {
 
   const handleCardMood = () => {
     navigation.navigate("CardMood", {
-      icon: icon,
+      icon: icon.name,
       quote: quote,
       signature: signature,
       bgColor: bgColor,
@@ -88,7 +106,9 @@ const CardCreate = () => {
 
       {/* Default card preview */}
       <View style={[styles.card, { backgroundColor: defaultBgColor }]}>
-        {renderIconBackground()}
+        <View style={styles.iconBackground}>
+          <Image source={defaultIcon} style={styles.icon} />
+        </View>
         <Text style={styles.quote}>{defaultQuote}</Text>
         <Text style={styles.signature}>{defaultSignature}</Text>
       </View>
@@ -104,7 +124,7 @@ const CardCreate = () => {
                 style={styles.iconOption}
                 onPress={() => handleIconSelection(icon)}
               >
-                <Image source={icon} style={styles.thumbnail} />
+                <Image source={icon.image} style={styles.thumbnail} />
               </TouchableOpacity>
             ))}
           </View>
@@ -235,8 +255,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
   },
   iconOption: {
-    marginHorizontal: 5
-    ,
+    marginHorizontal: 5,
     width: 50,
     height: 50,
     borderRadius: 5,

@@ -22,6 +22,7 @@ import CardMood from "../screen/CardMood";
 import ResetPin from "../screen/ResetPin";
 import ConfirmPin from "../screen/ConfirmPin";
 import Dashboard from "../screen/Dashboard";
+import FavoriteCard from "../screen/FavoriteCard";
 
 const Stack = createNativeStackNavigator();
 const AppNavigator = () => {
@@ -48,6 +49,7 @@ const AppNavigator = () => {
                 <Stack.Screen name="ResetPin" component={ ResetPin } options={{headerShown:false}} />
                 <Stack.Screen name="ConfirmPin" component={ ConfirmPin } options={{headerShown:false}} />
                 <Stack.Screen name="Dashboard" component={ Dashboard } options={{headerShown:false}} />
+                <Stack.Screen name="FavoriteCard" component={ FavoriteCard } options={{headerShown:false}} />
             </Stack.Navigator>
         </NavigationContainer>
     );
