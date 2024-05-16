@@ -13,21 +13,17 @@ const CardToday = () => {
     const [card, setCard] = useState(null);
     const [loading, setLoading] = useState(true);
     const db = getFirestore(firebaseApp);
-    
     const handleAddCard = () => {
         navigation.navigate("CardCreate");
     };
     const handleFindCard = () => {
-
     };
     const handleFavCard = () => {
-
     };
     const handlefavcard = () => {
         navigation.navigate("FavoriteCard");
         // Go to fav card page
     }
-
     async function getCard() {
         const cardCollectionRef = collection(db, "card");
         const cardQuerySnapshot = await getDocs(cardCollectionRef);
@@ -39,11 +35,11 @@ const CardToday = () => {
         const randomCard = cardList[randomIndex];
         console.log(randomCard);
         console.log(randomCard.icon);
-
+        
         setCard(randomCard);
         setLoading(false);
      }
-
+     
       
     //   useEffect(() => {
     //     getCard();
