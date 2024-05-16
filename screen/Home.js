@@ -115,7 +115,7 @@ const Home = ({ navigation }) => {
           <Text style={styles.message}>{diaryData?.text}</Text>
         </View>
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={() => {}}>
+          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('WeeklyHomework')}>
             <Text style={styles.buttonText}>Weekly Homework</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={handleStressAssessment}>

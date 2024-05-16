@@ -23,6 +23,7 @@ import ResetPin from "../screen/ResetPin";
 import ConfirmPin from "../screen/ConfirmPin";
 import Dashboard from "../screen/Dashboard";
 import FavoriteCard from "../screen/FavoriteCard";
+import WeeklyHomework from "../screen/WeeklyHomework";
 
 const Stack = createNativeStackNavigator();
 const AppNavigator = () => {
@@ -50,6 +51,7 @@ const AppNavigator = () => {
                 <Stack.Screen name="ConfirmPin" component={ ConfirmPin } options={{headerShown:false}} />
                 <Stack.Screen name="Dashboard" component={ Dashboard } options={{headerShown:false}} />
                 <Stack.Screen name="FavoriteCard" component={ FavoriteCard } options={{headerShown:false}} />
+                <Stack.Screen name="WeeklyHomework" component={ WeeklyHomework } options={{headerShown:false}} />
             </Stack.Navigator>
         </NavigationContainer>
     );
