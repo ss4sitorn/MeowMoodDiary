@@ -24,11 +24,11 @@ const Card = ({ card }) => {
 };
 const styles = StyleSheet.create({
   card: {
-    width: "65%",
-    height: "55%",
+    width: "70%",
+    height: "100%",
 
     alignItems: "center",
-    justifyContent: "flex-start",
+    // justifyContent: "flex-start",
     borderRadius: 10,
     borderWidth: 1,
     borderColor: COLORS.darkgreen,
@@ -40,10 +40,14 @@ const styles = StyleSheet.create({
   quote: {
     top: 75,
     marginBottom: 5,
+    fontSize: 20,
+    fontStyle: "Bold",
   },
   signature: {
-    top: 75,
+    top: 120,
     marginBottom: 5,
+    fontSize: 15,
+    fontStyle: "italic",
   },
   iconBackground: {
     width: 100,
