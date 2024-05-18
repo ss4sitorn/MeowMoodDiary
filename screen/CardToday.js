@@ -1,34 +1,22 @@
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  Image,
-  SafeAreaView,
-  StatusBar,
-} from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Image, SafeAreaView, StatusBar } from "react-native";
 import BottomBar from "../util/BottomBar";
 import { useNavigation } from "@react-navigation/native";
 import { COLORS } from "../constants/colors";
 import Icon from "react-native-vector-icons/AntDesign";
-import {
-  getFirestore,
-  doc,
-  getDoc,
-  collection,
-  getDocs,
-  where,
-  query,
-} from "firebase/firestore";
+import { getFirestore, doc,getDoc,collection,getDocs,where, query } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import firebaseApp from "../src/firebase/config";
 import Card from "../util/Card";
+import { Accelerometer } from 'expo-sensors';
 
 const CardToday = () => {
   const navigation = useNavigation();
   const [card, setCard] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [data, setData] = useState({ x: 0, y: 0, z: 0 });
+  const [shakeDetected, setShakeDetected] = useState(false);
   const db = getFirestore(firebaseApp);
+  const [allowShake, setAllowShake] = useState(true); // Initialize to true
   const handleAddCard = () => {
     navigation.navigate("CardCreate");
   };
@@ -36,7 +24,6 @@ const CardToday = () => {
   const handleFavCard = () => {};
   const handlefavcard = () => {
     navigation.navigate("FavoriteCard");
-    // Go to fav card page
   };
   async function getCard() {
     const cardCollectionRef = collection(db, "card");
@@ -47,22 +34,48 @@ const CardToday = () => {
     });
     const randomIndex = Math.floor(Math.random() * cardList.length);
     const randomCard = cardList[randomIndex];
-    console.log(randomCard);
-    console.log(randomCard.icon);
-
     setCard(randomCard);
     setLoading(false);
   }
+  const handleData = (data) => {
+    setData(data);
+    if (Math.abs(data.x) + Math.abs(data.y) + Math.abs(data.z) > 2) {
+      setShakeDetected(true);
+    }
+  };
 
-  //   useEffect(() => {
-  //     getCard();
-  //   }, []);
+  const handleFindNew = () => {
+    setAllowShake(true);
+  };
+
+  useEffect(() => {
+    if (shakeDetected && allowShake) {
+      getCard();
+      console.log('Random new card');
+      setShakeDetected(false);
+      setAllowShake(false);
+    }
+  }, [shakeDetected, navigation]);
+
+  useEffect(() => {
+    Accelerometer.setUpdateInterval(400);
+    Accelerometer.addListener(handleData);
+    return () => {
+      Accelerometer.removeAllListeners();
+    };
+
+  // useEffect(() => {
+  //   return () => setShakeDetected(false);
+  // }, 
+
+}, []);
+
+// console.log(card);
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={handlefavcard}>
-          {/* Go to fav card page */}
           <Text style={styles.title}>Card of the Day</Text>
         </TouchableOpacity>
       </View>
@@ -89,6 +102,7 @@ const CardToday = () => {
     </SafeAreaView>
   );
 };
+
 
 const styles = StyleSheet.create({
   container: {

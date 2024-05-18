@@ -22,7 +22,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFF8F8"
       },
-      "permissions": ["android.permissions.INTERNET"]
+      "permissions": ["android.permissions.INTERNET", "accelerometer"]
     },
     "web": {
       "favicon": "./assets/favicon.png"

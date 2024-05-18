@@ -7,7 +7,7 @@ import {
   Dimensions,
   TouchableOpacity,
 } from "react-native";
-import { LineChart } from "react-native-chart-kit";
+//import { LineChart } from "react-native-chart-kit";
 import { COLORS } from "../constants/colors";
 import BottomBar from "../util/BottomBar";
 

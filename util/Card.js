@@ -9,26 +9,31 @@ import {
   SafeAreaView,
 } from "react-native";
 import { COLORS } from "../constants/colors";
+
 const Card = ({ card }) => {
+  const iconList = [
+    require("../assets/Flowers/f01.png"),
+    require("../assets/Flowers/f02.png"),
+    require("../assets/Flowers/f03.png"),
+    require("../assets/Flowers/f04.png"),
+  ];
 
   return (
     <View style={[styles.card, { backgroundColor: card.bgColor }]}>
       <View style={styles.iconBackground}>
-        {/* <Image source={images[card.icon]} style={styles.icon} /> */}
-        <Image source={card.icon} style={styles.icon} />
+        <Image source={iconList[card.icon]} style={styles.icon} />
       </View>
       <Text style={styles.quote}>{card.quote}</Text>
       <Text style={styles.signature}>{card.signature}</Text>
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   card: {
     width: "70%",
     height: "100%",
-
     alignItems: "center",
-    // justifyContent: "flex-start",
     borderRadius: 10,
     borderWidth: 1,
     borderColor: COLORS.darkgreen,
