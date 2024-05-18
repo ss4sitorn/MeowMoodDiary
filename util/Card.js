@@ -9,19 +9,20 @@ import {
   SafeAreaView,
 } from "react-native";
 import { COLORS } from "../constants/colors";
-
 const Card = ({ card }) => {
-  const iconList = [
-    require("../assets/Flowers/f01.png"),
-    require("../assets/Flowers/f02.png"),
-    require("../assets/Flowers/f03.png"),
-    require("../assets/Flowers/f04.png"),
-  ];
+  // your code to display card data
+  const images = {
+    f01: require("../assets/Flowers/f01.png"),
+    f02: require("../assets/Flowers/f02.png"),
+    f03: require("../assets/Flowers/f03.png"),
+    f04: require("../assets/Flowers/f04.png"),
 
+    // add all your images here
+  };
   return (
     <View style={[styles.card, { backgroundColor: card.bgColor }]}>
       <View style={styles.iconBackground}>
-        <Image source={iconList[card.icon]} style={styles.icon} />
+        <Image source={images[card.icon]} style={styles.icon} />
       </View>
       <Text style={styles.quote}>{card.quote}</Text>
       <Text style={styles.signature}>{card.signature}</Text>
