@@ -1,13 +1,14 @@
-import { View, Text, TouchableOpacity, StyleSheet, Image, SafeAreaView, StatusBar } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, StatusBar } from "react-native";
 import BottomBar from "../util/BottomBar";
 import { useNavigation } from "@react-navigation/native";
 import { COLORS } from "../constants/colors";
 import Icon from "react-native-vector-icons/AntDesign";
-import { getFirestore, doc,getDoc,collection,getDocs,where, query } from "firebase/firestore";
+import { getFirestore, collection, getDocs, doc, setDoc, query, orderBy, limit, where } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import firebaseApp from "../src/firebase/config";
 import Card from "../util/Card";
 import { Accelerometer } from 'expo-sensors';
+import { getAuth } from "firebase/auth";
 
 const CardToday = () => {
   const navigation = useNavigation();
@@ -15,37 +16,92 @@ const CardToday = () => {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState({ x: 0, y: 0, z: 0 });
   const [shakeDetected, setShakeDetected] = useState(false);
+  const [allowShake, setAllowShake] = useState(true);
   const db = getFirestore(firebaseApp);
-  const [allowShake, setAllowShake] = useState(true); // Initialize to true
+  const auth = getAuth();
+  const user = auth.currentUser;
+  const currentDate = new Date().toISOString().slice(0, 10);
+
   const handleAddCard = () => {
     navigation.navigate("CardCreate");
   };
-  const handleFindCard = () => {};
-  const handleFavCard = () => {};
-  const handlefavcard = () => {
+
+  const handleFavCard = () => {
     navigation.navigate("FavoriteCard");
   };
+
   async function getCard() {
-    const cardCollectionRef = collection(db, "card");
-    const cardQuerySnapshot = await getDocs(cardCollectionRef);
-    const cardList = [];
-    cardQuerySnapshot.forEach((doc) => {
-      cardList.push(doc.data());
-    });
-    const randomIndex = Math.floor(Math.random() * cardList.length);
-    const randomCard = cardList[randomIndex];
-    setCard(randomCard);
-    setLoading(false);
+    if (!user) {
+      console.error("User not authenticated");
+      return;
+    }
+
+    try {
+      // Fetch the user's latest mood from the diaries collection
+      const diariesQuery = query(
+        collection(db, "diaries"),
+        where("uid", "==", user.uid),
+        orderBy("date", "desc"),
+        limit(1)
+      );
+      const diariesQuerySnapshot = await getDocs(diariesQuery);
+
+      if (diariesQuerySnapshot.empty) {
+        console.log("No diary entries found");
+        setLoading(false);
+        return;
+      }
+
+      const latestDiary = diariesQuerySnapshot.docs[0];
+      const userMood = latestDiary.data().mood;
+
+      // Fetch the cards from the card collection matching the user's mood
+      const cardCollectionRef = collection(db, "card");
+      const cardQuerySnapshot = await getDocs(cardCollectionRef);
+      const cardList = [];
+      cardQuerySnapshot.forEach((doc) => {
+        const cardData = doc.data();
+        if (cardData.mood === userMood) {
+          cardList.push(cardData);
+        }
+      });
+
+      if (cardList.length === 0) {
+        console.log("No cards matching the user's mood found");
+        setLoading(false);
+        return;
+      }
+
+      // Select a random card from the list
+      const randomIndex = Math.floor(Math.random() * cardList.length);
+      const randomCard = cardList[randomIndex];
+      setCard(randomCard);
+
+      // Set the diary document
+      const diaryRef = doc(db, "diaries", `${user.uid}-${currentDate}`);
+      await setDoc(diaryRef, {
+        mood: userMood,
+        uid: user.uid,
+        date: currentDate,
+      });
+
+      setLoading(false);
+    } catch (error) {
+      if (error.code === 'failed-precondition' && error.message.includes('The query requires an index.')) {
+        console.error("Index creation required. Please visit the following link to create the index:");
+        console.error(error.message.split(' ').slice(-1).join(' '));  // Logs the URL to create the index
+      } else {
+        console.error("Error fetching card:", error);
+      }
+      setLoading(false);
+    }
   }
+
   const handleData = (data) => {
     setData(data);
     if (Math.abs(data.x) + Math.abs(data.y) + Math.abs(data.z) > 2) {
       setShakeDetected(true);
     }
-  };
-
-  const handleFindNew = () => {
-    setAllowShake(true);
   };
 
   useEffect(() => {
@@ -55,32 +111,23 @@ const CardToday = () => {
       setShakeDetected(false);
       setAllowShake(false);
     }
-  }, [shakeDetected, navigation]);
+  }, [shakeDetected]);
 
   useEffect(() => {
     Accelerometer.setUpdateInterval(400);
-    Accelerometer.addListener(handleData);
+    const subscription = Accelerometer.addListener(handleData);
     return () => {
-      Accelerometer.removeAllListeners();
+      subscription && subscription.remove();
     };
-
-  // useEffect(() => {
-  //   return () => setShakeDetected(false);
-  // }, 
-
-}, []);
-
-// console.log(card);
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={handlefavcard}>
-          <Text style={styles.title}>Card of the Day</Text>
-        </TouchableOpacity>
+        <Text style={styles.title}>Card of the Day</Text>
       </View>
 
-      <View style={styles.cardcontainer}>
+      <View style={styles.cardContainer}>
         {!loading && card && <Card card={card} />}
       </View>
 
@@ -103,7 +150,6 @@ const CardToday = () => {
   );
 };
 
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -115,7 +161,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "10%",
   },
-  cardcontainer: {
+  cardContainer: {
     height: "50%",
     width: "100%",
     alignItems: "center",
@@ -133,28 +179,33 @@ const styles = StyleSheet.create({
     color: COLORS.darkgreen,
     paddingLeft: 20,
   },
-    button: {
-        backgroundColor: COLORS.pink,
-        padding: 10,
-        borderRadius: 5,
-        width: "30%", // Adjusted width
-        height: 40,
-        alignItems: "center",
-        justifyContent: "center",
-        marginHorizontal: "2%", // Adjusted margin
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-
+  button: {
+    backgroundColor: COLORS.pink,
+    padding: 10,
+    borderRadius: 5,
+    width: "30%", // Adjusted width
+    height: 40,
+    alignItems: "center",
+    justifyContent: "center",
+    marginHorizontal: "2%", // Adjusted margin
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
     },
-    buttonText: {
-        color: COLORS.white,
-        fontSize: 15,
-        fontWeight: "bold",
-    }
-
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  buttonText: {
+    color: COLORS.white,
+    fontSize: 15,
+    fontWeight: "bold",
+  },
+  FavButton: {
+    alignItems: "center",
+    justifyContent: "center",
+  }
 });
 
 export default CardToday;
