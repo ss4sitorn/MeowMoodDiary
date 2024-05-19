@@ -26,10 +26,11 @@ import FavoriteCard from "../screen/FavoriteCard";
 import WeeklyHomework from "../screen/WeeklyHomework";
 
 const Stack = createNativeStackNavigator();
-const AppNavigator = () => {
+const AppNavigator = ({setPage}) => {
+
     return (
         <NavigationContainer>
-            <Stack.Navigator>
+            <Stack.Navigator initialRouteName={setPage}>
                 <Stack.Screen name="Welcome" component={ Welcome } options={{headerShown:false}} />
                 <Stack.Screen name="Register" component={ Register } />
                 <Stack.Screen name="Pin" component={ Pin } />

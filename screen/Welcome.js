@@ -1,7 +1,9 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity, Dimensions, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { COLORS } from "../constants/colors";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import Register from './Register';
 // import styles from "../src/styles/styles";
 
@@ -10,6 +12,7 @@ const { width, height } = Dimensions.get("window");
 
 const Welcome = () => {
     const navigation = useNavigation();
+
 
     const handleRegister = () => {
         // Navigate to Register screen

@@ -94,12 +94,12 @@ const Home = ({ navigation }) => {
   
     return (
       <TouchableOpacity onPress={() => handleDatePress(day)}>
-        <View>
-          <Text>{date.day}</Text>
-          <Image source={image}  style={styles.calendarImage} />
-        </View>
+      <View style={{ position: 'relative' }}>
+        <Image source={image} style={[styles.calendarImage, { zIndex: 0, width: 50, height: 50 }]} />
+        <Text style={{ position: 'absolute', zIndex: 1, alignSelf: 'center', top: '50%', transform: [{ translateY: -8 }] }}>{date.day}</Text>
+      </View>
       </TouchableOpacity>
-    ); 
+    );
   };
 
   return (

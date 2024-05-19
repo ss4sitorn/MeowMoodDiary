@@ -2,19 +2,59 @@ import React, { useState, useRef } from 'react';
 import { Text, TouchableOpacity, TextInput, View, StyleSheet } from 'react-native'; 
 import { COLORS } from "../constants/colors";
 import styles from "../src/styles/styles";
+import { getFirestore, doc, setDoc } from "firebase/firestore";
+import firebaseApp from "../src/firebase/config";
+import showAlert from "../util/alert-custom";
 
-const Pin = ({ navigation }) => {
-  const [pin, setPin] = useState('');
+const Pin = ({ navigation, route }) => {
+  const [pin, setPin] = useState(['', '', '', '']);
   const [error, setError] = useState('');
-
+  const db = getFirestore(firebaseApp);
   const handleSubmit = async () => {
     try {
-      // Perform registration form submission logic here
-      navigation.navigate("Home")
+      // convert pin array to string
+        const pins = pin.join('');
+      await setDoc(doc(db, "users", uid), {
+        pin: pins,
+      });
+        showAlert('Success', 'PIN created successfully');
+      navigation.navigate('Login')
     } catch (e) {
-      setError(e.message);
+      showAlert('Error', e.message)
     }
   };
+  const PinInput = () => {
+    const inputRefs = useRef([]);
+  
+    const handleTextChange = (text, index) => {
+      const newPin = [...pin];
+      newPin[index] = text;
+      setPin(newPin);
+  
+      if (text && index < 3) {
+        inputRefs.current[index + 1].focus();
+      } else if (text === '' && index > 0) {
+        inputRefs.current[index - 1].focus();
+      }
+    };
+  
+    return (
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+        {pin.map((value, index) => (
+          <TextInput
+            key={index}
+            ref={ref => inputRefs.current[index] = ref}
+            style={pinStyles.input}
+            value={value}
+            onChangeText={text => handleTextChange(text, index)}
+            keyboardType="numeric"
+            maxLength={1}
+            secureTextEntry={true}
+          />
+        ))}
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -29,46 +69,14 @@ const Pin = ({ navigation }) => {
       </View>
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-          <Text style={styles.buttonText}> Submit</Text>
+          <Text style={styles.buttonText}> Submit </Text>
         </TouchableOpacity>
       </View>
     </View>
   );
 };
 
-const PinInput = () => {
-  const [pin, setPin] = useState(['', '', '', '']);
-  const inputRefs = useRef([]);
 
-  const handleTextChange = (text, index) => {
-    const newPin = [...pin];
-    newPin[index] = text;
-    setPin(newPin);
-
-    if (text && index < 3) {
-      inputRefs.current[index + 1].focus();
-    } else if (text === '' && index > 0) {
-      inputRefs.current[index - 1].focus();
-    }
-  };
-
-  return (
-    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-      {pin.map((value, index) => (
-        <TextInput
-          key={index}
-          ref={ref => inputRefs.current[index] = ref}
-          style={pinStyles.input}
-          value={value}
-          onChangeText={text => handleTextChange(text, index)}
-          keyboardType="numeric"
-          maxLength={1}
-          secureTextEntry={true}
-        />
-      ))}
-    </View>
-  );
-}
 
 const pinStyles = StyleSheet.create({
   input: {

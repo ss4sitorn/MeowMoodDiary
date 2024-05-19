@@ -38,25 +38,11 @@ const CaptureThisDay = ({route}) => {
     navigation.navigate("Home"); // replace 'AnotherScreen' with the name of the screen you want to navigate to
   };
 
-  // const images = {
-  //   r01: require('../assets/Stress reason icon/r01.png'),
-  //   r02: require('../assets/Stress reason icon/r02.png'),
-  //   r03: require('../assets/Stress reason icon/r03.png'),
-  //   r04: require('../assets/Stress reason icon/r04.png'),
-  //   r05: require('../assets/Stress reason icon/r05.png'),
-  //   r06: require('../assets/Stress reason icon/r06.png'),
-  //   r07: require('../assets/Stress reason icon/r07.png'),
-  //   r08: require('../assets/Stress reason icon/r08.png'),
-  //   r09: require('../assets/Stress reason icon/r09.png'),
-  //   r10: require('../assets/Stress reason icon/r10.png'),
-  // };
 
-  // get the mood and reason from the previous screen
-  // get the mood and reason from the previous screen
 const mood = route.params?.mood;
 const reason = route.params?.reason;
-console.log(mood);
-console.log(reason);
+const score = route.params?.score;
+
 
 function saveDiary() { 
   // save the diary to the database
@@ -64,7 +50,7 @@ function saveDiary() {
   const user = getAuth(firebaseApp).currentUser;
   // save the diary to the database
   const diaryRef = doc(db, "diaries",user.uid + currentDate);
-  setDoc(diaryRef, {
+  var docData = {
     mood: mood.moodText,
     moodImage: mood.imageSource,
     reason: reason.reasonText,
@@ -72,7 +58,12 @@ function saveDiary() {
     text: textDiary,
     uid: user.uid,
     date: currentDate,
-  })
+    score: score || 0,
+  };
+  if(docData.score == 0){
+    delete docData.score;
+  }
+  setDoc(diaryRef, docData)
     .then(() => {
       showAlert("Success", "Diary saved successfully");
       // navigate to the next screen

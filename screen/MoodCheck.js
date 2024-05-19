@@ -21,7 +21,7 @@ const MoodCheck = () => {
         { moodText: "Shy", imageSource: require("../assets/Emotion/e02.png") },
         { moodText: "Confused", imageSource: require("../assets/Emotion/e03.png") },
         { moodText: "Happy", imageSource: require("../assets/Emotion/e12.png") },
-        { moodText: "Sad", imageSource: require("../assets/Emotion/e04.png") },
+        { moodText: "Sad", imageSource: require("../assets/Emotion/e04.png"), navigation_to:'Assessment' },
         { moodText: "Silly", imageSource: require("../assets/Emotion/e06.png") },
         { moodText: "Angry", imageSource: require("../assets/Emotion/e07.png") },
         { moodText: "Sleepy", imageSource: require("../assets/Emotion/e13.png") },
@@ -33,7 +33,10 @@ const MoodCheck = () => {
     const Moodtracking = (moodText) => {
         // const mood = somethingIclicked;
         const mood = moodData.find(mood => mood.moodText === moodText);
-        
+        if (mood.navigation_to) {
+            navigation.navigate(mood.navigation_to, {mood: mood});
+            return;
+        }
         navigation.navigate('Reason', {mood: mood});
     };
 

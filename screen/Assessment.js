@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet, Button } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { useNavigation } from '@react-navigation/native';
 import { COLORS } from "../constants/colors";
+import { set } from "firebase/database";
 
 const questions = [
   "1. Do you have sleep problems, such as insomnia or hypersomnia?",
@@ -12,11 +13,13 @@ const questions = [
   "5. Do you avoid social interaction or withdraw from social activities?",
 ];
 
-const Assessment = () => {
+const Assessment = ({route}) => {
   const navigation = useNavigation();
   const [message, setMessage] = useState("");
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-
+  const  mood  = route.params?.mood;
+  const [score, setScore] = useState(0);
+  const [scoreSum , setScoreSum] = useState(0);
   const handleNextQuestion = () => {
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
@@ -25,10 +28,12 @@ const Assessment = () => {
   };
 
   const handleButtonPress = () => {
+    setScoreSum(scoreSum + score);
+    console.log(scoreSum);
     if (currentQuestionIndex < questions.length - 1) {
       handleNextQuestion();
     } else {
-      navigation.navigate("Reason");
+      navigation.navigate("Reason" , {mood: mood , score: scoreSum});
     }
   };
 
@@ -50,6 +55,7 @@ const Assessment = () => {
       default:
         newMessage = "Invalid selection";
     }
+    setScore(number);
     setMessage(newMessage);
   };
 

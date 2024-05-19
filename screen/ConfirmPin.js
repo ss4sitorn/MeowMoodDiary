@@ -4,6 +4,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import PinTemp from "../util/PinTemp";
 import { COLORS } from "../constants/colors";
 import BackButton from "../util/BackButton";
+import {setPinToFireStore} from "../util/firebase-help";
  
 const ConfirmPin = () => {
   const navigation = useNavigation();
@@ -19,10 +20,12 @@ const ConfirmPin = () => {
 
     if (pin !== originalPin) {
       Alert.alert('Error', 'PINs do not match');
+      
       return;
     }
 
     try {
+      setPinToFireStore(pin);
       navigation.navigate("Setting");
     } catch (e) {
       console.error(e);

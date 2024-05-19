@@ -9,13 +9,14 @@ import showConfirmationDialog from "../util/alert-confirm-custom";
 import firebaseApp from "../src/firebase/config";
 import 'firebase/auth';
 import { getAuth } from "firebase/auth";
+import {LogOut, resetPassword} from "../util/firebase-help";
 
 
 const Setting = () => {const auth = getAuth(firebaseApp);
   const navigation = useNavigation();
 
   const handleResetPassword = () => {
-    navigation.navigate("ResetPassword");
+    resetPassword();
   };
   const handleResetPin = () => {
     navigation.navigate("ResetPin");
@@ -60,8 +61,9 @@ const Setting = () => {const auth = getAuth(firebaseApp);
         <Icons name="password" size={40}  style={styles.settingicon} />
           <Text style={styles.settingText}>    Change Password </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.settingButton} onPress={() => showConfirmationDialog('Warning', 'Are you sure to log out?',()=>{
-            navigation.popToTop("Login"),()=>{console.log('cancle logout')}}) }>
+        <TouchableOpacity style={styles.settingButton} onPress={() => {
+          LogOut(navigation)
+        } }>
           <Icon name="log-out-outline" size={40}  style={styles.settingicon} />
           <Text style={styles.settingText}>    Log Out</Text>
         </TouchableOpacity>

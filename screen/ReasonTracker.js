@@ -8,8 +8,8 @@ import BackButton from "../util/BackButton";
  
 const ReasonTracker = ({route}) => { 
     const navigation = useNavigation();
-    const { mood } = route.params;
-    console.log(mood);
+    const mood = route.params?.mood;
+    const score = route.params?.score;
 
     const handleBackPress = () => {
         navigation.navigate("MoodTracker");
@@ -33,8 +33,11 @@ const ReasonTracker = ({route}) => {
     const reasonrecord = (resson) => {
         // const mood = somethingIclicked;
         const reason = reasonData.find(reason => reason.reasonText === resson);
-        console.log(reason);
-        navigation.navigate("CaptureThisDay", { reason: reason , mood: mood });
+        var route_data = { mood: mood, reason: reason };
+        if (score) {
+            route_data.score = score;
+        }
+        navigation.navigate("CaptureThisDay", route_data);
     };
 
     return (
