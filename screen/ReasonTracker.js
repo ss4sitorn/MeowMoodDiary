@@ -5,28 +5,30 @@ import { COLORS } from "../constants/colors";
 import Icon from "react-native-vector-icons/Ionicons";
 import Reason from "../util/Reason";
 import BackButton from "../util/BackButton";
- 
-const ReasonTracker = ({route}) => { 
+import {imageReasonStore} from "../util/image-store";
+
+
+const ReasonTracker = ({route}) => {
     const navigation = useNavigation();
     const mood = route.params?.mood;
     const score = route.params?.score;
-
+    console.log(mood);
     const handleBackPress = () => {
         navigation.goBack();
     };
 
     //map reason with reason img to object
     const reasonData = [
-        { reasonText: "social", imageSource: require("../assets/Stress reason icon/r01.png") },
-        { reasonText: "food", imageSource: require("../assets/Stress reason icon/r02.png") },
-        { reasonText: "baby", imageSource: require("../assets/Stress reason icon/r03.png") },
-        { reasonText: "work", imageSource: require("../assets/Stress reason icon/r04.png") },
-        { reasonText: "health", imageSource: require("../assets/Stress reason icon/r05.png") },
-        { reasonText: "school", imageSource: require("../assets/Stress reason icon/r06.png") },
-        { reasonText: "money", imageSource: require("../assets/Stress reason icon/r07.png") },
-        { reasonText: "love", imageSource: require("../assets/Stress reason icon/r08.png") },
-        { reasonText: "home", imageSource: require("../assets/Stress reason icon/r09.png") },
-        { reasonText: "friend", imageSource: require("../assets/Stress reason icon/r10.png") },
+        { reasonText: "social"},
+        { reasonText: "food"},
+        { reasonText: "baby"},
+        { reasonText: "work"},
+        { reasonText: "health"},
+        { reasonText: "school"},
+        { reasonText: "money"},
+        { reasonText: "love"},
+        { reasonText: "home" },
+        { reasonText: "friend"},
     ];
 
 
@@ -49,58 +51,58 @@ const ReasonTracker = ({route}) => {
             <View style={styles.tableContainer}>
                 <View style={styles.row}>
                     <Reason
-                        imageSource={require("../assets/Stress reason icon/r01.png")}
+                        imageSource={imageReasonStore['social']}
                         reasonText="social"
                         onPress={() => reasonrecord("social")}
                     />
                     <Reason
-                        imageSource={require("../assets/Stress reason icon/r02.png")}
+                        imageSource={imageReasonStore['food']}
                         reasonText="food"
                         onPress={() => reasonrecord("food")}
                     />
                     <Reason
-                        imageSource={require("../assets/Stress reason icon/r03.png")}
+                        imageSource={imageReasonStore['baby']}
                         reasonText="baby"
                         onPress={() => reasonrecord("baby")}
                     />
                 </View>
                 <View style={styles.row}>
                     <Reason
-                        imageSource={require("../assets/Stress reason icon/r04.png")}
+                        imageSource={imageReasonStore['work']}
                         reasonText="work"
                         onPress={() => reasonrecord("work")}
                     />
                     <Reason
-                        imageSource={require("../assets/Stress reason icon/r05.png")}
+                        imageSource={imageReasonStore['health']}
                         reasonText="health"
                         onPress={() => reasonrecord("health")}
                     />
                     <Reason
-                        imageSource={require("../assets/Stress reason icon/r06.png")}
+                        imageSource={imageReasonStore['school']}
                         reasonText="school"
                         onPress={() => reasonrecord("school")}
                     />
                 </View>
                 <View style={styles.row}>
                     <Reason
-                        imageSource={require("../assets/Stress reason icon/r07.png")}
+                        imageSource={imageReasonStore['money']}
                         reasonText="money"
                         onPress={() => reasonrecord("money")}
                     />
                     <Reason
-                        imageSource={require("../assets/Stress reason icon/r08.png")}
+                        imageSource={imageReasonStore['love']}
                         reasonText="love"
                         onPress={() => reasonrecord("love")}
                     />
                     <Reason
-                        imageSource={require("../assets/Stress reason icon/r09.png")}
+                        imageSource={imageReasonStore['home']}
                         reasonText="home"
                         onPress={() => reasonrecord("home")}
                     />
                 </View>
                 <View style={styles.row}>
                     <Reason
-                        imageSource={require("../assets/Stress reason icon/r10.png")}
+                        imageSource={imageReasonStore['friend']}
                         reasonText="friend"
                         onPress={() => reasonrecord("friend")}
                     />
@@ -136,7 +138,7 @@ const styles = StyleSheet.create({
         left: 20,
         zIndex: 1,
       },
-  
+
  });
 
 export default ReasonTracker;

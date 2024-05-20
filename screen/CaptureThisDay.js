@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity, StyleSheet, Image, TextInput } from "react-native";
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import Icon from "react-native-vector-icons/Ionicons";
 import { COLORS } from "../constants/colors";
 import { useNavigation } from '@react-navigation/native';
@@ -7,6 +7,7 @@ import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } f
 import firebaseApp from "../src/firebase/config";
 import showAlert from "../util/alert-custom";
 import { getFirestore, doc, setDoc } from "firebase/firestore";
+import {imageMoodStore, imageReasonStore} from "../util/image-store";
 
 const CaptureThisDay = ({route}) => {
   const navigation = useNavigation();
@@ -44,7 +45,7 @@ const reason = route.params?.reason;
 const score = route.params?.score;
 
 
-function saveDiary() { 
+function saveDiary() {
   // save the diary to the database
   // get the current user
   const user = getAuth(firebaseApp).currentUser;
@@ -52,9 +53,7 @@ function saveDiary() {
   const diaryRef = doc(db, "diaries",user.uid + currentDate);
   var docData = {
     mood: mood.moodText,
-    moodImage: mood.imageSource,
     reason: reason.reasonText,
-    reasonImage: reason.imageSource,
     text: textDiary,
     uid: user.uid,
     date: currentDate,
@@ -76,6 +75,8 @@ function saveDiary() {
 
 
 
+
+
   return (
     <View style={styles.container}>
       <View style={styles.backButtonContainer}>
@@ -93,7 +94,7 @@ function saveDiary() {
       <View style={styles.imageContainer}>
         <TouchableOpacity onPress={selectMood}>
           <Image
-            source={mood.imageSource}
+            source={imageMoodStore[mood.moodText]}
             style={styles.image}
           />
           <Text style={styles.imageText}>{mood.moodText}</Text>
@@ -108,7 +109,7 @@ function saveDiary() {
       <View style={styles.imageContainer}>
         <TouchableOpacity onPress={selectReason}>
           <Image
-            source={reason.imageSource}
+            source={imageReasonStore[reason.reasonText]}
             style={styles.image}
           />
           <Text style={styles.imageText}>{reason.reasonText}</Text>
@@ -197,10 +198,10 @@ const styles = StyleSheet.create({
   input: {
     height: 40,
     width: '80%',
-    borderColor: COLORS.lightgreen, 
+    borderColor: COLORS.lightgreen,
     borderWidth: 2,
-    borderRadius: 20, 
-    backgroundColor: COLORS.white, 
+    borderRadius: 20,
+    backgroundColor: COLORS.white,
     marginTop: 40,
     marginBottom: 20,
     paddingLeft: 10,

@@ -29,6 +29,7 @@ import {
 import calendarImage1 from "../assets/Emotion/e01.png";
 import calendarImage2 from "../assets/Emotion/e02.png";
 import { set } from "firebase/database";
+import {imageMoodStore} from "../util/image-store";
 
 const Home = ({ navigation }) => {
   const emotionPath = "../assets/Emotion/e01.png";
@@ -70,6 +71,7 @@ const Home = ({ navigation }) => {
       acc[diary.date] = {
         moodImage: diary.moodImage,
         text: diary.text,
+        moodText: diary.mood,
         date: diary.date,
       };
       return acc;
@@ -107,8 +109,7 @@ const Home = ({ navigation }) => {
       year: "numeric",
     });
     // Get the image for the selected date
-    const image = diary && diary[day]?.moodImage;
-
+    const image = diary && imageMoodStore[diary[day]?.moodText];
     return (
       <TouchableOpacity onPress={() => handleDatePress(day)}>
         <View style={styles.dayContainer}>
@@ -127,7 +128,7 @@ const Home = ({ navigation }) => {
         </View>
         <Calendar dayComponent={renderDay} />
         <View style={styles.messageBox}>
-          <Image source={diaryData?.moodImage} style={styles.emoji} />
+          <Image source={imageMoodStore[diaryData?.mood]} style={styles.emoji} />
           <Text style={styles.date}>{diaryData?.date}</Text>
           <Text style={styles.message}>{diaryData?.text}</Text>
         </View>
@@ -229,10 +230,6 @@ const styles = StyleSheet.create({
   message: {
     fontSize: 16,
     color: "COLORS.black",
-  },
-  calendarImage: {
-    width: 40,
-    height: 40,
   },
   dayContainer: {
     alignItems: "center", // Center items vertically

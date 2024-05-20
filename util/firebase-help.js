@@ -38,7 +38,7 @@ const LogOut = async (navigation) => {
     showConfirmationDialog('Warning', 'Are you sure to log out?', async () => {
             await auth.signOut().then(() => {
                 console.log('User signed out');
-                navigation.popToTop();
+                navigation.popToTop('Login');
             }).catch((error) => {
                 console.error(error);
             });
