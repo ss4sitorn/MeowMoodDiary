@@ -1,14 +1,33 @@
-import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, StatusBar } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  SafeAreaView,
+  StatusBar,
+} from "react-native";
 import BottomBar from "../util/BottomBar";
 import { useNavigation } from "@react-navigation/native";
 import { COLORS } from "../constants/colors";
 import Icon from "react-native-vector-icons/AntDesign";
-import { getFirestore, collection, getDocs, doc, setDoc, query, orderBy, limit, where } from "firebase/firestore";
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  doc,
+  setDoc,
+  query,
+  orderBy,
+  limit,
+  where,
+  addDoc,
+} from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import firebaseApp from "../src/firebase/config";
 import Card from "../util/Card";
-import { Accelerometer } from 'expo-sensors';
+import { Accelerometer } from "expo-sensors";
 import { getAuth } from "firebase/auth";
+import { set } from "firebase/database";
 
 const CardToday = () => {
   const navigation = useNavigation();
@@ -25,10 +44,24 @@ const CardToday = () => {
   const handleAddCard = () => {
     navigation.navigate("CardCreate");
   };
-
-  const handleFavCard = () => {
+  const gotofav = () => {
     navigation.navigate("FavoriteCard");
   };
+
+  async function handleFavCard () {
+    try {
+      const user = getAuth(firebaseApp).currentUser;
+      const favCardCollectionRef = collection(db, "users", user.uid , "favCard");
+      await addDoc(favCardCollectionRef, {
+        card: card,
+      });
+
+    } catch (error) {
+      console.error("Error fetching card:", error);
+    }
+  }
+
+
 
   async function getCard() {
     if (!user) {
@@ -51,7 +84,7 @@ const CardToday = () => {
         setLoading(false);
         return;
       }
-
+     
       const latestDiary = diariesQuerySnapshot.docs[0];
       const userMood = latestDiary.data().mood;
 
@@ -64,6 +97,9 @@ const CardToday = () => {
         if (cardData.mood === userMood) {
           cardList.push(cardData);
         }
+        // else if (userMood === null) {
+        //   cardList.push(cardData);
+        // }
       });
 
       if (cardList.length === 0) {
@@ -78,18 +114,23 @@ const CardToday = () => {
       setCard(randomCard);
 
       // Set the diary document
-      const diaryRef = doc(db, "diaries", `${user.uid}-${currentDate}`);
-      await setDoc(diaryRef, {
-        mood: userMood,
-        uid: user.uid,
-        date: currentDate,
-      });
+      // const diaryRef = doc(db, "diaries", `${user.uid}-${currentDate}`);
+      // await setDoc(diaryRef, {
+      //   mood: userMood,
+      //   uid: user.uid,
+      //   date: currentDate,
+      // });
 
       setLoading(false);
     } catch (error) {
-      if (error.code === 'failed-precondition' && error.message.includes('The query requires an index.')) {
-        console.error("Index creation required. Please visit the following link to create the index:");
-        console.error(error.message.split(' ').slice(-1).join(' '));  // Logs the URL to create the index
+      if (
+        error.code === "failed-precondition" &&
+        error.message.includes("The query requires an index.")
+      ) {
+        console.error(
+          "Index creation required. Please visit the following link to create the index:"
+        );
+        console.error(error.message.split(" ").slice(-1).join(" ")); // Logs the URL to create the index
       } else {
         console.error("Error fetching card:", error);
       }
@@ -107,7 +148,7 @@ const CardToday = () => {
   useEffect(() => {
     if (shakeDetected && allowShake) {
       getCard();
-      console.log('Random new card');
+      console.log("Random new card");
       setShakeDetected(false);
       setAllowShake(false);
     }
@@ -124,13 +165,17 @@ const CardToday = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>Card of the Day</Text>
+        <Text style={styles.title} onPress={gotofav}>Card of the Day</Text>
       </View>
 
       <View style={styles.cardContainer}>
         {!loading && card && <Card card={card} />}
       </View>
-
+      <View style={styles.textcontainer}>
+        <Text style={styles.shaketext}> Shake your phone to </Text>
+        <Text style={styles.shaketext}> find new card </Text>
+        <Text style={styles.warningtext}> pls selected mood before shake </Text>
+      </View>
       <View style={styles.buttonsContainer}>
         <TouchableOpacity style={styles.button} onPress={handleAddCard}>
           <Text style={styles.buttonText}>Add Card</Text>
@@ -170,13 +215,21 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
-    height: "40%",
+    height: "30%",
+    top: -60,
+  },
+  textcontainer: {
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingTop: 60,
+    height: "10%",
   },
   footer: {},
   title: {
     fontSize: 34,
     fontWeight: "bold",
-    color: COLORS.darkgreen,
+    color: COLORS.pink,
     paddingLeft: 20,
   },
   button: {
@@ -204,8 +257,20 @@ const styles = StyleSheet.create({
   },
   FavButton: {
     alignItems: "center",
-    justifyContent: "center",
-  }
+    // justifyContent: "center",
+  },
+  shaketext: {
+    fontSize: 20,
+    color: COLORS.darkgreen,
+    fontWeight: "bold",
+    fontStyle: "italic",
+  },
+  warningtext: {
+    fontSize: 14,
+    color: COLORS.purple,
+    fontWeight: "bold",
+    fontStyle: "italic",
+  },
 });
 
 export default CardToday;

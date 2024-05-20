@@ -12,7 +12,7 @@ const ReasonTracker = ({route}) => {
     const score = route.params?.score;
 
     const handleBackPress = () => {
-        navigation.navigate("MoodTracker");
+        navigation.goBack();
     };
 
     //map reason with reason img to object

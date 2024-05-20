@@ -7,6 +7,7 @@ import {
   Image,
   TextInput,
   SafeAreaView,
+  StatusBar,
 } from "react-native";
 import { COLORS } from "../constants/colors";
 import { useNavigation } from "@react-navigation/native";
@@ -85,7 +86,7 @@ const CardCreate = () => {
   // );
 
   const handleBackPress = () => {
-    navigation.navigate("Home");
+    navigation.goBack();
   };
 
   const handleCardMood = () => {
@@ -180,13 +181,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "flex-start",
     alignItems: "center",
-    paddingTop: 20,
+    paddingTop: StatusBar.currentHeight,
   },
   header: {
     flexDirection: "row",
     justifyContent: "flex-start",
     width: "100%",
-    paddingTop: 20,
+
     paddingHorizontal: 20,
   },
   headerText: {
@@ -310,11 +311,7 @@ const styles = StyleSheet.create({
     color: COLORS.white,
     fontSize: 16,
   },
-  backButtonContainer: {
-    position: "absolute",
-    left: 0,
-    zIndex: 1,
-  },
+
 });
 
 export default CardCreate;

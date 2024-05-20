@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity,SafeAreaView } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import { COLORS } from "../constants/colors";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -12,7 +12,7 @@ const MoodCheck = () => {
     const navigation = useNavigation();
 
     const handleBackPress = () => {
-        navigation.navigate("Home");
+        navigation.goBack();
     };
 
     //map mood and img mood to object
@@ -44,7 +44,7 @@ const MoodCheck = () => {
 
     return (
         // JSX code
-        <View style={styles.container} >
+        <SafeAreaView style={styles.container} >
             <View style={styles.backButtonContainer}>
                 <BackButton onPress={handleBackPress} />
             </View>
@@ -72,7 +72,7 @@ const MoodCheck = () => {
                 </View>
             </View>
 
-        </View>
+        </SafeAreaView>
     );
 
 

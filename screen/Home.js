@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Image,StatusBar, } from "react-native";
 import { Calendar } from "react-native-calendars";
 import BottomBar from "../util/BottomBar";
 import { COLORS } from "../constants/colors";
@@ -134,15 +134,19 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
     backgroundColor: COLORS.cream,
+    paddingTop: StatusBar.currentHeight,
   },
   contentContainer: {
     flex: 1, // Take remaining space
     backgroundColor: COLORS.cream,
-    padding: 20,
+    paddingHorizontal: 20,
+    paddingBottom: 20,
+
   },
   titleContainer: {
     alignSelf: "flex-start",
-    padding: 10,
+    paddingHorizontal: 10,
+    paddingBottom: 10,
   },
   title: {
     fontSize: 30,
