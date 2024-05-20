@@ -18,7 +18,7 @@ const BottomNavBar = ({ navigation }) => {
         <Image source={require("../assets/Emotion/e12.png")} style={{width: 80, height: 140}} />
         </TouchableOpacity>
       </View>
-      <TouchableOpacity onPress={() => navigation.navigate('WeekReport')}>
+      <TouchableOpacity onPress={() => navigation.navigate('Dashboard')}>
         <Icon name="pie-chart-sharp" size={35} color={COLORS.darkgreen} />
       </TouchableOpacity>
 
