@@ -1,15 +1,34 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image,StatusBar, } from "react-native";
+import React, { useEffect, useState } from "react";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Image,
+  StatusBar,
+} from "react-native";
 import { Calendar } from "react-native-calendars";
 import BottomBar from "../util/BottomBar";
 import { COLORS } from "../constants/colors";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import firebaseApp from "../src/firebase/config";
 import showAlert from "../util/alert-custom";
-import { getFirestore, doc, getDoc ,collection ,getDocs ,where ,query} from "firebase/firestore";
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  collection,
+  getDocs,
+  where,
+  query,
+} from "firebase/firestore";
 import calendarImage1 from "../assets/Emotion/e01.png";
 import calendarImage2 from "../assets/Emotion/e02.png";
-import { set } from 'firebase/database';
+import { set } from "firebase/database";
 
 const Home = ({ navigation }) => {
   const emotionPath = "../assets/Emotion/e01.png";
@@ -25,7 +44,7 @@ const Home = ({ navigation }) => {
   async function getdiary() {
     //get current user
     const user = getAuth(firebaseApp).currentUser;
-    const docRef = doc(db, "diaries", user.uid+currentDate);
+    const docRef = doc(db, "diaries", user.uid + currentDate);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
       console.log("Document data:", docSnap.data());
@@ -48,24 +67,22 @@ const Home = ({ navigation }) => {
       diaryData.push(doc.data());
     });
     diaryData = diaryData.reduce((acc, diary) => {
-      acc[diary.date] = { moodImage: diary.moodImage, text: diary.text, date: diary.date };
+      acc[diary.date] = {
+        moodImage: diary.moodImage,
+        text: diary.text,
+        date: diary.date,
+      };
       return acc;
     }, {});
-   
-    
+
     console.log(diaryData);
     setDiary(diaryData);
-    
-
-    
-
   }
 
-  
   useEffect(() => {
     getdiary();
     getAlldiary();
-    const unsubscribe = navigation.addListener('focus', () => {
+    const unsubscribe = navigation.addListener("focus", () => {
       getdiary();
       getAlldiary();
     });
@@ -91,13 +108,13 @@ const Home = ({ navigation }) => {
     });
     // Get the image for the selected date
     const image = diary && diary[day]?.moodImage;
-  
+
     return (
       <TouchableOpacity onPress={() => handleDatePress(day)}>
-      <View style={{ position: 'relative' }}>
-        <Image source={image} style={[styles.calendarImage, { zIndex: 0, width: 50, height: 50 }]} />
-        <Text style={{ position: 'absolute', zIndex: 1, alignSelf: 'center', top: '50%', transform: [{ translateY: -8 }] }}>{date.day}</Text>
-      </View>
+        <View style={styles.dayContainer}>
+          <Text style={styles.dayNumber}>{date.day}</Text>
+          <Image source={image} style={styles.calendarImage} />
+        </View>
       </TouchableOpacity>
     );
   };
@@ -115,10 +132,16 @@ const Home = ({ navigation }) => {
           <Text style={styles.message}>{diaryData?.text}</Text>
         </View>
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('WeeklyHomework')}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => navigation.navigate("WeeklyHomework")}
+          >
             <Text style={styles.buttonText}>Weekly Homework</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={handleStressAssessment}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={handleStressAssessment}
+          >
             <Text style={styles.buttonText}>Stress Assessment</Text>
           </TouchableOpacity>
         </View>
@@ -141,7 +164,6 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.cream,
     paddingHorizontal: 20,
     paddingBottom: 20,
-
   },
   titleContainer: {
     alignSelf: "flex-start",
@@ -154,7 +176,6 @@ const styles = StyleSheet.create({
     color: COLORS.darkgreen,
     marginBottom: 20,
     marginLeft: 5,
-
   },
   buttonContainer: {
     flexDirection: "row",
@@ -208,6 +229,16 @@ const styles = StyleSheet.create({
   message: {
     fontSize: 16,
     color: "COLORS.black",
+  },
+  calendarImage: {
+    width: 40,
+    height: 40,
+  },
+  dayContainer: {
+    alignItems: "center", // Center items vertically
+  },
+  dayNumber: {
+    marginBottom: 5, // Add some space between the number and the image
   },
   calendarImage: {
     width: 40,
