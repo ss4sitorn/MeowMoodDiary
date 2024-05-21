@@ -40,6 +40,7 @@ const MoodCheck = () => {
             navigation.navigate(mood.navigation_to, {mood: mood});
             return;
         }
+        //l
         navigation.navigate('Reason', {mood: mood});
     };
 
