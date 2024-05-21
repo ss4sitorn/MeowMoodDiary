@@ -6,35 +6,16 @@ import {
   StyleSheet,
   Image,
   StatusBar,
+  ScrollView,
 } from "react-native";
 import { Calendar } from "react-native-calendars";
 import BottomBar from "../util/BottomBar";
 import { COLORS } from "../constants/colors";
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
+import { getAuth, getFirestore, doc, getDoc, collection, getDocs, where, query } from "firebase/firestore";
 import firebaseApp from "../src/firebase/config";
-import showAlert from "../util/alert-custom";
-import {
-  getFirestore,
-  doc,
-  getDoc,
-  collection,
-  getDocs,
-  where,
-  query,
-} from "firebase/firestore";
-import calendarImage1 from "../assets/Emotion/e01.png";
-import calendarImage2 from "../assets/Emotion/e02.png";
-import { set } from "firebase/database";
-import {imageMoodStore} from "../util/image-store";
+import { imageMoodStore } from "../util/image-store";
 
 const Home = ({ navigation }) => {
-  const emotionPath = "../assets/Emotion/e01.png";
-  const date = "2022-01-01";
-  const message = "This is a message from Firebase";
   const db = getFirestore(firebaseApp);
   const [diaryData, setDiaryData] = useState(null);
   const currentDate = new Date().toLocaleDateString("en-GB", {
@@ -42,27 +23,24 @@ const Home = ({ navigation }) => {
     month: "long",
     year: "numeric",
   });
+
   async function getdiary() {
-    //get current user
     const user = getAuth(firebaseApp).currentUser;
     const docRef = doc(db, "diaries", user.uid + currentDate);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
-      console.log("Document data:", docSnap.data());
       setDiaryData(docSnap.data());
     } else {
-      // doc.data() will be undefined in this case
       console.log("No such document!");
     }
   }
+
   const [diary, setDiary] = useState(null);
   async function getAlldiary() {
-    //get all diary of current user uid = field uid in diary collection
     const user = getAuth(firebaseApp).currentUser;
     const diaryRef = collection(db, "diaries");
     const q = query(diaryRef, where("uid", "==", user.uid));
     const querySnapshot = await getDocs(q);
-    //map all diary to diaryData
     let diaryData = [];
     querySnapshot.forEach((doc) => {
       diaryData.push(doc.data());
@@ -88,24 +66,21 @@ const Home = ({ navigation }) => {
     });
     return unsubscribe;
   }, [navigation]);
+
   const handleStressAssessment = () => {
     navigation.navigate("Assessment");
   };
 
   const handleDatePress = (date) => {
-    // Logic to show diary for the selected date
     setDiaryData(diary[date]);
-    // You can navigate to a new screen or show a modal with the diary details
   };
 
   const renderDay = ({ date }) => {
-    // //convert date form 2024-05-15 to 15 May 2024
     const day = new Date(date.timestamp).toLocaleDateString("en-GB", {
       day: "numeric",
       month: "long",
       year: "numeric",
     });
-    // Get the image for the selected date
     const image = diary && imageMoodStore[diary[day]?.mood];
     return (
       <TouchableOpacity onPress={() => handleDatePress(day)}>
@@ -119,37 +94,35 @@ const Home = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.contentContainer}>
-        <View style={styles.titleContainer}>
-          <Text style={styles.title}>Calendar</Text>
+      <ScrollView contentContainerStyle={styles.scrollContent}>
+        <View style={styles.contentContainer}>
+          <View style={styles.titleContainer}>
+            <Text style={styles.title}>Calendar</Text>
+          </View>
+          <Calendar 
+            dayComponent={renderDay} 
+            onMonthChange={(month) => {
+              console.log('Month changed', month);
+              setDiary(null);
+              getAlldiary();
+            }}
+          />
+          <View style={styles.messageBox}>
+            <Image source={imageMoodStore[diaryData?.mood]} style={styles.emoji} />
+            <Text style={styles.date}>{diaryData?.date}</Text>
+            <Text style={styles.message}>{diaryData?.text}</Text>
+          </View>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("WeeklyHomework")}>
+              <Text style={styles.buttonText}>Weekly Homework</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={handleStressAssessment}>
+              <Text style={styles.buttonText}>Stress Assessment</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-        <Calendar dayComponent={renderDay}
-                  onMonthChange={(month) => {
-                    console.log('Month changed', month);
-                    setDiary(null);
-                    getAlldiary();
-                  }}/>
-        <View style={styles.messageBox}>
-          <Image source={imageMoodStore[diaryData?.mood]} style={styles.emoji} />
-          <Text style={styles.date}>{diaryData?.date}</Text>
-          <Text style={styles.message}>{diaryData?.text}</Text>
-        </View>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => navigation.navigate("WeeklyHomework")}
-          >
-            <Text style={styles.buttonText}>Weekly Homework</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={handleStressAssessment}
-          >
-            <Text style={styles.buttonText}>Stress Assessment</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-      <BottomBar navigation={navigation} />
+      </ScrollView>
+      <BottomBar navigation={navigation} /> 
     </View>
   );
 };
@@ -166,7 +139,7 @@ const styles = StyleSheet.create({
     flex: 1, // Take remaining space
     backgroundColor: COLORS.cream,
     paddingHorizontal: 20,
-    paddingBottom: 20,
+    paddingBottom: 80,
   },
   titleContainer: {
     alignSelf: "flex-start",
