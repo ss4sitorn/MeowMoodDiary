@@ -20,18 +20,18 @@ const MoodCheck = () => {
 
     //map mood and img mood to object
     const moodData = [
-        { moodText: "Disappointed"},
+        { moodText: "Disappointed",navigation_to:'Assessment'},
         { moodText: "Shy"},
-        { moodText: "Confused"},
+        { moodText: "Confused",navigation_to:'Assessment'},
         { moodText: "Happy"},
-        { moodText: "Sad",},
+        { moodText: "Sad",navigation_to:'Assessment'},
         { moodText: "Silly"},
-        { moodText: "Angry"},
+        { moodText: "Angry",navigation_to:'Assessment'},
         { moodText: "Sleepy"},
-        { moodText: "Jealous"},
+        { moodText: "Jealous",navigation_to:'Assessment'},
         { moodText: "Love"},
         { moodText: "Proud"},
-        { moodText: "Bored"},
+        { moodText: "Bored",navigation_to:'Assessment'},
     ];
     const Moodtracking = (moodText) => {
         // const mood = somethingIclicked;

@@ -1,5 +1,5 @@
-import { View,Text,TouchableOpacity,StyleSheet,Image,TextInput,} from "react-native";
-import React, { Profiler, useState } from "react";
+import { View,Text,TouchableOpacity,StyleSheet,Image,TextInput,Switch} from "react-native";
+import React, { Profiler, useEffect, useState } from "react";
 import Icon from "react-native-vector-icons/Ionicons";
 import Icons from "react-native-vector-icons/MaterialIcons";
 import { COLORS } from "../constants/colors";
@@ -9,12 +9,21 @@ import showConfirmationDialog from "../util/alert-confirm-custom";
 import firebaseApp from "../src/firebase/config";
 import 'firebase/auth';
 import { getAuth } from "firebase/auth";
-import {LogOut, resetPassword} from "../util/firebase-help";
+import {LogOut, getEmail, getUsername, resetPassword} from "../util/firebase-help";
 
 
 const Setting = () => {const auth = getAuth(firebaseApp);
   const navigation = useNavigation();
-
+  const [isEnabled, setIsEnabled] = useState(false);
+  const [email,setEmail]=useState('');
+  const [username, setUsername] = useState('');
+  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+  useEffect(() => {
+    setEmail(getEmail());
+    setUsername(getUsername());
+  }
+  , []);
+  
   const handleResetPassword = () => {
     resetPassword();
   };
@@ -45,21 +54,28 @@ const Setting = () => {const auth = getAuth(firebaseApp);
             />
           </TouchableOpacity>
         </View>
-        <Text style={styles.name}> Don't forget to listen Girl Never Dies    </Text>
-        <Text style={styles.email}> B6500000@g.sut.ac.th</Text>
+        <Text style={styles.name}> {username}    </Text>
+        <Text style={styles.email}> {email}</Text>
       </View>
       <View style={styles.Title}>
         <Text style={styles.PageTitle}>setting</Text>
       </View>
 
       <View style={styles.settingContainer}>
-        <TouchableOpacity style={styles.settingButton} onPress={handleResetPin}>
-          <Icon name="keypad-outline" size={40}  style={styles.settingicon} />  
-          <Text style={styles.settingText}>    Pin</Text>
+        <TouchableOpacity style={styles.settingButton2} onPress={handleResetPin}>
+          <View style={styles.Title}><Icon name="keypad-outline" size={40}  style={styles.settingicon} />  
+          <Text style={styles.settingText}>    Pin</Text></View>
+          <Switch style={width=200}
+        trackColor={{false: '#767577', true: '#80B7A2'}}
+        thumbColor={isEnabled ? '#ADD495' : '#80B7A2'}
+        ios_backgroundColor="#3e3e3e"
+        onValueChange={toggleSwitch}
+        value={isEnabled}
+      />
         </TouchableOpacity>
         <TouchableOpacity style={styles.settingButton}onPress={handleResetPassword} >
         <Icons name="password" size={40}  style={styles.settingicon} />
-          <Text style={styles.settingText}>    Change Password </Text>
+          <Text style={styles.settingText}>    Reset Password </Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.settingButton} onPress={() => {
           LogOut(navigation)
@@ -146,8 +162,17 @@ const styles = StyleSheet.create({
   },
   settingicon: {
     color: COLORS.black,
-
-    
   },
+  settingButton2: {
+    width: "100%",
+    backgroundColor: COLORS.lightpurple,
+    padding: 20,
+    justifyContent: "space-between",
+    flexDirection: "row",
+  },
+  Title: {
+    flexDirection: "row",
+  },
+  
 });
 export default Setting;

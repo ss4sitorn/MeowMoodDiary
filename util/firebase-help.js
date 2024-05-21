@@ -1,4 +1,4 @@
-import { getFirestore, doc, setDoc, updateDoc } from "firebase/firestore";
+import { getFirestore, doc, setDoc, updateDoc,getDoc } from "firebase/firestore";
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import firebaseApp from "../src/firebase/config";
 import showConfirmationDialog from "./alert-confirm-custom";
@@ -46,4 +46,23 @@ const LogOut = async (navigation) => {
     )
 }
 
-export { setPinToFireStore, resetPassword , LogOut};
+const getEmail = () => {
+    let auth = getAuth(firebaseApp);
+    let user = auth.currentUser;
+    return user.email;
+}
+
+const getUsername = async() => { 
+    const auth = getAuth(firebaseApp);
+    const user = auth.currentUser;
+    const docRef = doc(db, "users", user.uid);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+        console.log("Document data:", docSnap.data());
+        return docSnap.data().username;
+    } else {
+        console.log("No such document!");
+    }
+}
+
+export { setPinToFireStore, resetPassword , LogOut, getEmail, getUsername};
