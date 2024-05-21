@@ -71,13 +71,11 @@ const Home = ({ navigation }) => {
       acc[diary.date] = {
         moodImage: diary.moodImage,
         text: diary.text,
-        moodText: diary.mood,
+        mood: diary.mood,
         date: diary.date,
       };
       return acc;
     }, {});
-
-    console.log(diaryData);
     setDiary(diaryData);
   }
 
@@ -96,7 +94,6 @@ const Home = ({ navigation }) => {
 
   const handleDatePress = (date) => {
     // Logic to show diary for the selected date
-    console.log("Selected date:", date);
     setDiaryData(diary[date]);
     // You can navigate to a new screen or show a modal with the diary details
   };
@@ -109,7 +106,7 @@ const Home = ({ navigation }) => {
       year: "numeric",
     });
     // Get the image for the selected date
-    const image = diary && imageMoodStore[diary[day]?.moodText];
+    const image = diary && imageMoodStore[diary[day]?.mood];
     return (
       <TouchableOpacity onPress={() => handleDatePress(day)}>
         <View style={styles.dayContainer}>
@@ -126,7 +123,12 @@ const Home = ({ navigation }) => {
         <View style={styles.titleContainer}>
           <Text style={styles.title}>Calendar</Text>
         </View>
-        <Calendar dayComponent={renderDay} />
+        <Calendar dayComponent={renderDay}
+                  onMonthChange={(month) => {
+                    console.log('Month changed', month);
+                    setDiary(null);
+                    getAlldiary();
+                  }}/>
         <View style={styles.messageBox}>
           <Image source={imageMoodStore[diaryData?.mood]} style={styles.emoji} />
           <Text style={styles.date}>{diaryData?.date}</Text>
