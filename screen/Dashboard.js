@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -10,6 +10,16 @@ import {
 import { LineChart } from "react-native-chart-kit";
 import { COLORS } from "../constants/colors";
 import BottomBar from "../util/BottomBar";
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  query,
+  where,
+  orderBy,
+  limitToLast,
+} from "firebase/firestore";
+import firebaseApp from "../src/firebase/config";
 
 const Dashboard = ({ navigation }) => {
   const [isWeekly, setIsWeekly] = useState(true);
@@ -18,6 +28,39 @@ const Dashboard = ({ navigation }) => {
     month: "long",
     year: "numeric",
   });
+  const [stressData, setStressData] = useState([]); // เก็บข้อมูล stress score จาก Firebase
+
+  useEffect(() => {
+    const fetchStressData = async () => {
+      const db = getFirestore(firebaseApp);
+      const today = new Date();
+      const sevenDaysAgo = new Date(today);
+      sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 6); // ย้อนหลัง 7 วัน
+
+      const stressRef = collection(db, "diaries");
+      const q = query(
+        stressRef,
+        where("date", ">=", sevenDaysAgo),
+        where("date", "<=", today),
+        orderBy("date", "desc"),
+        limitToLast(7)
+      ); // ดึงข้อมูล 7 วันล่าสุด
+
+      const querySnapshot = await getDocs(q);
+      const data = [];
+      querySnapshot.forEach((doc) => {
+        data.push(doc.data().score || 0); // ถ้าไม่มี score ให้เป็น 0
+      });
+
+      while (data.length < 7) {
+        data.push(0); // เติม 0 ให้ครบ 7 วัน
+      }
+
+      setStressData(data.reverse()); // เรียงข้อมูลจากเก่าไปใหม่
+    };
+
+    fetchStressData();
+  }, []); 
 
   // ฟังก์ชั่นสำหรับแปลงค่า stress level เป็นข้อความ
   const yAxisLabel = (value) => {
@@ -46,7 +89,7 @@ const Dashboard = ({ navigation }) => {
   };
 
   // ข้อมูล stress level ของทุกวันในสัปดาห์
-  const stressData = [0, 1, 2, 3, 2, 1, 3];
+  //const stressData = [0, 1, 2, 3, 2, 1, 3];
 
   return (
     <View style={styles.container}>
