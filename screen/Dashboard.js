@@ -30,6 +30,8 @@ const Dashboard = ({ navigation }) => {
     year: "numeric",
   });
   const [stressData, setStressData] = useState([0, 1, 2, 3, 2, 1, 3]); // เก็บข้อมูล stress score จาก Firebase
+  const [label, setLabel] = useState(["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]); // เก็บข้อมูล stress score จาก Firebase
+
 
   useEffect(() => {
     const fetchStressData = async () => {
@@ -40,17 +42,40 @@ const Dashboard = ({ navigation }) => {
       sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 6); // ย้อนหลัง 7 วัน
       console.log(sevenDaysAgo);
       const dataDia = await getDataCollectionWithUid("diaries");
-      console.log("dataDia ", dataDia);
+
 
       const data = [];
-      dataDia.forEach((doc) => {
-        data.push(doc.score || 0); // ถ้าไม่มี score ให้เป็น 0
+      let dayArray = [];
+      //filer data between today and 7 days ago
+      const filteredData = dataDia.filter((doc) => {
+        const docDate = doc.date; // assuming there is a 'date' field in the document
+        return docDate >= sevenDaysAgo && docDate <= today;
       });
+      filteredData.forEach((doc) => {
+        data.push(doc.score || 0); // ถ้าไม่มี score ให้เป็น 0
+        //get day text of the week
+        const day = new Date(doc.date).toLocaleDateString("en-GB", {
+          weekday: "short",
+        });
+
+        console.log("day: ", day);
+        dayArray.push(day);
+      });
+      let i = 1;
       while (data.length < 7) {
         data.push(0); // เติม 0 ให้ครบ 7 วัน
+        //add day text next ต่อจากวันสุดท้าย
+        const lastDay = new Date(filteredData[filteredData.length - 1].date); 
+        lastDay.setDate(lastDay.getDate() + i++);
+        const day = lastDay.toLocaleDateString("en-GB", {
+          weekday: "short",
+        });
+        dayArray.push(day);
+  
       }
-      console.log(data);
+      console.log(data); 
       setStressData(data); // เรียงข้อมูลจากเก่าไปใหม่
+      setLabel(dayArray);
     };
 
     fetchStressData();
@@ -159,7 +184,7 @@ const Dashboard = ({ navigation }) => {
 
         <LineChart
           data={{
-            labels: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+            labels: label,
             datasets: [{ data: stressData }],
           }}
           width={Dimensions.get("window").width}
