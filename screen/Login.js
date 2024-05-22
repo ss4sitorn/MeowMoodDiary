@@ -4,6 +4,7 @@ import { COLORS } from "../constants/colors";
 import styles from "../src/styles/styles";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, setPersistence, browserLocalPersistence, browserSessionPersistence } from "firebase/auth";import firebaseApp from "../src/firebase/config";
 import showAlert from "../util/alert-custom";
+import {getUserData} from "../util/firebase-help";
 
 const auth = getAuth(firebaseApp);
 
@@ -15,12 +16,14 @@ const Login = ({ navigation }) => {
     try {
         // To sign in an existing user
         signInWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
+            .then(async (userCredential) => {
                 // The user is signed in
                 const user = userCredential.user;
                 console.log('User signed in: ', user);
                 // showAlert('Login success', 'Nice to see you again!');
-                navigation.navigate('Home');
+                const page = await getUserData("pin") ? "PinActivate" : "Home";
+
+                navigation.navigate(page);
             })
             .catch((error) => {
                 showAlert('Login failed', 'email or password is incorrect');

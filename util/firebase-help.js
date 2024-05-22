@@ -1,4 +1,4 @@
-import { getFirestore, doc, setDoc, updateDoc,getDoc } from "firebase/firestore";
+import { getFirestore, doc, setDoc, updateDoc,getDoc,deleteField } from "firebase/firestore";
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import firebaseApp from "../src/firebase/config";
 import showConfirmationDialog from "./alert-confirm-custom";
@@ -10,6 +10,8 @@ const auth = getAuth(firebaseApp);
 const user = auth.currentUser;
 
 const setPinToFireStore = async (pin) => {
+    let auth = getAuth(firebaseApp);
+    let user = auth.currentUser;
     try {
         await updateDoc(doc(db, "users", user.uid), {
             pin: pin,
@@ -20,6 +22,8 @@ const setPinToFireStore = async (pin) => {
 }
 
 const resetPassword = async () => {
+    let auth = getAuth(firebaseApp);
+    let user = auth.currentUser;
     showConfirmationDialog('Reset Password', 'Are you sure you want to reset your password?', async () => {
         try {
             await sendPasswordResetEmail(auth, user.email).then(() => {
@@ -35,6 +39,8 @@ const resetPassword = async () => {
     )
 }
 const LogOut = async (navigation) => {
+    let auth = getAuth(firebaseApp);
+    let user = auth.currentUser;
     showConfirmationDialog('Warning', 'Are you sure to log out?', async () => {
             await auth.signOut().then(() => {
                 console.log('User signed out');

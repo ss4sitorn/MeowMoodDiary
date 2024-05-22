@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Text, TouchableOpacity, TextInput, View, StyleSheet } from 'react-native';
+import {Text, TouchableOpacity, TextInput, View, StyleSheet, SafeAreaView} from 'react-native';
 import { COLORS } from "../constants/colors";
 import styles from "../src/styles/styles";
 import {getFirestore, doc, setDoc, getDoc} from "firebase/firestore";
@@ -62,7 +62,7 @@ const PinActivate = ({ navigation, route }) => {
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.headingContainer}>
         <Text style={styles.headingText}>PIN</Text>
         <Text style={styles.subheadingText}> </Text>
@@ -77,7 +77,7 @@ const PinActivate = ({ navigation, route }) => {
           <Text style={styles.buttonText}> Submit </Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

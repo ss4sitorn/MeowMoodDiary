@@ -9,7 +9,7 @@ import showConfirmationDialog from "../util/alert-confirm-custom";
 import firebaseApp from "../src/firebase/config";
 import 'firebase/auth';
 import { getAuth } from "firebase/auth";
-import {LogOut, getEmail, getUsername, resetPassword} from "../util/firebase-help";
+import {LogOut, getEmail, getUsername, resetPassword, deleteFieldWithValue, getUserData} from "../util/firebase-help";
 import { NavigationContainer } from '@react-navigation/native';
 
 
@@ -18,16 +18,27 @@ const Setting = () => {const auth = getAuth(firebaseApp);
   const [isEnabled, setIsEnabled] = useState(false);
   const [email,setEmail]=useState('');
   const [username, setUsername] = useState('');
-  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
-  useEffect(() => {
+  const toggleSwitch = () => {
+    setIsEnabled(previousState => !previousState);
+    deleteFieldWithValue("pin");
   }
-  , []);
+
+  const getStatePin = async () => {
+    const pin = await getUserData("pin");
+    if (pin) {
+      setIsEnabled(true);
+    }else {
+      setIsEnabled(false);
+    }
+
+  }
+
   useEffect(() => {
-    setEmail(getEmail());
-    setUsername(getUsername());
     const unsubscribe = navigation.addListener("focus", () => {
       setEmail(getEmail());
     setUsername(getUsername());
+      getStatePin();
+
     });
     return unsubscribe;
   }, [navigation]);
@@ -49,7 +60,7 @@ const Setting = () => {const auth = getAuth(firebaseApp);
       console.log(error);
     });
   };
-  
+
   return (
     <View style={styles.container}>
       <View style={styles.headerzone}>
@@ -73,7 +84,7 @@ const Setting = () => {const auth = getAuth(firebaseApp);
 
       <View style={styles.settingContainer}>
         <TouchableOpacity style={styles.settingButton2} onPress={handleResetPin}>
-          <View style={styles.Title}><Icon name="keypad-outline" size={40}  style={styles.settingicon} />  
+          <View style={styles.Title}><Icon name="keypad-outline" size={40}  style={styles.settingicon} />
           <Text style={styles.settingText}>    Pin</Text></View>
           <Switch style={width=200}
         trackColor={{false: '#767577', true: '#80B7A2'}}
@@ -125,7 +136,7 @@ const styles = StyleSheet.create({
   PageTitle: {
     fontSize: 28,
     color: COLORS.black,
-    
+
 
     left: 20,
   },
@@ -183,6 +194,6 @@ const styles = StyleSheet.create({
   Title: {
     flexDirection: "row",
   },
-  
+
 });
 export default Setting;
