@@ -37,10 +37,8 @@ const Dashboard = ({ navigation }) => {
     const fetchStressData = async () => {
       const db = getFirestore(firebaseApp);
       const today = new Date();
-      console.log(today);
       const sevenDaysAgo = new Date(today);
       sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 6); // ย้อนหลัง 7 วัน
-      console.log(sevenDaysAgo);
       const dataDia = await getDataCollectionWithUid("diaries");
 
 
@@ -58,7 +56,6 @@ const Dashboard = ({ navigation }) => {
           weekday: "short",
         });
 
-        console.log("day: ", day);
         dayArray.push(day);
       });
       let i = 1;
@@ -73,7 +70,6 @@ const Dashboard = ({ navigation }) => {
         dayArray.push(day);
   
       }
-      console.log(data); 
       setStressData(data); // เรียงข้อมูลจากเก่าไปใหม่
       setLabel(dayArray);
     };
