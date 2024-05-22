@@ -25,6 +25,7 @@ import Dashboard from "../screen/Dashboard";
 import FavoriteCard from "../screen/FavoriteCard";
 import WeeklyHomework from "../screen/WeeklyHomework";
 import PinActivate from "../screen/Pin-activate";
+import EditProfile from "../screen/EditProfile";
 
 const Stack = createNativeStackNavigator();
 const AppNavigator = ({setPage}) => {
@@ -55,6 +56,7 @@ const AppNavigator = ({setPage}) => {
                 <Stack.Screen name="FavoriteCard" component={ FavoriteCard } options={{headerShown:false}} />
                 <Stack.Screen name="WeeklyHomework" component={ WeeklyHomework } options={{headerShown:false}} />
                 <Stack.Screen name="PinActivate" component={ PinActivate } options={{headerShown:false}} />
+                <Stack.Screen name="EditProfile" component={EditProfile} options={{headerShown:false}} />
             </Stack.Navigator>
         </NavigationContainer>
     );
