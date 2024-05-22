@@ -1,4 +1,4 @@
-import { getFirestore, doc, setDoc, updateDoc,getDoc } from "firebase/firestore";
+import { getFirestore, doc, setDoc, updateDoc,getDoc ,deleteField } from "firebase/firestore";
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import firebaseApp from "../src/firebase/config";
 import showConfirmationDialog from "./alert-confirm-custom";
@@ -79,4 +79,13 @@ const getUserData = async (value) => {
     }
 }
 
-export { setPinToFireStore, resetPassword , LogOut, getEmail, getUsername , getUserData};
+const deleteFieldWithValue = (field) => {
+    const auth = getAuth(firebaseApp);
+    const user = auth.currentUser;
+    const docRef = doc(db, "users", user.uid);
+    updateDoc(docRef, {
+        [field]: deleteField()
+    }).then(r => console.log(field ," deleted"));
+}
+
+export { setPinToFireStore, resetPassword , LogOut, getEmail, getUsername , getUserData , deleteFieldWithValue};
