@@ -10,17 +10,9 @@ import {
 import { LineChart } from "react-native-chart-kit";
 import { COLORS } from "../constants/colors";
 import BottomBar from "../util/BottomBar";
-import {
-  getFirestore,
-  collection,
-  getDocs,
-  query,
-  where,
-  orderBy,
-  limitToLast,
-} from "firebase/firestore";
 import firebaseApp from "../src/firebase/config";
 import { getDataCollectionWithUid } from "../util/firebase-help";
+import { getFirestore } from "firebase/firestore";
 
 const Dashboard = ({ navigation }) => {
   const [isWeekly, setIsWeekly] = useState(true);
@@ -29,53 +21,32 @@ const Dashboard = ({ navigation }) => {
     month: "long",
     year: "numeric",
   });
-  const [stressData, setStressData] = useState([0, 1, 2, 3, 2, 1, 3]); // เก็บข้อมูล stress score จาก Firebase
-  const [label, setLabel] = useState(["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]); // เก็บข้อมูล stress score จาก Firebase
-
+  const [stressData, setStressData] = useState(Array(14).fill(0)); // เก็บข้อมูล stress score จาก Firebase
 
   useEffect(() => {
     const fetchStressData = async () => {
       const db = getFirestore(firebaseApp);
       const today = new Date();
-      const sevenDaysAgo = new Date(today);
-      sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 6); // ย้อนหลัง 7 วัน
+      const daysAgo = isWeekly ? 6 : 13; // ย้อนหลัง 7 วันสำหรับ weekly, 14 วันสำหรับ 2 weeks
+      const startDate = new Date(today);
+      startDate.setDate(startDate.getDate() - daysAgo);
+
       const dataDia = await getDataCollectionWithUid("diaries");
+      const data = Array(daysAgo + 1).fill(0);
 
-
-      const data = [];
-      let dayArray = [];
-      //filer data between today and 7 days ago
-      const filteredData = dataDia.filter((doc) => {
-        const docDate = doc.date; // assuming there is a 'date' field in the document
-        return docDate >= sevenDaysAgo && docDate <= today;
+      dataDia.forEach((doc) => {
+        const docDate = new Date(doc.date);
+        if (docDate >= startDate && docDate <= today) {
+          const diffDays = Math.floor((today - docDate) / (1000 * 60 * 60 * 24));
+          data[daysAgo - diffDays] = doc.score || 0; // ถ้าไม่มี score ให้เป็น 0
+        }
       });
-      filteredData.forEach((doc) => {
-        data.push(doc.score || 0); // ถ้าไม่มี score ให้เป็น 0
-        //get day text of the week
-        const day = new Date(doc.date).toLocaleDateString("en-GB", {
-          weekday: "short",
-        });
 
-        dayArray.push(day);
-      });
-      let i = 1;
-      while (data.length < 7) {
-        data.push(0); // เติม 0 ให้ครบ 7 วัน
-        //add day text next ต่อจากวันสุดท้าย
-        const lastDay = new Date(filteredData[filteredData.length - 1].date); 
-        lastDay.setDate(lastDay.getDate() + i++);
-        const day = lastDay.toLocaleDateString("en-GB", {
-          weekday: "short",
-        });
-        dayArray.push(day);
-  
-      }
       setStressData(data); // เรียงข้อมูลจากเก่าไปใหม่
-      setLabel(dayArray);
     };
 
     fetchStressData();
-  }, []); 
+  }, [isWeekly]);
 
   // ฟังก์ชั่นสำหรับแปลงค่า stress level เป็นข้อความ
   const yAxisLabel = (value) => {
@@ -85,26 +56,27 @@ const Dashboard = ({ navigation }) => {
     return "most";
   };
 
-  // คำนวณค่าเฉลี่ยของ stress level ของทั้งสัปดาห์
-  const weeklyAverage = (data) => {
+  // คำนวณค่าเฉลี่ยของ stress level ของช่วงเวลาที่เลือก
+  const calculateAverage = (data) => {
     const sum = data.reduce((acc, curr) => acc + curr, 0);
     return sum / data.length;
   };
 
-  // ข้อความแสดงค่าเฉลี่ยของ stress level ของทั้งสัปดาห์
+  // ข้อความแสดงค่าเฉลี่ยของ stress level ของช่วงเวลาที่เลือก
   const averageStressText = (average) => {
     let stressLevel = "low";
     if (average >= 1 && average < 2) stressLevel = "moderate";
     else if (average >= 2 && average < 3) stressLevel = "very";
     else if (average >= 3) stressLevel = "most";
 
-    return `Your weekly stress average is ${average.toFixed(
+    return `Your stress average is ${average.toFixed(
       2
-    )} indicating ${stressLevel} stress level. Great Job!`;
+    )}, indicating ${stressLevel} stress level. Great Job!`;
   };
 
-  // ข้อมูล stress level ของทุกวันในสัปดาห์
-  //const stressData = [0, 1, 2, 3, 2, 1, 3];
+  const labels = isWeekly
+    ? ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+    : ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
   return (
     <View style={styles.container}>
@@ -114,7 +86,7 @@ const Dashboard = ({ navigation }) => {
       <View style={styles.card}>
         <View style={styles.header}>
           <Text style={styles.title}>Mood Week Diary</Text>
-          <Text style={styles.subtitle}>Day 7/7</Text>
+          <Text style={styles.subtitle}>Day {isWeekly ? "7/7" : "14/14"}</Text>
         </View>
         <View style={styles.iconRow}>
           <Image
@@ -180,8 +152,8 @@ const Dashboard = ({ navigation }) => {
 
         <LineChart
           data={{
-            labels: label,
-            datasets: [{ data: stressData }],
+            labels: labels,
+            datasets: [{ data: stressData.slice(-labels.length) }],
           }}
           width={Dimensions.get("window").width}
           height={220}
@@ -212,7 +184,7 @@ const Dashboard = ({ navigation }) => {
         />
         <View style={styles.stressTextContainer}>
           <Text style={styles.stressText}>
-            {averageStressText(weeklyAverage(stressData))}
+            {averageStressText(calculateAverage(stressData.slice(-labels.length)))}
           </Text>
         </View>
       </View>
