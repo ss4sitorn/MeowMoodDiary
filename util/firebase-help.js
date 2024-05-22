@@ -52,7 +52,7 @@ const getEmail = () => {
     return user.email;
 }
 
-const getUsername = async() => { 
+const getUsername = async() => {
     const auth = getAuth(firebaseApp);
     const user = auth.currentUser;
     const docRef = doc(db, "users", user.uid);
@@ -77,4 +77,18 @@ const updateByValue = async (filed,value) => {
     }
 }
 
-export { setPinToFireStore, resetPassword , LogOut, getEmail, getUsername,updateByValue};
+const getUserData = async (value) => {
+    const auth = getAuth(firebaseApp);
+    const user = auth.currentUser;
+    const docRef = doc(db, "users", user.uid);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+        console.log("Document data:", docSnap.data());
+        return docSnap.data()[value];
+    } else {
+        console.log("No such document!");
+        return null;
+    }
+}
+
+export { setPinToFireStore, resetPassword , LogOut, getEmail, getUsername , getUserData,updateByValue};

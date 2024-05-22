@@ -24,6 +24,7 @@ import ConfirmPin from "../screen/ConfirmPin";
 import Dashboard from "../screen/Dashboard";
 import FavoriteCard from "../screen/FavoriteCard";
 import WeeklyHomework from "../screen/WeeklyHomework";
+import PinActivate from "../screen/Pin-activate";
 import EditProfile from "../screen/EditProfile";
 
 const Stack = createNativeStackNavigator();
@@ -48,12 +49,13 @@ const AppNavigator = ({setPage}) => {
                 <Stack.Screen name="CardToday" component={ CardToday } options={{headerShown:false}} />
                 <Stack.Screen name="Setting" component={ Setting } options={{headerShown:false}} />
                 <Stack.Screen name="ResetPassword" component={ ResetPassword } options={{headerShown:false}} />
-                <Stack.Screen name="CardMood" component={ CardMood } options={{headerShown:false}} /> 
+                <Stack.Screen name="CardMood" component={ CardMood } options={{headerShown:false}} />
                 <Stack.Screen name="ResetPin" component={ ResetPin } options={{headerShown:false}} />
                 <Stack.Screen name="ConfirmPin" component={ ConfirmPin } options={{headerShown:false}} />
                 <Stack.Screen name="Dashboard" component={ Dashboard } options={{headerShown:false}} />
                 <Stack.Screen name="FavoriteCard" component={ FavoriteCard } options={{headerShown:false}} />
                 <Stack.Screen name="WeeklyHomework" component={ WeeklyHomework } options={{headerShown:false}} />
+                <Stack.Screen name="PinActivate" component={ PinActivate } options={{headerShown:false}} />
                 <Stack.Screen name="EditProfile" component={EditProfile} options={{headerShown:false}} />
             </Stack.Navigator>
         </NavigationContainer>
