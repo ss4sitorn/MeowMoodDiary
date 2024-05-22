@@ -5,6 +5,7 @@ import {
   StyleSheet,
   SafeAreaView,
   StatusBar,
+  Platform,
 } from "react-native";
 import BottomBar from "../util/BottomBar";
 import { useNavigation } from "@react-navigation/native";
@@ -25,7 +26,7 @@ import {
 import React, { useEffect, useState } from "react";
 import firebaseApp from "../src/firebase/config";
 import Card from "../util/Card";
-import { Accelerometer } from "expo-sensors";
+import { Accelerometer, DeviceMotion } from "expo-sensors";
 import { getAuth } from "firebase/auth";
 import { set } from "firebase/database";
 
@@ -161,6 +162,18 @@ const CardToday = () => {
       subscription && subscription.remove();
     };
   }, []);
+
+  useEffect(() => {
+    if (Platform.OS === "ios") {
+      DeviceMotion.setUpdateInterval(400);
+      const subscription = DeviceMotion.addListener(handleData);
+      return () => {
+        subscription && subscription.remove();
+      };
+    }
+  }, []);
+
+  
 
   return (
     <SafeAreaView style={styles.container}>

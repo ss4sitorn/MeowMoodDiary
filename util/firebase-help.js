@@ -65,4 +65,16 @@ const getUsername = async() => {
     }
 }
 
-export { setPinToFireStore, resetPassword , LogOut, getEmail, getUsername};
+const updateByValue = async (filed,value) => {
+    try {
+        const auth = getAuth(firebaseApp);
+    const user = auth.currentUser;
+        await updateDoc(doc(db, "users", user.uid), {
+            [filed]: value,
+        });
+    } catch (e) {
+        console.error(e);
+    }
+}
+
+export { setPinToFireStore, resetPassword , LogOut, getEmail, getUsername,updateByValue};

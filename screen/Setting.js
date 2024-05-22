@@ -10,6 +10,7 @@ import firebaseApp from "../src/firebase/config";
 import 'firebase/auth';
 import { getAuth } from "firebase/auth";
 import {LogOut, getEmail, getUsername, resetPassword} from "../util/firebase-help";
+import { NavigationContainer } from '@react-navigation/native';
 
 
 const Setting = () => {const auth = getAuth(firebaseApp);
@@ -19,16 +20,25 @@ const Setting = () => {const auth = getAuth(firebaseApp);
   const [username, setUsername] = useState('');
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   useEffect(() => {
-    setEmail(getEmail());
-    setUsername(getUsername());
   }
   , []);
-  
+  useEffect(() => {
+    setEmail(getEmail());
+    setUsername(getUsername());
+    const unsubscribe = navigation.addListener("focus", () => {
+      setEmail(getEmail());
+    setUsername(getUsername());
+    });
+    return unsubscribe;
+  }, [navigation]);
   const handleResetPassword = () => {
     resetPassword();
   };
   const handleResetPin = () => {
     navigation.navigate("ResetPin");
+  };
+  const handleEditProfilePress = () => {
+    navigation.navigate('EditProfile' , {username: username});
   };
   const user = auth.currentUser;
   //delete user from firebase auth and database
@@ -44,7 +54,7 @@ const Setting = () => {const auth = getAuth(firebaseApp);
     <View style={styles.container}>
       <View style={styles.headerzone}>
         <View style={styles.imageContainer}>
-          <TouchableOpacity style={styles.Profile}>
+          <TouchableOpacity style={styles.Profile} onPress={handleEditProfilePress}>
             <Icon name="person-circle" size={125} color={COLORS.darkgreen} />
             <Icon
               style={styles.editIconContainer}
