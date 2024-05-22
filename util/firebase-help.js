@@ -1,10 +1,10 @@
-import { getFirestore, doc, setDoc, updateDoc,getDoc,deleteField } from "firebase/firestore";
+import { getFirestore, doc, setDoc, updateDoc,getDoc,deleteField ,getDocs , collection} from "firebase/firestore";
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import firebaseApp from "../src/firebase/config";
 import showConfirmationDialog from "./alert-confirm-custom";
 import showAlert from "./alert-custom";
 import {useNavigation} from "@react-navigation/native";
-
+import moment from 'moment';
 const db = getFirestore(firebaseApp);
 const auth = getAuth(firebaseApp);
 const user = auth.currentUser;
@@ -112,4 +112,31 @@ const deleteFieldWithValue = (field) => {
     }).then(r => console.log(field ," deleted"));
 }
 
-export { setPinToFireStore, resetPassword , LogOut, getEmail, getUsername , getUserData , deleteFieldWithValue,updateByValue,getUID};
+const getDataCollectionWithUid = async (collectionName) => {
+    const auth = getAuth(firebaseApp);
+    const user = auth.currentUser;
+    const collref = getDocs(collection(db, collectionName));
+    const data = [];
+    const querySnapshot = await collref;
+    querySnapshot.forEach((doc) => {
+        if(doc.data().uid === user.uid){
+            //convert string date "19 May 2024" to date object
+
+
+
+            data.push(doc.data());
+        }
+    });
+    data.map((item) => {
+        const dateString = item.date.trim();
+        const dateObject = moment(dateString, "DD MMM YYYY").toDate();
+        if (isNaN(dateObject.getTime())) {
+            console.error("Invalid date string: ", dateString);
+        } else {
+            item.date = dateObject;
+        }
+    });
+    return data;
+}
+
+export { setPinToFireStore, resetPassword , LogOut, getEmail, getUsername , getUserData , deleteFieldWithValue,updateByValue , getDataCollectionWithUid};

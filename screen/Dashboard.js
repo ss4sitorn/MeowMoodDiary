@@ -20,6 +20,7 @@ import {
   limitToLast,
 } from "firebase/firestore";
 import firebaseApp from "../src/firebase/config";
+import { getDataCollectionWithUid } from "../util/firebase-help";
 
 const Dashboard = ({ navigation }) => {
   const [isWeekly, setIsWeekly] = useState(true);
@@ -28,35 +29,28 @@ const Dashboard = ({ navigation }) => {
     month: "long",
     year: "numeric",
   });
-  const [stressData, setStressData] = useState([]); // เก็บข้อมูล stress score จาก Firebase
+  const [stressData, setStressData] = useState([0, 1, 2, 3, 2, 1, 3]); // เก็บข้อมูล stress score จาก Firebase
 
   useEffect(() => {
     const fetchStressData = async () => {
       const db = getFirestore(firebaseApp);
       const today = new Date();
+      console.log(today);
       const sevenDaysAgo = new Date(today);
       sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 6); // ย้อนหลัง 7 วัน
+      console.log(sevenDaysAgo);
+      const dataDia = await getDataCollectionWithUid("diaries");
+      console.log("dataDia ", dataDia);
 
-      const stressRef = collection(db, "diaries");
-      const q = query(
-        stressRef,
-        where("date", ">=", sevenDaysAgo),
-        where("date", "<=", today),
-        orderBy("date", "desc"),
-        limitToLast(7)
-      ); // ดึงข้อมูล 7 วันล่าสุด
-
-      const querySnapshot = await getDocs(q);
       const data = [];
-      querySnapshot.forEach((doc) => {
-        data.push(doc.data().score || 0); // ถ้าไม่มี score ให้เป็น 0
+      dataDia.forEach((doc) => {
+        data.push(doc.score || 0); // ถ้าไม่มี score ให้เป็น 0
       });
-
       while (data.length < 7) {
         data.push(0); // เติม 0 ให้ครบ 7 วัน
       }
-
-      setStressData(data.reverse()); // เรียงข้อมูลจากเก่าไปใหม่
+      console.log(data);
+      setStressData(data); // เรียงข้อมูลจากเก่าไปใหม่
     };
 
     fetchStressData();
