@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Image,
   StatusBar,
+  ScrollView
 } from "react-native";
 import { Calendar } from "react-native-calendars";
 import BottomBar from "../util/BottomBar";
@@ -30,6 +31,7 @@ import calendarImage1 from "../assets/Emotion/e01.png";
 import calendarImage2 from "../assets/Emotion/e02.png";
 import { set } from "firebase/database";
 import {imageMoodStore} from "../util/image-store";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const Home = ({ navigation }) => {
   const emotionPath = "../assets/Emotion/e01.png";
@@ -118,8 +120,8 @@ const Home = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.contentContainer}>
+    <SafeAreaView style={styles.container}>
+      <ScrollView style={styles.contentContainer}>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>Calendar</Text>
         </View>
@@ -148,9 +150,9 @@ const Home = ({ navigation }) => {
             <Text style={styles.buttonText}>Stress Assessment</Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </ScrollView>
       <BottomBar navigation={navigation} />
-    </View>
+    </SafeAreaView>
   );
 };
 
