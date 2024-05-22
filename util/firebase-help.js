@@ -58,6 +58,12 @@ const getEmail = () => {
     return user.email;
 }
 
+const getUID = () => {
+    let auth = getAuth(firebaseApp);
+    let user = auth.currentUser;
+    return user.uid;
+}
+
 const getUsername = async() => {
     const auth = getAuth(firebaseApp);
     const user = auth.currentUser;
@@ -106,4 +112,4 @@ const deleteFieldWithValue = (field) => {
     }).then(r => console.log(field ," deleted"));
 }
 
-export { setPinToFireStore, resetPassword , LogOut, getEmail, getUsername , getUserData , deleteFieldWithValue,updateByValue};
+export { setPinToFireStore, resetPassword , LogOut, getEmail, getUsername , getUserData , deleteFieldWithValue,updateByValue,getUID};
