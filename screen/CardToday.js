@@ -11,7 +11,8 @@ import BottomBar from "../util/BottomBar";
 import { useNavigation } from "@react-navigation/native";
 import { COLORS } from "../constants/colors";
 import Icon from "react-native-vector-icons/AntDesign";
-import Icons from "react-native-vector-icons/Ionicons";
+import Icons from "react-native-vector-icons/Fontisto";
+
 import {
   getFirestore,
   collection,
@@ -191,7 +192,7 @@ const CardToday = () => {
         <Text style={styles.title} >
           Card Of The Day
         </Text>
-        <Icons name="heart-circle" size={50} style={styles.favicon}  onPress={gotofav}/>
+        <Icons name="favorite" size={35} style={styles.favicon}  onPress={gotofav}/>
       </View>
 
       <View style={styles.cardContainer}>
@@ -299,8 +300,8 @@ const styles = StyleSheet.create({
   },
   favicon : {
     position: "absolute",
-    right: 20,
-    top: 0,
+    right: 25,
+    top: 10,
     color: COLORS.pink,
   
   },

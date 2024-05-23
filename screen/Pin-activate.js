@@ -1,7 +1,6 @@
 import React, { useState, useRef } from 'react';
-import {Text, TouchableOpacity, TextInput, View, StyleSheet, SafeAreaView} from 'react-native';
+import {Text, TouchableOpacity, TextInput, View, StyleSheet, SafeAreaView, StatusBar } from 'react-native';
 import { COLORS } from "../constants/colors";
-import styles from "../src/styles/styles";
 import {getFirestore, doc, setDoc, getDoc} from "firebase/firestore";
 import firebaseApp from "../src/firebase/config";
 import showAlert from "../util/alert-custom";
@@ -32,15 +31,13 @@ const PinActivate = ({ navigation, route }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.headingContainer}>
-        <Text style={styles.headingText}>PIN</Text>
-        <Text style={styles.subheadingText}> </Text>
-      </View>
+        {/* <Text style={styles.headingText}>PIN</Text> */}
       {error ? <Text>{error}</Text> : null}
+      
       <View style={styles.inputContainer}>
-        <Text style={[styles.label, {align: "center"}]}> Please input your 4 digits number </Text>
+      <PinTemp heading="PIN" label="please input your 4 digits number" onPinChange={(newPin) => setPin(newPin.split(''))} />
       </View>
-      <PinTemp onPinChange={(newPin) => setPin(newPin.split(''))} />
+      
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button} onPress={handleSubmit}>
           <Text style={styles.buttonText}> Submit </Text>
@@ -50,17 +47,39 @@ const PinActivate = ({ navigation, route }) => {
   );
 };
 
-const pinStyles = StyleSheet.create({
-  input: {
-    borderRadius: 15,
-    padding: 5,
-    width: '15%',
+const styles = StyleSheet.create({
+
+  container: {
+    flex: 1,
+    paddingHorizontal: 20,
+    paddingTop: StatusBar.currentHeight,
     backgroundColor: COLORS.cream,
-    borderColor: COLORS.darkgreen,
-    borderWidth: 1,
-    margin: 5,
+  },
+  inputContainer: {
+    marginBottom: 20,
+    width: '100%',
+    marginTop: 30,
+  },
+  button: {
+    backgroundColor: COLORS.lightgreen,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    marginVertical: 10,
+    borderRadius: 5,
+    alignSelf: 'center',
+    width: '40%',
+  },
+  buttonText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: COLORS.white,
     textAlign: 'center',
   },
+
+
+
 });
+
+
 
 export default PinActivate;
