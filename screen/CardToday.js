@@ -21,14 +21,14 @@ import {
   orderBy,
   limit,
   where,
-  addDoc,
+  getDoc,
 } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import firebaseApp from "../src/firebase/config";
 import Card from "../util/Card";
 import { Accelerometer, DeviceMotion } from "expo-sensors";
 import { getAuth } from "firebase/auth";
-import { set } from "firebase/database";
+import  showAlert  from "../util/alert-custom";
 
 const CardToday = () => {
   const navigation = useNavigation();
@@ -49,20 +49,30 @@ const CardToday = () => {
     navigation.navigate("FavoriteCard");
   };
 
-  async function handleFavCard () {
+  async function handleFavCard() {
     try {
       const user = getAuth(firebaseApp).currentUser;
-      const favCardCollectionRef = collection(db, "users", user.uid , "favCard");
-      await addDoc(favCardCollectionRef, {
-        card: card,
-      });
+      const favCardCollectionRef = collection(db, "users", user.uid, "favCard");
+      if (card != null) {
+        const favCardDocRef = doc(favCardCollectionRef, card.id); // Create a reference to the document with the same ID as card.id
+        const favCardSnapshot = await getDoc(favCardDocRef);
 
+        if (favCardSnapshot.exists()) {
+          console.log("This card has already been added.");
+        } else {
+          await setDoc(favCardDocRef, {
+            card: card,
+          });
+          showAlert("Success", "Card added to favorite");
+          console.log("Card added to favorite");
+        }
+      } else {
+        console.log("No card to add to favorite");
+      }
     } catch (error) {
       console.error("Error fetching card:", error);
     }
   }
-
-
 
   async function getCard() {
     if (!user) {
@@ -85,7 +95,7 @@ const CardToday = () => {
         setLoading(false);
         return;
       }
-     
+
       const latestDiary = diariesQuerySnapshot.docs[0];
       const userMood = latestDiary.data().mood;
 
@@ -95,12 +105,10 @@ const CardToday = () => {
       const cardList = [];
       cardQuerySnapshot.forEach((doc) => {
         const cardData = doc.data();
+        cardData.id = doc.id; // Add the document ID to the cardData
         if (cardData.mood === userMood) {
           cardList.push(cardData);
         }
-        // else if (userMood === null) {
-        //   cardList.push(cardData);
-        // }
       });
 
       if (cardList.length === 0) {
@@ -113,14 +121,15 @@ const CardToday = () => {
       const randomIndex = Math.floor(Math.random() * cardList.length);
       const randomCard = cardList[randomIndex];
       setCard(randomCard);
+    
 
       // Set the diary document
-      // const diaryRef = doc(db, "diaries", `${user.uid}-${currentDate}`);
-      // await setDoc(diaryRef, {
-      //   mood: userMood,
-      //   uid: user.uid,
-      //   date: currentDate,
-      // });
+      const diaryRef = doc(db, "diaries", `${user.uid}-${currentDate}`);
+      await setDoc(diaryRef, {
+        mood: userMood,
+        uid: user.uid,
+        date: currentDate,
+      });
 
       setLoading(false);
     } catch (error) {
@@ -173,12 +182,12 @@ const CardToday = () => {
     }
   }, []);
 
-  
-
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title} onPress={gotofav}>Card of the Day</Text>
+        <Text style={styles.title} onPress={gotofav}>
+          Card of the Day
+        </Text>
       </View>
 
       <View style={styles.cardContainer}>

@@ -8,6 +8,7 @@ const COLORS = {
     purple: '#A19DCA',
     black: '#181818',
     lightpurple: "rgba(155, 71, 255, 0.05)", // use with 5% opacity
+    ivory : '#ffffe3',
 };
 
 export { COLORS };
