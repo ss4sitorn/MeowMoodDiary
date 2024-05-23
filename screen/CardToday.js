@@ -67,6 +67,7 @@ const CardToday = () => {
           console.log("Card added to favorite");
         }
       } else {
+        showAlert("Error", "No card to add to favorite");
         console.log("No card to add to favorite");
       }
     } catch (error) {

@@ -12,7 +12,7 @@ import {
 import BottomBar from "../util/BottomBar";
 import { useNavigation } from "@react-navigation/native";
 import { COLORS } from "../constants/colors";
-import Icon from "react-native-vector-icons/AntDesign";
+import Icon from "react-native-vector-icons/Ionicons";
 import {
   getFirestore,
   collection,
@@ -160,6 +160,17 @@ const FavoriteCard = () => {
       >
         <View style={styles.overlay} />
         <View style={styles.modalView}>
+        <View style={styles.modalheader}>  
+        <TouchableOpacity
+              style={{ ...styles.HideButton }}
+              onPress={() => {
+                setModalVisible(!modalVisible);
+              }}
+            >
+              {/* <Text style={styles.textStyle}>Hide</Text> */}
+              <Icon name="close-circle-outline" size={40} color={COLORS.darkgreen} />
+            </TouchableOpacity>
+          </View>
           <View style={styles.cardContainer}>
             <Card card={selectedCard} />
           </View>
@@ -170,17 +181,11 @@ const FavoriteCard = () => {
               setModalVisible(!modalVisible);
                }}
             >
-   
-              <Text style={styles.textStyle}>Delete</Text>
+              <Icon name="heart-dislike" size={25} color={COLORS.black} />
             </TouchableOpacity>
-            <TouchableOpacity
-              style={{ ...styles.HideButton }}
-              onPress={() => {
-                setModalVisible(!modalVisible);
-              }}
-            >
-              <Text style={styles.textStyle}>Hide</Text>
-            </TouchableOpacity>
+            
+            
+      
           </View>
         </View>
       </Modal>
@@ -278,21 +283,14 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.pink,
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: 10,
+    borderRadius: 50,
   },
-  HideButton: {
-    width: "30%",
-    height: "30%",
-    backgroundColor: COLORS.darkgreen,
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 10,
-  },
+
   cardContainer: {
     height: "70%",
     alignItems: "center",
     justifyContent: "center",
-    paddingTop: "10%",
+    
   },
   overlay: {
     height: "100%",
@@ -304,6 +302,16 @@ const styles = StyleSheet.create({
   textStyle: {
     color: COLORS.black,
     fontWeight: "bold",
+  },
+  modalheader: {
+    width: "100%",
+    height: "10%",
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    alignItems: "center",
+    paddingRight: 20,
+    paddingTop: 10,
+   
   },
 });
 
