@@ -94,7 +94,7 @@ const Dashboard = ({ navigation }) => {
           {moodImages.slice(-labels.length).map((image, index) => (
             <Image
               key={index}
-              source={image ? image : require("../assets/Emotion/e01.png")}
+              source={image ? image : require("../assets/Emotion/e16.png")}
               style={styles.icon}
             />
           ))}
