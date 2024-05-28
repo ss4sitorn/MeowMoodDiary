@@ -13,6 +13,7 @@ import BottomBar from "../util/BottomBar";
 import firebaseApp from "../src/firebase/config";
 import { getDataCollectionWithUid } from "../util/firebase-help";
 import { getFirestore } from "firebase/firestore";
+import { imageMoodStore } from "../util/image-store";
 
 const Dashboard = ({ navigation }) => {
   const [isWeekly, setIsWeekly] = useState(true);
@@ -21,34 +22,37 @@ const Dashboard = ({ navigation }) => {
     month: "long",
     year: "numeric",
   });
-  const [stressData, setStressData] = useState(Array(14).fill(0)); // เก็บข้อมูล stress score จาก Firebase
+  const [stressData, setStressData] = useState(Array(14).fill(0));
+  const [moodImages, setMoodImages] = useState(Array(14).fill(null));
 
   useEffect(() => {
     const fetchStressData = async () => {
       const db = getFirestore(firebaseApp);
       const today = new Date();
-      const daysAgo = isWeekly ? 6 : 13; // ย้อนหลัง 7 วันสำหรับ weekly, 14 วันสำหรับ 2 weeks
+      const daysAgo = isWeekly ? 6 : 13;
       const startDate = new Date(today);
       startDate.setDate(startDate.getDate() - daysAgo);
 
       const dataDia = await getDataCollectionWithUid("diaries");
       const data = Array(daysAgo + 1).fill(0);
+      const images = Array(daysAgo + 1).fill(null);
 
       dataDia.forEach((doc) => {
         const docDate = new Date(doc.date);
         if (docDate >= startDate && docDate <= today) {
           const diffDays = Math.floor((today - docDate) / (1000 * 60 * 60 * 24));
-          data[daysAgo - diffDays] = doc.score || 0; // ถ้าไม่มี score ให้เป็น 0
+          data[daysAgo - diffDays] = doc.score || 0;
+          images[daysAgo - diffDays] = imageMoodStore[doc.mood] || null;
         }
       });
 
-      setStressData(data); // เรียงข้อมูลจากเก่าไปใหม่
+      setStressData(data);
+      setMoodImages(images);
     };
 
     fetchStressData();
   }, [isWeekly]);
 
-  // ฟังก์ชั่นสำหรับแปลงค่า stress level เป็นข้อความ
   const yAxisLabel = (value) => {
     if (value === 0) return "low";
     if (value === 1) return "moderate";
@@ -56,13 +60,11 @@ const Dashboard = ({ navigation }) => {
     return "most";
   };
 
-  // คำนวณค่าเฉลี่ยของ stress level ของช่วงเวลาที่เลือก
   const calculateAverage = (data) => {
     const sum = data.reduce((acc, curr) => acc + curr, 0);
     return sum / data.length;
   };
 
-  // ข้อความแสดงค่าเฉลี่ยของ stress level ของช่วงเวลาที่เลือก
   const averageStressText = (average) => {
     let stressLevel = "low";
     if (average >= 1 && average < 2) stressLevel = "moderate";
@@ -89,34 +91,13 @@ const Dashboard = ({ navigation }) => {
           <Text style={styles.subtitle}>Day {isWeekly ? "7/7" : "14/14"}</Text>
         </View>
         <View style={styles.iconRow}>
-          <Image
-            source={require("../assets/Emotion/e01.png")}
-            style={styles.icon}
-          />
-          <Image
-            source={require("../assets/Emotion/e02.png")}
-            style={styles.icon}
-          />
-          <Image
-            source={require("../assets/Emotion/e03.png")}
-            style={styles.icon}
-          />
-          <Image
-            source={require("../assets/Emotion/e04.png")}
-            style={styles.icon}
-          />
-          <Image
-            source={require("../assets/Emotion/e05.png")}
-            style={styles.icon}
-          />
-          <Image
-            source={require("../assets/Emotion/e06.png")}
-            style={styles.icon}
-          />
-          <Image
-            source={require("../assets/Emotion/e07.png")}
-            style={styles.icon}
-          />
+          {moodImages.slice(-labels.length).map((image, index) => (
+            <Image
+              key={index}
+              source={image ? image : require("../assets/Emotion/e01.png")}
+              style={styles.icon}
+            />
+          ))}
         </View>
       </View>
       <View>
@@ -246,16 +227,12 @@ const styles = StyleSheet.create({
   },
   iconRow: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    flexWrap: "wrap",
   },
   icon: {
     width: 40,
     height: 40,
-  },
-  stressText: {
-    fontSize: 16,
-    color: "#1a202c",
-    marginTop: 10,
+    margin: 2,
   },
   stressTextContainer: {
     backgroundColor: COLORS.purple,
@@ -300,6 +277,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     borderRadius: 20,
     backgroundColor: COLORS.purple,
+    marginHorizontal: 5,
   },
   reportButtonText: {
     fontSize: 16,
