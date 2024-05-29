@@ -133,10 +133,11 @@ const Home = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.contentContainer}>
+      <View style={styles.contentContainer}>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>Calendar</Text>
         </View>
+        <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <Calendar
           dayComponent={renderDay}
           onMonthChange={(month) => {
@@ -180,7 +181,8 @@ const Home = ({ navigation }) => {
             <Text style={styles.buttonText}>Stress Assessment</Text>
           </TouchableOpacity>
         </View>
-      </ScrollView>
+        </ScrollView>
+      </View>
       <BottomBar navigation={navigation} />
     </SafeAreaView>
   );
@@ -199,6 +201,11 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.cream,
     paddingHorizontal: 20,
     paddingBottom: 20,
+    paddingTop: StatusBar.currentHeight,
+  },
+  scrollViewContent: {
+    flexGrow: 1,
+    paddingBottom: 100,
   },
   titleContainer: {
     alignSelf: "flex-start",
