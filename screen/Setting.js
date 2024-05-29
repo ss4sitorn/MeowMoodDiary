@@ -7,10 +7,12 @@ import { useNavigation } from "@react-navigation/native";
 import BottomBar from "../util/BottomBar";
 import showConfirmationDialog from "../util/alert-confirm-custom";
 import firebaseApp from "../src/firebase/config";
+import { getFirestore , doc , getDoc} from "firebase/firestore";
 import 'firebase/auth';
 import { getAuth } from "firebase/auth";
 import {LogOut, getEmail, getUsername, resetPassword, deleteFieldWithValue, getUserData} from "../util/firebase-help";
 import { NavigationContainer } from '@react-navigation/native';
+import { get } from "firebase/database";
 
 
 const Setting = () => {const auth = getAuth(firebaseApp);
@@ -18,6 +20,7 @@ const Setting = () => {const auth = getAuth(firebaseApp);
   const [isEnabled, setIsEnabled] = useState(false);
   const [email,setEmail]=useState('');
   const [username, setUsername] = useState('');
+  const [ Profile , setProfile] = useState('');
   const toggleSwitch = () => {
     setIsEnabled(previousState => !previousState);
     deleteFieldWithValue("pin");
@@ -32,13 +35,28 @@ const Setting = () => {const auth = getAuth(firebaseApp);
     }
 
   }
+  const getProfile = async () => {
+    const user = auth.currentUser;
+    const uid = user.uid;
+    const db = getFirestore();
+    const userDocRef = doc(db, "users", uid); // Get a reference to the user document
+    const userDocSnapshot = await getDoc(userDocRef); // Get the document snapshot
+    if (userDocSnapshot.exists()) {
+      const userData = userDocSnapshot.data();
+      setProfile(userData.profilePic);
+      console.log(userData.profilePic);
+    } else {
+      console.log("No such document!");
+    }
+  }
+
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
       setEmail(getEmail());
     setUsername(getUsername());
       getStatePin();
-
+      getProfile();
     });
     return unsubscribe;
   }, [navigation]);
@@ -65,8 +83,8 @@ const Setting = () => {const auth = getAuth(firebaseApp);
     <View style={styles.container}>
       <View style={styles.headerzone}>
         <View style={styles.imageContainer}>
-          <TouchableOpacity style={styles.Profile} onPress={handleEditProfilePress}>
-            <Icon name="person-circle" size={125} color={COLORS.darkgreen} />
+        <TouchableOpacity style={styles.Profile} onPress={handleEditProfilePress}>
+            <Image source={{ uri: Profile }} style={{ width: 135, height: 135, borderRadius: 100 }} /> 
             <Icon
               style={styles.editIconContainer}
               name="pencil"
@@ -107,7 +125,7 @@ const Setting = () => {const auth = getAuth(firebaseApp);
         <TouchableOpacity style={styles.settingButton} onPress={() => showConfirmationDialog('Warning', 'Do you want to delete your account?',()=>{{handleDeleteAccount()}
             navigation.popToTop("Login"),()=>{console.log('cancle logout')}}) }>
         <Icons name="delete" size={40}  style={styles.settingicon} />
-          <Text style={styles.settingText}>    Delete Account</Text>
+          <Text style={styles.settingText}>    Delete Account </Text>
         </TouchableOpacity>
       </View>
 
