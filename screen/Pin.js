@@ -24,39 +24,7 @@ const Pin = ({ navigation, route }) => {
       showAlert('Error', e.message)
     }
   };
-  // const PinInput = () => {
-  //   const inputRefs = useRef([]);
   
-  //   const handleTextChange = (text, index) => {
-  //     const newPin = [...pin];
-  //     newPin[index] = text;
-  //     setPin(newPin);
-  
-  //     if (text && index < 3) {
-  //       inputRefs.current[index + 1].focus();
-  //     } else if (text === '' && index > 0) {
-  //       inputRefs.current[index - 1].focus();
-  //     }
-  //   };
-
-  //   return (
-  //     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-  //       {pin.map((value, index) => (
-  //         <TextInput
-  //           key={index}
-  //           ref={ref => inputRefs.current[index] = ref}
-  //           style={pinStyles.input}
-  //           value={value}
-  //           onChangeText={text => handleTextChange(text, index)}
-  //           keyboardType="numeric"
-  //           maxLength={1}
-  //           secureTextEntry={true}
-  //         />
-  //       ))}
-  //     </View>
-  //   );
-  // }
-
   return (
     <View style={styles.container}>
       <View style={styles.headingContainer}>

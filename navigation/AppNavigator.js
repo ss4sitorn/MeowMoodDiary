@@ -16,7 +16,6 @@ import WeekReport from "../screen/WeekReport";
 import CardCreate from '../screen/CardCreate';
 import CardToday from "../screen/CardToday";
 import Setting from "../screen/Setting";
-import ResetPassword from "../screen/ResetPassword";
 import CardMood from "../screen/CardMood";
 import ResetPin from "../screen/ResetPin";
 import ConfirmPin from "../screen/ConfirmPin";
@@ -46,7 +45,6 @@ const AppNavigator = ({setPage}) => {
                 <Stack.Screen name="CardCreate" component={ CardCreate } options={{headerShown:false}} />
                 <Stack.Screen name="CardToday" component={ CardToday } options={{headerShown:false}} />
                 <Stack.Screen name="Setting" component={ Setting } options={{headerShown:false}} />
-                <Stack.Screen name="ResetPassword" component={ ResetPassword } options={{headerShown:false}} />
                 <Stack.Screen name="CardMood" component={ CardMood } options={{headerShown:false}} />
                 <Stack.Screen name="ResetPin" component={ ResetPin } options={{headerShown:false}} />
                 <Stack.Screen name="ConfirmPin" component={ ConfirmPin } options={{headerShown:false}} />
