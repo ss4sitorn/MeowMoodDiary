@@ -47,14 +47,21 @@ const Home = ({ navigation }) => {
     const docRef = doc(db, "diaries", user.uid + currentDate);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
-      console.log("Document data:", docSnap.data());
-      setDiaryData(docSnap.data());
+      const diary = docSnap.data();
+      const diaryData = {
+      id: diary.uid + diary.date,
+      moodImage: diary.moodImage,
+      reason: diary.reason,
+      text: diary.text,
+      mood: diary.mood,
+      date: diary.date,
+      };
+      setDiaryData(diaryData);
     } else {
       console.log("No such document!");
     }
-  };
-
-  const getAllDiary = async () => {
+    };
+    const getAllDiary = async () => {
     const user = getAuth(firebaseApp).currentUser;
     const diaryRef = collection(db, "diaries");
     const q = query(diaryRef, where("uid", "==", user.uid));

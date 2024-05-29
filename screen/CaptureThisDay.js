@@ -4,7 +4,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { COLORS } from "../constants/colors";
 import { useNavigation } from '@react-navigation/native';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
-import firebaseApp from "../src/firebase/config";
+import {firebaseApp} from "../src/firebase/config";
 import showAlert from "../util/alert-custom";
 import { getFirestore, doc, setDoc, updateDoc } from "firebase/firestore";
 import {imageMoodStore, imageReasonStore} from "../util/image-store";
