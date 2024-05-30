@@ -149,21 +149,23 @@ const CardCreate = () => {
         <View style={styles.titleInputContainer}>
           <Text style={styles.inputTitle}>Quote :</Text>
           <TextInput
-            style={styles.input}
-            placeholder="Enter Quote"
-            onChangeText={(text) => setQuote(text)}
-            value={quote}
-          />
+              style={styles.input}
+              placeholder="Enter Quote"
+              onChangeText={(text) => setQuote(text)}
+              value={quote}
+              onFocus={() => setQuote('')}
+            />
         </View>
         {/* Signature input */}
         <View style={styles.titleInputContainer}>
           <Text style={styles.inputTitle}>Signature :</Text>
           <TextInput
-            style={styles.input}
-            placeholder="Enter Signature"
-            onChangeText={(text) => setSignature(text)}
-            value={signature}
-          />
+              style={styles.input}
+              placeholder="Enter Signature"
+              onChangeText={(text) => setSignature(text)}
+              value={signature}
+              onFocus={() => setSignature('')}
+            />
         </View>
       </View>
 
