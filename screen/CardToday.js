@@ -252,7 +252,6 @@ const styles = StyleSheet.create({
     paddingTop: 60,
     height: "10%",
   },
-  footer: {},
   title: {
     fontSize: 34,
     fontWeight: "bold",
@@ -304,6 +303,12 @@ const styles = StyleSheet.create({
     top: 10,
     color: COLORS.pink,
   
+  },
+  footer: {
+    height: "10%",
+    width: "100%",
+    position: "absolute",
+    bottom: 0,
   },
 });
 
