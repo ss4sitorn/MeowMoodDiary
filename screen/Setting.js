@@ -84,7 +84,11 @@ const Setting = () => {const auth = getAuth(firebaseApp);
       <View style={styles.headerzone}>
         <View style={styles.imageContainer}>
         <TouchableOpacity style={styles.Profile} onPress={handleEditProfilePress}>
-            <Image source={{ uri: Profile }} style={{ width: 135, height: 135, borderRadius: 100 }} /> 
+        {Profile ? (
+                            <Image source={{ uri: Profile }} style={styles.profileImage} />
+                        ) : (
+                            <Icon name="person-circle-outline" size={100} color={COLORS.lightgreen} />
+                        )}
             <Icon
               style={styles.editIconContainer}
               name="pencil"
@@ -103,7 +107,7 @@ const Setting = () => {const auth = getAuth(firebaseApp);
       <View style={styles.settingContainer}>
         <TouchableOpacity style={styles.settingButton2} onPress={handleResetPin}>
           <View style={styles.Title}><Icon name="keypad-outline" size={40}  style={styles.settingicon} />
-          <Text style={styles.settingText}>    Pin</Text></View>
+          <Text style={styles.settingText}>Pin</Text></View>
           <Switch style={width=200}
         trackColor={{false: '#767577', true: '#80B7A2'}}
         thumbColor={isEnabled ? '#ADD495' : '#80B7A2'}
@@ -123,9 +127,9 @@ const Setting = () => {const auth = getAuth(firebaseApp);
           <Text style={styles.settingText}>    Log Out</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.settingButton} onPress={() => showConfirmationDialog('Warning', 'Do you want to delete your account?',()=>{{handleDeleteAccount()}
-            navigation.popToTop("Login"),()=>{console.log('cancle logout')}}) }>
+            navigation.navigate("Welcome"),()=>{console.log('cancle logout')}}) }>
         <Icons name="delete" size={40}  style={styles.settingicon} />
-          <Text style={styles.settingText}>    Delete Account </Text>
+          <Text style={styles.settingText}> Delete Account </Text>
         </TouchableOpacity>
       </View>
 
@@ -154,8 +158,6 @@ const styles = StyleSheet.create({
   PageTitle: {
     fontSize: 28,
     color: COLORS.black,
-
-
     left: 20,
   },
   settingContainer: {
@@ -192,6 +194,7 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     position: "relative",
+    marginTop: 20,
     width: 135,
     height: 135,
   },
@@ -212,6 +215,11 @@ const styles = StyleSheet.create({
   Title: {
     flexDirection: "row",
   },
+  profileImage: {
+    width: 135,
+    height: 135,
+    borderRadius: 67.5, // half the size to make it circular
+},
 
 });
 export default Setting;

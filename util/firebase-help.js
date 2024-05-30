@@ -44,7 +44,7 @@ const LogOut = async (navigation) => {
     showConfirmationDialog('Warning', 'Are you sure to log out?', async () => {
             await auth.signOut().then(() => {
                 console.log('User signed out');
-                navigation.popToTop('Login');
+                navigation.navigate('Welcome');
             }).catch((error) => {
                 console.error(error);
             });
@@ -121,8 +121,6 @@ const getDataCollectionWithUid = async (collectionName) => {
     querySnapshot.forEach((doc) => {
         if(doc.data().uid === user.uid){
             //convert string date "19 May 2024" to date object
-
-
 
             data.push(doc.data());
         }

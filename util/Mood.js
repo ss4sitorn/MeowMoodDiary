@@ -18,7 +18,6 @@ const styles = {
         width: 135,
         height: 135,
         flexDirection: "column",
-        
     },
 
 };
