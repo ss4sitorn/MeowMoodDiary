@@ -7,7 +7,7 @@ import {
   Image,
   StatusBar,
   ScrollView,
-  Alert
+  Alert,
 } from "react-native";
 import { Calendar } from "react-native-calendars";
 import BottomBar from "../util/BottomBar";
@@ -27,7 +27,7 @@ import {
   getDocs,
   where,
   query,
-  deleteDoc
+  deleteDoc,
 } from "firebase/firestore";
 import { imageMoodStore } from "../util/image-store";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -49,19 +49,19 @@ const Home = ({ navigation }) => {
     if (docSnap.exists()) {
       const diary = docSnap.data();
       const diaryData = {
-      id: diary.uid + diary.date,
-      moodImage: diary.moodImage,
-      reason: diary.reason,
-      text: diary.text,
-      mood: diary.mood,
-      date: diary.date,
+        id: diary.uid + diary.date,
+        moodImage: diary.moodImage,
+        reason: diary.reason,
+        text: diary.text,
+        mood: diary.mood,
+        date: diary.date,
       };
       setDiaryData(diaryData);
     } else {
       console.log("No such document!");
     }
-    };
-    const getAllDiary = async () => {
+  };
+  const getAllDiary = async () => {
     const user = getAuth(firebaseApp).currentUser;
     const diaryRef = collection(db, "diaries");
     const q = query(diaryRef, where("uid", "==", user.uid));
@@ -93,10 +93,6 @@ const Home = ({ navigation }) => {
     });
     return unsubscribe;
   }, [navigation]);
-
-  const handleStressAssessment = () => {
-    navigation.navigate("Assessment");
-  };
 
   const handleDatePress = (date) => {
     console.log(diary[date]);
@@ -145,49 +141,43 @@ const Home = ({ navigation }) => {
           <Text style={styles.title}>Calendar</Text>
         </View>
         <ScrollView contentContainerStyle={styles.scrollViewContent}>
-        <Calendar
-          dayComponent={renderDay}
-          onMonthChange={(month) => {
-            console.log('Month changed', month);
-            setDiary(null);
-            getAllDiary();
-          }}
-        />
-        <View style={styles.messageBox}>
-          <Image source={imageMoodStore[diaryData?.mood]} style={styles.emoji} />
-          <Text style={styles.date}>{diaryData?.date}</Text>
-          <Text style={styles.message}>{diaryData?.text}</Text>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => {
-              if (diaryData) {
-                deleteFieldWithValue(diaryData?.date);
-              }
+          <Calendar
+            dayComponent={renderDay}
+            onMonthChange={(month) => {
+              console.log("Month changed", month);
+              setDiary(null);
+              getAllDiary();
             }}
-          >
-            <Text style={styles.buttonText}>Delete Your Mood</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={handleUpdate}
-          >
-            <Text style={styles.buttonText}>Update</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => navigation.navigate("WeeklyHomework")}
-          >
-            <Text style={styles.buttonText}>Weekly Homework</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={handleStressAssessment}
-          >
-            <Text style={styles.buttonText}>Stress Assessment</Text>
-          </TouchableOpacity>
-        </View>
+          />
+          <View style={styles.messageBox}>
+            <Image
+              source={imageMoodStore[diaryData?.mood]}
+              style={styles.emoji}
+            />
+            <Text style={styles.date}>{diaryData?.date}</Text>
+            <Text style={styles.message}>{diaryData?.text}</Text>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => {
+                if (diaryData) {
+                  deleteFieldWithValue(diaryData?.date);
+                }
+              }}
+            >
+              <Text style={styles.buttonText}>Delete Your Mood</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={handleUpdate}>
+              <Text style={styles.buttonText}>Update</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => navigation.navigate("WeeklyHomework")}
+            >
+              <Text style={styles.buttonText}>Weekly Homework</Text>
+            </TouchableOpacity>
+          </View>
         </ScrollView>
       </View>
       <BottomBar navigation={navigation} />
@@ -199,7 +189,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "flex-start",
-    alignItems: "center",
     backgroundColor: COLORS.cream,
     paddingTop: StatusBar.currentHeight,
   },
@@ -288,6 +277,14 @@ const styles = StyleSheet.create({
   calendarImage: {
     width: 40,
     height: 40,
+  },
+  buttonContainer: {
+    width: "100%", 
+    marginTop: 20,
+    alignItems: "center", 
+  },
+  centeredButton: {
+    width: "80%", 
   },
 });
 
