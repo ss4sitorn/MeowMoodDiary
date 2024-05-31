@@ -149,7 +149,7 @@ const Home = ({ navigation }) => {
               getAllDiary();
             }}
           />
-          <View style={styles.messageBox}>
+         {diaryData ? <View style={styles.messageBox}>
             <Image
               source={imageMoodStore[diaryData?.mood]}
               style={styles.emoji}
@@ -169,7 +169,7 @@ const Home = ({ navigation }) => {
             <TouchableOpacity style={styles.button} onPress={handleUpdate}>
               <Text style={styles.buttonText}>Update</Text>
             </TouchableOpacity>
-          </View>
+          </View> : null}
           <View style={styles.buttonContainer}>
             <TouchableOpacity
               style={styles.button}
