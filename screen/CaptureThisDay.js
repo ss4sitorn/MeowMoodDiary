@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, StyleSheet, Image, TextInput } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Image, TextInput ,StatusBar } from "react-native";
 import React, {useEffect, useState} from "react";
 import Icon from "react-native-vector-icons/Ionicons";
 import { COLORS } from "../constants/colors";
@@ -8,6 +8,7 @@ import {firebaseApp} from "../src/firebase/config";
 import showAlert from "../util/alert-custom";
 import { getFirestore, doc, setDoc, updateDoc } from "firebase/firestore";
 import {imageMoodStore, imageReasonStore} from "../util/image-store";
+import BackButton from "../util/BackButton";
 
 const CaptureThisDay = ({route}) => {
   const navigation = useNavigation();
@@ -112,10 +113,10 @@ function saveDiary() {
 
   return (
     <View style={styles.container}>
+      <View style={styles.header}>
       <View style={styles.backButtonContainer}>
-        <TouchableOpacity onPress={handleBackPress}>
-          <Icon name="arrow-back" size={30} color="#000" />
-        </TouchableOpacity>
+        <BackButton onPress={handleBackPress} />
+      </View>
       </View>
 
       <View style={styles.title}>
@@ -166,13 +167,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "flex-start",
     alignItems: "center",
-    paddingTop: "20%",
-    backgroundColor: "cream",
+    paddingTop: StatusBar.currentHeight,
+    backgroundColor: COLORS.cream,
   },
   backButtonContainer: {
     position: "absolute",
-    top: 50,
-    left: 20,
+    left: 10,
+    top: 20,
     zIndex: 1,
   },
   titleText: {
@@ -238,6 +239,14 @@ const styles = StyleSheet.create({
     marginTop: 40,
     marginBottom: 20,
     paddingLeft: 10,
+    },
+    header: {
+      flexDirection: "row",
+      justifyContent: "flex-start",
+      width: "100%",
+      paddingTop: 20,
+
+
     },
 });
 

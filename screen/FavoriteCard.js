@@ -145,7 +145,7 @@ const FavoriteCard = () => {
             <View style={styles.iconBackground}>
               <Image source={images[card.icon]} style={styles.icon} />
             </View>
-            <Text style={styles.quote}>{card.quote}</Text>
+            <Text style={styles.quote} >{card.quote.substring(0, 28)}</Text>
           </TouchableOpacity>
         );
       })}
@@ -204,9 +204,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "flex-start",
     width: "100%",
-
     paddingHorizontal: 20,
     paddingBottom: 20,
+    paddingTop: StatusBar.currentHeight,
   },
   headerText: {
     fontSize: 30,

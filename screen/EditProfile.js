@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, TouchableOpacity, TextInput, View, SafeAreaView, StyleSheet, Alert, Image } from 'react-native';
+import { Text, TouchableOpacity, TextInput, View, SafeAreaView, StyleSheet, Alert, Image ,StatusBar } from 'react-native';
 import { COLORS } from "../constants/colors";
 import Icon from "react-native-vector-icons/Ionicons";
 import { useNavigation } from '@react-navigation/native';
@@ -132,9 +132,9 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         paddingHorizontal: 20,
-        paddingTop: 20,
+        paddingTop : StatusBar.currentHeight,
         backgroundColor: COLORS.cream,
-        marginLeft: 20,
+  
     },
     name: {
         fontSize: 20,
@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
     },
     imageContainer: {
         position: "relative",
-        marginTop: 20,
+        marginTop: "20%",
         width: 135,
         height: 135,
     },

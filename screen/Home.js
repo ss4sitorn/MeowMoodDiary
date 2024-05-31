@@ -193,11 +193,11 @@ const styles = StyleSheet.create({
     paddingTop: StatusBar.currentHeight,
   },
   contentContainer: {
-    flex: 1,
+
     backgroundColor: COLORS.cream,
     paddingHorizontal: 20,
     paddingBottom: 20,
-    paddingTop: StatusBar.currentHeight,
+
   },
   scrollViewContent: {
     flexGrow: 1,
@@ -215,11 +215,13 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     marginLeft: 5,
   },
+
   buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    width: "100%",
+    width: "100%", 
     marginTop: 20,
+    alignItems: "center", 
+    justifyContent: "center",
+    marginBottom: 30,
   },
   button: {
     backgroundColor: COLORS.white,
@@ -278,11 +280,7 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
   },
-  buttonContainer: {
-    width: "100%", 
-    marginTop: 20,
-    alignItems: "center", 
-  },
+
   centeredButton: {
     width: "80%", 
   },

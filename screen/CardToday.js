@@ -232,6 +232,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: "100%",
     height: "10%",
+    paddingTop: "5%",
   },
   cardContainer: {
     height: "50%",
@@ -298,9 +299,11 @@ const styles = StyleSheet.create({
     fontStyle: "italic",
   },
   favicon : {
-    position: "absolute",
-    right: 25,
-    top: 10,
+     position: "absolute",
+     right: 25,
+     top: 20,
+
+    paddingTop: 5,
     color: COLORS.pink,
   
   },

@@ -47,7 +47,8 @@ const styles = StyleSheet.create({
     top: 75,
     marginBottom: 5,
     fontSize: 20,
-    fontStyle: "Bold",
+    fontStyle: "italic",
+    textAlign: "center",
   },
   signature: {
     top: 120,
