@@ -59,7 +59,7 @@ const EditProfile = ({ route }) => {
               quality: 1,
           });
   
-          if (!result.cancelled) {
+          if (!result.canceled) {
               const uri = result.assets[0].uri;
               const user = auth.currentUser;
   

@@ -35,7 +35,7 @@ const CardMood = () => {
       });
 
       Alert.alert("Success", "Card created successfully!");
-      navigation.navigate("Home"); // Navigate to Home screen or any other screen
+      navigation.navigate("CardToday"); // Navigate to Home screen or any other screen
     } catch (error) {
       console.error("Error creating card:", error);
       Alert.alert("Error", "There was an error creating the card. Please try again.");
