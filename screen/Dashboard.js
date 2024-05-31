@@ -25,6 +25,16 @@ const Dashboard = ({ navigation }) => {
   const [stressData, setStressData] = useState(Array(14).fill(0));
   const [moodImages, setMoodImages] = useState(Array(14).fill(null));
 
+  const generateLabels = (days) => {
+    const today = new Date();
+    const dayLabels = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    return Array.from({ length: days + 1 }, (_, i) => {
+      const date = new Date();
+      date.setDate(today.getDate() - (days - i));
+      return dayLabels[date.getDay()];
+    });
+  };
+
   useEffect(() => {
     const fetchStressData = async () => {
       const db = getFirestore(firebaseApp);
@@ -77,8 +87,8 @@ const Dashboard = ({ navigation }) => {
   };
 
   const labels = isWeekly
-    ? ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
-    : ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    ? generateLabels(6)
+    : generateLabels(13);
 
   return (
     <View style={styles.container}>
