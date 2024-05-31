@@ -119,7 +119,7 @@ const WeeklyHomework = ({ navigation }) => {
        <View style={styles.backButtonContainer}>
           <BackButton onPress={handleBackPress} />
        </View>
-       <Text style={styles.title}>Weekly Homework</Text>
+       <Text style={styles.title}>Weekly Assignment</Text>
        <View style={styles.moodhomework}>
           {homework.map((item) => (
              <View key={item.id} style={styles.check}>

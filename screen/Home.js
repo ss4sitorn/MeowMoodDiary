@@ -175,7 +175,7 @@ const Home = ({ navigation }) => {
               style={styles.button}
               onPress={() => navigation.navigate("WeeklyHomework")}
             >
-              <Text style={styles.buttonText}>Weekly Homework</Text>
+              <Text style={styles.buttonText}>Weekly Assignment</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>
