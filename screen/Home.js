@@ -85,10 +85,10 @@ const Home = ({ navigation }) => {
   };
 
   useEffect(() => {
-    getDiary();
+    //getDiary();
     getAllDiary();
     const unsubscribe = navigation.addListener("focus", () => {
-      getDiary();
+      //getDiary();
       getAllDiary();
     });
     return unsubscribe;
