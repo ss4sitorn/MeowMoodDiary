@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, StyleSheet, Image, TextInput ,StatusBar } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Image, TextInput ,StatusBar} from "react-native";
 import React, {useEffect, useState} from "react";
 import Icon from "react-native-vector-icons/Ionicons";
 import { COLORS } from "../constants/colors";
@@ -9,6 +9,7 @@ import showAlert from "../util/alert-custom";
 import { getFirestore, doc, setDoc, updateDoc } from "firebase/firestore";
 import {imageMoodStore, imageReasonStore} from "../util/image-store";
 import BackButton from "../util/BackButton";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const CaptureThisDay = ({route}) => {
   const navigation = useNavigation();
@@ -112,7 +113,7 @@ function saveDiary() {
 
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.header}>
       <View style={styles.backButtonContainer}>
         <BackButton onPress={handleBackPress} />
@@ -158,7 +159,7 @@ function saveDiary() {
         <Text style={styles.submitText}>Submit</Text>
       </TouchableOpacity>
 
-    </View>
+    </SafeAreaView>
   );
 };
 
