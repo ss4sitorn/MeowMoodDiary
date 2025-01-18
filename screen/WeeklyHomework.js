@@ -34,60 +34,60 @@ const WeeklyHomework = ({ navigation }) => {
     return () => unsubscribe();
   }, []);
 
-  useEffect(() => {
-    const fetchHomework = async () => {
-      if (!userId) return; // รอจนกว่าจะได้ userId
+  const fetchHomework = async () => {
+    if (!userId) return; // รอจนกว่าจะได้ userId
 
-      const db = getFirestore(firebaseApp);
-      const userHomeworkRef = doc(db, "userHomework", userId);
+    const db = getFirestore(firebaseApp);
+    const userHomeworkRef = doc(db, "userHomework", userId);
 
-      try {
-        const userHomeworkDoc = await getDoc(userHomeworkRef);
-        let selectedHomeworkIds;
+    try {
+      const userHomeworkDoc = await getDoc(userHomeworkRef);
+      let selectedHomeworkIds;
 
-        if (
-          userHomeworkDoc.exists() &&
-          userHomeworkDoc.data().selectedHomework &&
-          userHomeworkDoc.data().selectedHomeworkTimestamp &&
-          Date.now() - userHomeworkDoc.data().selectedHomeworkTimestamp.toMillis() < 604800000 // 7 days in milliseconds
-        ) {
-          // ใช้ selectedHomework เดิมถ้ายังไม่หมดอายุ 7 วัน
-          selectedHomeworkIds = userHomeworkDoc.data().selectedHomework;
-        } else {
-          // สุ่ม selectedHomework ใหม่และบันทึกลง Firestore
-          const homeworkSnapshot = await getDocs(collection(db, "homework"));
-          selectedHomeworkIds = _.sampleSize(homeworkSnapshot.docs, 3).map(
-            (doc) => doc.id
-          );
-          await setDoc(
-            userHomeworkRef,
-            {
-              selectedHomework: selectedHomeworkIds,
-              selectedHomeworkTimestamp: serverTimestamp(),
-            },
-            { merge: true }
-          );
-        }
-
-        // ดึงข้อมูลการบ้านที่เลือกแล้ว
-        const homeworkData = await Promise.all(
-          selectedHomeworkIds.map(async (homeworkId) => {
-            const homeworkDoc = await getDoc(doc(db, "homework", homeworkId));
-            return {
-              ...homeworkDoc.data(),
-              id: homeworkDoc.id,
-              // completed: userHomeworkData[homeworkId] || false,
-            };
-          })
+      if (
+        userHomeworkDoc.exists() &&
+        userHomeworkDoc.data().selectedHomework &&
+        userHomeworkDoc.data().selectedHomeworkTimestamp &&
+        Date.now() - userHomeworkDoc.data().selectedHomeworkTimestamp.toMillis() < 604800000 // 7 days in milliseconds
+      ) {
+        // ใช้ selectedHomework เดิมถ้ายังไม่หมดอายุ 7 วัน
+        selectedHomeworkIds = userHomeworkDoc.data().selectedHomework;
+      } else {
+        // สุ่ม selectedHomework ใหม่และบันทึกลง Firestore
+        const homeworkSnapshot = await getDocs(collection(db, "homework"));
+        selectedHomeworkIds = _.sampleSize(homeworkSnapshot.docs, 3).map(
+          (doc) => doc.id
         );
-
-        setHomework(homeworkData);
-        setUserHomeworkData(userHomeworkDoc.exists() ? userHomeworkDoc.data() : {});
-      } catch (error) {
-        console.error("Error fetching homework:", error);
+        await setDoc(
+          userHomeworkRef,
+          {
+            selectedHomework: selectedHomeworkIds,
+            selectedHomeworkTimestamp: serverTimestamp(),
+          },
+          { merge: true }
+        );
       }
-    };
 
+      // ดึงข้อมูลการบ้านที่เลือกแล้ว
+      const homeworkData = await Promise.all(
+        selectedHomeworkIds.map(async (homeworkId) => {
+          const homeworkDoc = await getDoc(doc(db, "homework", homeworkId));
+          return {
+            ...homeworkDoc.data(),
+            id: homeworkDoc.id,
+            completed: userHomeworkDoc.exists() ? userHomeworkDoc.data()[homeworkId] || false : false,
+          };
+        })
+      );
+
+      setHomework(homeworkData);
+      setUserHomeworkData(userHomeworkDoc.exists() ? userHomeworkDoc.data() : {});
+    } catch (error) {
+      console.error("Error fetching homework:", error);
+    }
+  };
+
+  useEffect(() => {
     fetchHomework();
   }, [userId]);
 
@@ -116,37 +116,37 @@ const WeeklyHomework = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-       <View style={styles.backButtonContainer}>
-          <BackButton onPress={handleBackPress} />
-       </View>
-       <Text style={styles.title}>Weekly Assignment</Text>
-       <View style={styles.moodhomework}>
-          {homework.map((item) => (
-             <View key={item.id} style={styles.check}>
-                <TouchableOpacity
-                   style={[
-                      styles.checkbox,
-                      userHomeworkData[item.id] && styles.checkedCheckbox,
-                   ]}
-                   onPress={() => toggleHomework(item.id)}
-                >
-                   {userHomeworkData[item.id] && (
-                      <Text style={styles.checkmark}>✓</Text>
-                   )}
-                </TouchableOpacity>
-                <Text style={styles.homeworkname}>{item.name}</Text>
-             </View>
-          ))}
-       </View>
-       <View>
-          <Image
-             source={require("../assets/Emotion/e00.png")}
-             style={styles.image}
-             resizeMode="contain"
-          />
-       </View>
+      <View style={styles.backButtonContainer}>
+        <BackButton onPress={handleBackPress} />
+      </View>
+      <Text style={styles.title}>Weekly Assignment</Text>
+      <View style={styles.moodhomework}>
+        {homework.map((item) => (
+          <View key={item.id} style={styles.check}>
+            <TouchableOpacity
+              style={[
+                styles.checkbox,
+                item.completed && styles.checkedCheckbox,
+              ]}
+              onPress={() => toggleHomework(item.id)}
+            >
+              {item.completed && (
+                <Text style={styles.checkmark}>✓</Text>
+              )}
+            </TouchableOpacity>
+            <Text style={styles.homeworkname}>{item.name}</Text>
+          </View>
+        ))}
+      </View>
+      <View>
+        <Image
+          source={require("../assets/Emotion/e00.png")}
+          style={styles.image}
+          resizeMode="contain"
+        />
+      </View>
     </View>
- );
+  );
 };
 
 const styles = StyleSheet.create({
