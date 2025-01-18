@@ -24,75 +24,13 @@ const averageStressText = (average) => {
   return `Your weekly stress average is ${stressLevel}`;
 };
 
-const WeekReport = () => {
+const WeekReport = ({ route }) => {
   const navigation = useNavigation();
   const handleBackPress = () => {
     navigation.goBack(); // navigate back to the previous screen
   };
 
-  const [moodSummary, setMoodSummary] = useState({});
-  const [averageStress, setAverageStress] = useState(0);
-
-  useEffect(() => {
-    const fetchMoodData = async () => {
-      const db = getFirestore(firebaseApp);
-      const auth = getAuth(firebaseApp);
-      const user = auth.currentUser;
-
-      if (!user) {
-        console.log("User is not logged in");
-        return;
-      }
-
-      const uid = user.uid;
-      const today = new Date();
-      const sevenDaysAgo = new Date(today);
-      sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 6);
-
-      const formatDateString = (date) => {
-        const day = String(date.getDate()).padStart(2, '0');
-        const month = String(date.getMonth() + 1).padStart(2, '0'); // เดือนใน JS เริ่มจาก 0
-        const year = date.getFullYear();
-        return `${day} ${month} ${year}`;
-      };
-
-      const todayString = formatDateString(today);
-      const sevenDaysAgoString = formatDateString(sevenDaysAgo);
-
-      const diariesRef = collection(db, "diaries");
-      const q = query(
-        diariesRef,
-        where("date", ">=", sevenDaysAgoString),
-        where("date", "<=", todayString),
-        where("uid", "==", uid),
-        orderBy("date", "desc")
-      );
-
-      const querySnapshot = await getDocs(q);
-      const summary = {};
-      const stressScores = [];
-
-      querySnapshot.forEach((doc) => {
-        const data = doc.data();
-        const mood = data.mood;
-        const score = data.score || 0;
-
-        if (summary[mood] !== undefined) {
-          summary[mood] += 1;
-        } else {
-          summary[mood] = 1;
-        }
-
-        stressScores.push(score);
-      });
-
-      const average = calculateAverage(stressScores);
-      setMoodSummary(summary);
-      setAverageStress(average);
-    };
-
-    fetchMoodData();
-  }, []);
+  const { moodSummary, averageStress } = route.params;
 
   const currentDate = new Date().toLocaleDateString("en-GB", {
     day: "numeric",

@@ -24,6 +24,8 @@ const Dashboard = ({ navigation }) => {
   });
   const [stressData, setStressData] = useState(Array(14).fill(0));
   const [moodImages, setMoodImages] = useState(Array(14).fill(null));
+  const [moodSummary, setMoodSummary] = useState({});
+  const [averageStress, setAverageStress] = useState(0);
 
   const generateLabels = (days) => {
     const today = new Date();
@@ -46,6 +48,8 @@ const Dashboard = ({ navigation }) => {
       const dataDia = await getDataCollectionWithUid("diaries");
       const data = Array(daysAgo + 1).fill(0);
       const images = Array(daysAgo + 1).fill(null);
+      const summary = {};
+      const stressScores = [];
 
       dataDia.forEach((doc) => {
         const docDate = new Date(doc.date);
@@ -53,9 +57,22 @@ const Dashboard = ({ navigation }) => {
           const diffDays = Math.floor((today - docDate) / (1000 * 60 * 60 * 24));
           data[daysAgo - diffDays] = doc.score || 0;
           images[daysAgo - diffDays] = imageMoodStore[doc.mood] || null;
+
+          const mood = doc.mood;
+          const score = doc.score || 0;
+
+          if (summary[mood] !== undefined) {
+            summary[mood] += 1;
+          } else {
+            summary[mood] = 1;
+          }
+
+          stressScores.push(score);
         }
       });
 
+      setMoodSummary(summary);
+      setAverageStress(calculateAverage(stressScores));
       setStressData(data);
       setMoodImages(images);
     };
@@ -182,7 +199,7 @@ const Dashboard = ({ navigation }) => {
       <View style={styles.buttonReport}>
         <TouchableOpacity
           style={styles.reportButton}
-          onPress={() => navigation.navigate("WeekReport")}
+          onPress={() => navigation.navigate("WeekReport", { moodSummary, averageStress })}
         >
           <Text style={styles.reportButtonText}>Weekly Report</Text>
         </TouchableOpacity>
